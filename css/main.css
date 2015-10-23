@@ -1,0 +1,28 @@
+body{
+	margin-top:10px;
+}
+
+#perdiem-swiper {
+    height: 325px;
+    width: 900px;
+    border: 1px solid #ccc;
+}
+
+div.hr {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #aaa;
+    line-height: 0.1em;
+    margin: 10px 0 20px;
+    padding-top:10px;
+    font-size:12px;
+    color:#aaa;
+}
+
+div.hr span {
+    background: #fff;
+    padding: 0 10px;
+}
+.swiper-slide{
+	padding:10px;
+}

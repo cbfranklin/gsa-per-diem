@@ -1,0 +1,21 @@
+{
+  "name": "perdiem2",
+  "version": "0.0.0",
+  "authors": [
+    "Connor Franklin <connorbfranklin@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "animate.css": "~3.4.0",
+    "eonasdan-bootstrap-datetimepicker": "~4.17.37",
+    "jquery": "~2.1.4",
+    "swiper": "~3.1.7"
+  }
+}

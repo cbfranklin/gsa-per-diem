@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpUY4dGa_KFp-Rf4oNtabKFZYs37KDizU&sensor=false"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="bower_components/swiper/dist/js/swiper.js"></script>
+    <script src="bower_components/swiper/dist/js/swiper.jquery.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/moment-timezone/moment-timezone.js"></script>
+    <script src="bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="bower_components/swiper/dist/css/swiper.min.css" />
+    <!--<link rel="stylesheet" href="http://devastoweb.wip.gsa.gov:8090/resources/css/asto_1.1/all.css" />-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" />
+    <link rel="stylesheet" href="css/main.css" />
+</head>
+
+<body>
+    <div id="perdiem-swiper" class="swiper-container">
+        <div class="swiper-wrapper">
+            <!-- Slides -->
+            <div class="perdiem-step-1 swiper-slide">
+                <h4>1. Choose a Location:</h4>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button data-loading-text="Getting Location..." id="perdiem-current-location" class="btn btn-default btn-block">Use My Current Location <span class="glyphicon glyphicon-map-marker"></span></button>
+                    </div>
+                </div>
+                <div class="hr"><span>or</span></div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <select class="form-control" id="perdiem-state">
+                            <option value="">Select a State</option>
+                            <option value="AL">Alabama</option>
+                            <option value="AK">Alaska</option>
+                            <option value="AS">American Samoa</option>
+                            <option value="AZ">Arizona</option>
+                            <option value="AR">Arkansas</option>
+                            <option value="CA">California</option>
+                            <option value="CO">Colorado</option>
+                            <option value="CT">Connecticut</option>
+                            <option value="DE">Delaware</option>
+                            <option value="DC">District of Columbia</option>
+                            <option value="FL">Florida</option>
+                            <option value="GA">Georgia</option>
+                            <option value="GU">Guam</option>
+                            <option value="HI">Hawaii</option>
+                            <option value="ID">Idaho</option>
+                            <option value="IL">Illinois</option>
+                            <option value="IN">Indiana</option>
+                            <option value="IA">Iowa</option>
+                            <option value="KS">Kansas</option>
+                            <option value="KY">Kentucky</option>
+                            <option value="LA">Louisiana</option>
+                            <option value="ME">Maine</option>
+                            <option value="MD">Maryland</option>
+                            <option value="MA">Massachusetts</option>
+                            <option value="MI">Michigan</option>
+                            <option value="MN">Minnesota</option>
+                            <option value="MS">Mississippi</option>
+                            <option value="MO">Missouri</option>
+                            <option value="MT">Montana</option>
+                            <option value="NE">Nebraska</option>
+                            <option value="NV">Nevada</option>
+                            <option value="NH">New Hampshire</option>
+                            <option value="NJ">New Jersey</option>
+                            <option value="NM">New Mexico</option>
+                            <option value="NY">New York</option>
+                            <option value="NC">North Carolina</option>
+                            <option value="ND">North Dakota</option>
+                            <option value="OH">Ohio</option>
+                            <option value="OK">Oklahoma</option>
+                            <option value="OR">Oregon</option>
+                            <option value="PA">Pennsylvania</option>
+                            <option value="PR">Puerto Rico</option>
+                            <option value="RI">Rhode Island</option>
+                            <option value="SC">South Carolina</option>
+                            <option value="SD">South Dakota</option>
+                            <option value="TN">Tennessee</option>
+                            <option value="TX">Texas</option>
+                            <option value="UT">Utah</option>
+                            <option value="VT">Vermont</option>
+                            <option value="VI">Virgin Islands</option>
+                            <option value="VA">Virginia</option>
+                            <option value="WA">Washington</option>
+                            <option value="WV">West Virginia</option>
+                            <option value="WI">Wisconsin</option>
+                            <option value="WY">Wyoming</option>
+                        
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <input id="perdiem-city" type="text" class="form-control" placeholder="City (Optional)">
+                    </div>
+                </div>
+                <div class="hr"><span>or</span></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <input id="perdiem-zip" type="text" class="form-control" placeholder="ZIP">
+                    </div>
+                </div>
+                <br>
+                <button id="next" class="btn btn-primary btn-block disabled">Next Step <span class="glyphicon glyphicon-chevron-right" </span></button>
+            </div>
+            <div class="perdiem-step-2 swiper-slide">
+                <h4>2. Would You Like To:</h4>
+                <br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <button class="btn btn-primary btn-block">Calculate Expenses <span class="glyphicon glyphicon-chevron-right" </span></button>
+                    </div>
+                    <div class="col-md-6">
+                        <button class="btn btn-primary btn-block">Look Up Rates <span class="glyphicon glyphicon-chevron-right" </span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="perdiem-step-2a swiper-slide">
+                <h4>Multiple Rates are Available. Please Choose One:</h4>
+                <br>
+                <select class="form-control">
+                    <option>Laurel</option>
+                </select>
+                <br>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <button id="prev" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-chevron-left"></span> Prev Step</button>
+                    </div>
+                    <div class="col-sm-6">
+                        <button id="next" class="btn btn-primary btn-block">Next Step <span class="glyphicon glyphicon-chevron-right" </span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="perdiem-step-3a swiper-slide">
+                <h4>Date Range of Your Trip:</h4>
+                <div class="input-group date" id="start-date-group">
+                    <span class="input-group-addon" id="start-date">Start Date</span>
+                    <input type="text" class="form-control" placeholder="mm/dd/yy" aria-describedby="start-date">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+                <br>
+                <div class="input-group date" id="end-date-group">
+                    <span class="input-group-addon" id="end-date">End Date</span>
+                    <input type="text" class="form-control" placeholder="mm/dd/yy" aria-describedby="end-date">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <button id="prev" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-chevron-left"></span> Prev Step</button>
+                    </div>
+                    <div class="col-sm-6">
+                        <button id="next" class="btn btn-primary btn-block">Next Step <span class="glyphicon glyphicon-chevron-right" </span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="perdiem-step-3b swiper-slide">
+                <h4>Fiscal Year</h4>
+                <br>
+                <select class="form-control">
+                    <option>2015</option>
+                </select>
+                <br>
+                <div class="row">
+                <div class="col-sm-6">
+                        <button id="prev" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-chevron-left"></span> Prev Step</button>
+                    </div>
+                    <div class="col-sm-6">
+                        <button id="next" class="btn btn-primary btn-block">Next Step <span class="glyphicon glyphicon-chevron-right" </span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide perdiem-step-4">
+                <h4>Results:</h4>
+            </div>
+        </div>
+</body>
+
+</html>
