@@ -11,6 +11,7 @@
     <script src="bower_components/moment/moment.js"></script>
     <script src="bower_components/moment-timezone/moment-timezone.js"></script>
     <script src="bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="bower_components/mustache.js/mustache.js"></script>
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="bower_components/swiper/dist/css/swiper.min.css" />
     <!--<link rel="stylesheet" href="http://devastoweb.wip.gsa.gov:8090/resources/css/asto_1.1/all.css" />-->
@@ -112,26 +113,10 @@
                 <br>
                 <div class="row">
                     <div class="col-md-6">
-                        <button class="btn btn-primary btn-block btn-lg">Calculate Expenses <span class="glyphicon glyphicon-chevron-right" </span></button>
+                        <button id="perdiem-calculate-expenses" class="btn btn-primary btn-block btn-lg">Calculate Expenses <span class="glyphicon glyphicon-chevron-right" </span></button>
                     </div>
                     <div class="col-md-6">
                         <button class="btn btn-primary btn-block btn-lg">Look Up Rates <span class="glyphicon glyphicon-chevron-right" </span></button>
-                    </div>
-                </div>
-            </div>
-            <div class="perdiem-step-2a swiper-slide">
-                <h4>Multiple Rates are Available. Please Choose One:</h4>
-                <br>
-                <select class="form-control">
-                    <option>Laurel</option>
-                </select>
-                <br>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <button id="prev" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-chevron-left"></span> Prev Step</button>
-                    </div>
-                    <div class="col-sm-6">
-                        <button id="next" class="btn btn-primary btn-block">Next Step <span class="glyphicon glyphicon-chevron-right" </span></button>
                     </div>
                 </div>
             </div>
@@ -158,7 +143,7 @@
                         <button id="prev" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-chevron-left"></span> Prev Step</button>
                     </div>
                     <div class="col-sm-6">
-                        <button id="next" class="btn btn-primary btn-block">Next Step <span class="glyphicon glyphicon-chevron-right" </span></button>
+                        <button id="perdiem-multiple-rates-check" class="btn btn-primary btn-block">Next Step <span class="glyphicon glyphicon-chevron-right" </span></button>
                     </div>
                 </div>
             </div>
@@ -178,9 +163,32 @@
                     </div>
                 </div>
             </div>
-            <div class="swiper-slide perdiem-step-4">
+            <div class="perdiem-step-4 swiper-slide">
+            </div>
+            <div class="swiper-slide perdiem-step-5">
                 <h4>Results:</h4>
             </div>
+        </div>
+    </div>
+    <div id="templates">
+        <div class="multiple-rates">
+            <h4>Multiple Rates are Available. Please Choose One:</h4>
+                <br>
+                <label for="perdiem-fiscal-year-1">Fiscal Year {{fy}}</label><select id="perdiem-fiscal-year-2" class="form-control">
+                    <option>{{county}}</option>
+                </select>
+                <label for="perdiem-fiscal-year-2">Fiscal Year {{fy}}</label><select id="perdiem-fiscal-year-2" class="form-control">
+                    <option>{{county}}</option>
+                </select>
+                <br>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <button id="prev" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-chevron-left"></span> Prev Step</button>
+                    </div>
+                    <div class="col-sm-6">
+                        <button id="next" class="btn btn-primary btn-block">Next Step <span class="glyphicon glyphicon-chevron-right" </span></button>
+                    </div>
+                </div>
         </div>
     </div>
 </body>
