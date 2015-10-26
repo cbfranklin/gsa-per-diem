@@ -16,6 +16,7 @@
     "animate.css": "~3.4.0",
     "eonasdan-bootstrap-datetimepicker": "~4.17.37",
     "jquery": "~2.1.4",
-    "swiper": "~3.1.7"
+    "swiper": "~3.1.7",
+    "mustache": "~2.2.0"
   }
 }

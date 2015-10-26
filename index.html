@@ -11,7 +11,7 @@
     <script src="bower_components/moment/moment.js"></script>
     <script src="bower_components/moment-timezone/moment-timezone.js"></script>
     <script src="bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="bower_components/mustache.js/mustache.js"></script>
+    <script src="bower_components/mustache/mustache.js"></script>
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="bower_components/swiper/dist/css/swiper.min.css" />
     <!--<link rel="stylesheet" href="http://devastoweb.wip.gsa.gov:8090/resources/css/asto_1.1/all.css" />-->
@@ -29,7 +29,7 @@
                 <h4>1. Choose a Location:</h4>
                 <div class="row">
                     <div class="col-md-12">
-                        <button data-loading-text="Getting Location..." id="perdiem-current-location" class="btn btn-default btn-block">Use My Current Location <span class="glyphicon glyphicon-map-marker"></span></button>
+                        <button data-loading-text="Getting Location..." id="perdiem-current-location" class="btn btn-default btn-block">Use Your Current Location <span class="glyphicon glyphicon-map-marker"></span></button>
                     </div>
                 </div>
                 <div class="hr"><span>or</span></div>
@@ -113,7 +113,7 @@
                 <br>
                 <div class="row">
                     <div class="col-md-6">
-                        <button id="perdiem-calculate-expenses" class="btn btn-primary btn-block btn-lg">Calculate Expenses <span class="glyphicon glyphicon-chevron-right" </span></button>
+                        <button id="next" class="btn btn-primary btn-block btn-lg">Calculate Expenses <span class="glyphicon glyphicon-chevron-right" </span></button>
                     </div>
                     <div class="col-md-6">
                         <button class="btn btn-primary btn-block btn-lg">Look Up Rates <span class="glyphicon glyphicon-chevron-right" </span></button>
@@ -124,7 +124,7 @@
                 <h4>Date Range of Your Trip:</h4>
                 <div class="input-group date" id="start-date-group">
                     <span class="input-group-addon" id="start-date">Start Date</span>
-                    <input type="text" class="form-control" placeholder="mm/dd/yy" aria-describedby="start-date">
+                    <input id="perdiem-start-date" type="text" class="form-control" placeholder="mm/dd/yy" aria-describedby="start-date">
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -132,7 +132,7 @@
                 <br>
                 <div class="input-group date" id="end-date-group">
                     <span class="input-group-addon" id="end-date">End Date</span>
-                    <input type="text" class="form-control" placeholder="mm/dd/yy" aria-describedby="end-date">
+                    <input id="perdiem-end-date" type="text" class="form-control" placeholder="mm/dd/yy" aria-describedby="end-date">
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -171,25 +171,36 @@
         </div>
     </div>
     <div id="templates">
-        <div class="multiple-rates">
+        <script type="template" class="multiple-rates">
+        {{#rates}}
             <h4>Multiple Rates are Available. Please Choose One:</h4>
                 <br>
-                <label for="perdiem-fiscal-year-1">Fiscal Year {{fy}}</label><select id="perdiem-fiscal-year-2" class="form-control">
+                {{#fy1}}
+                <label for="perdiem-fiscal-year-1">Fiscal Year {{year}}</label><select id="perdiem-fiscal-year-1" class="form-control">
+                    {{#rates}}
                     <option>{{county}}</option>
+                    {{/rates}}
                 </select>
-                <label for="perdiem-fiscal-year-2">Fiscal Year {{fy}}</label><select id="perdiem-fiscal-year-2" class="form-control">
+                {{/fy1}}
+                {{#fy2}}
+                <br>
+                <label for="perdiem-fiscal-year-2">Fiscal Year {{year}}</label><select id="perdiem-fiscal-year-2" class="form-control">
+                    {{#rates}}
                     <option>{{county}}</option>
+                    {{/rates}}
                 </select>
+                {{/fy2}}
                 <br>
                 <div class="row">
                     <div class="col-sm-6">
                         <button id="prev" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-chevron-left"></span> Prev Step</button>
                     </div>
                     <div class="col-sm-6">
-                        <button id="next" class="btn btn-primary btn-block">Next Step <span class="glyphicon glyphicon-chevron-right" </span></button>
+                        <button id="perdiem-rates-selected" class="btn btn-primary btn-block">Next Step <span class="glyphicon glyphicon-chevron-right" </span></button>
                     </div>
                 </div>
-        </div>
+                {{/rates}}
+        </script>
     </div>
 </body>
 
