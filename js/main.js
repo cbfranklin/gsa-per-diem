@@ -105,7 +105,6 @@ function checkForMultipleRates() {
                     rate: rates[0]
                 }
             }
-
         });
     }
 
@@ -115,7 +114,7 @@ function checkForMultipleRates() {
             console.log('FY2 AJAX Call...')
             var fy2req = req + '/year/' + perDiemSearch.endFY;
             return $.ajax({
-                url: fy1req,
+                url: fy2req,
             }).done(function(data) {
                 //data = JSON.parse(data)
                 var rates = data.rates[0].rate;
@@ -241,6 +240,10 @@ function useMyCurrentLocation() {
 
 
 function calculateRates() {
+    perDiemSearch.results = {
+        breakdown: [],
+        total: 0
+    };
     console.log('Calculating...')
     var start = moment(perDiemSearch.startDate);
     var end = moment(perDiemSearch.endDate);
@@ -248,17 +251,19 @@ function calculateRates() {
     var endDate = moment(perDiemSearch.endDate);
     //single day trip
     if (perDiemSearch.startDate === perDiemSearch.endDate) {
-        console.log('One Day Trip (No Overnight):','MIE:',perDiemSearch.rates.fy1.rate.meals * 0.75)
-        //mie only, at 75%
+        console.log('One Day Trip (No Overnight):', 'MIE:', perDiemSearch.rates.fy1.rate.meals * 0.75)
+            //mie only, at 75%
         var total = perDiemCalculator.rates.fy1.rate.meals * 0.75;
-    } else {
+    }
+    //multi-day trip
+    else {
         var total = 0;
         var months = [];
         for (var date = start; !date.isAfter(end); date.add(1, 'days')) {
+
             var rateMonth = date.format('M');
             var rateYear = date.format('YYYY');
 
-            //console.log('rateMonth:',rateMonth)
             if (rateMonth > 9) {
                 var fy = parseFloat(rateYear) + 1
             } else {
@@ -266,49 +271,92 @@ function calculateRates() {
             }
 
             var fys = Object.keys(perDiemSearch.rates);
-            //console.log('fys:',fys)
             for (i in fys) {
-                //console.log(perDiemSearch.rates[fys[i]].year)
-                if (perDiemSearch.rates[fys[i]].year == fy) {
+                if (perDiemSearch.rates[fys[i]].year === fy) {
                     var rate = perDiemSearch.rates[fys[i]].rate;
                 }
             }
 
-            console.log('=========\n','Adding Date:', date.format('MM-DD-YYYY'), 'Fiscal Year:', fy)
+            console.log('=========\n', 'Adding Date:', date.format('MM-DD-YYYY'), 'Fiscal Year:', fy)
+
+
 
 
             //add perdiem rate for month
-            total += rate.months.month[date.format('M')].value;
-            console.log('Rate:',rate.months.month[date.format('M')].value)
-            //console.log('perDiemSearch.startDate',perDiemSearch.startDate.format('MM-DD-YYYY'))
-            var pdsd = moment(perDiemSearch.startDate).format('MM-DD-YYYY');
-            console.log(pdsd)
-            var pded = moment(perDiemSearch.endDate).format('MM-DD-YYYY');
-            console.log(pded)
+            var lodgingRate = rate.months.month[date.format('M')].value;
             //add mie at 75% for first and last day (using first two days since it's only a sum)
-            if (date.format('MM-DD-YYYY') === pdsd || date.format('MM-DD-YYYY') === pded) {
-                total += rate.meals * 0.75;
-                console.log('MIE at 75%:',rate.meals * 0.75)
-            } else {
-                //mie at 100% for all other days
-                total += rate.meals
-                console.log('MIE:',rate.meals)
+            var pdsd = moment(perDiemSearch.startDate).format('MM-DD-YYYY');
+            var pded = moment(perDiemSearch.endDate).format('MM-DD-YYYY');
+            //first day
+            if (date.format('MM-DD-YYYY') === pdsd) {
+                var mieRate = rate.meals * 0.75;
+                total += mieRate;
+                console.log('MIE at 75%:', mieRate)
+                total += lodgingRate;
+                console.log('Rate:', lodgingRate)
+                perDiemSearch.results.breakdown.push({
+                    type: 'first',
+                    lodging: lodgingRate,
+                    mie: mieRate
+                })
+            }
+            //last day
+            else if (date.format('MM-DD-YYYY') === pded) {
+                var mieRate = rate.meals * 0.75;
+                total += mieRate;
+                console.log('MIE at 75%:', mieRate)
+                perDiemSearch.results.breakdown.push({
+                    type: 'last',
+                    mie: mieRate,
+                    lodging: 0
+                })
+            }
+            //all other days
+            else {
+                total += lodgingRate;
+                console.log('Rate:', lodgingRate)
+                    //mie at 100%
+                var mieRate = rate.meals;
+                total += mieRate;
+                console.log('MIE:', mieRate)
+                var breakdown = perDiemSearch.results.breakdown;
+                var month = date.format('MMMM');
+                for (i in breakdown) {
+                    if (breakdown[i].month === month) {
+                        var monthAlreadyExists = true;
+                    }
+                }
+                if (!monthAlreadyExists) {
+                    perDiemSearch.results.breakdown.push({
+                        type: 'month',
+                        month: date.format('MMMM'),
+                        lodging: lodgingRate,
+                        mie: mieRate
+                    })
+                }
+
             }
         }
     }
-    console.log('Total:', total)
-    return total;
+    perDiemSearch.results.total = total;
+    console.log('=========\n','Total:', perDiemSearch.results.total);
+    console.log('=========\n','Breakdown:')
+    console.table(perDiemSearch.results.breakdown)
 };
 
 function ratesSelected() {
     var m = $('#perdiem-fiscal-year-1 option:selected').index();
     var n = $('#perdiem-fiscal-year-2 option:selected').index();
-    console.log('User Selected:',$('#perdiem-fiscal-year-1 option:selected').text(),'For FY',perDiemSearch.rates.fy1.year)
+    console.log('User Selected:', $('#perdiem-fiscal-year-1 option:selected').text(), 'For FY', perDiemSearch.rates.fy1.year)
     perDiemSearch.rates.fy1.rate = perDiemSearch.rates.fy1.rates[m]
-    if(perDiemSearch.rates.fy2){
+    if (perDiemSearch.rates.fy2) {
         perDiemSearch.rates.fy2.rate = perDiemSearch.rates.fy2.rates[n]
-        console.log('User Selected:',$('#perdiem-fiscal-year-2 option:selected').text(),'For FY',perDiemSearch.rates.fy2.year)
+        console.log('User Selected:', $('#perdiem-fiscal-year-2 option:selected').text(), 'For FY', perDiemSearch.rates.fy2.year)
     }
     //temp
     calculateRates()
+}
+
+function updateProgress(n) {
+    $('.progress-bar').attr('aria-valuenow', n).css('width', n + '%')
 }

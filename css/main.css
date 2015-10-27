@@ -24,3 +24,9 @@ div.hr span {
 .swiper-slide{
 	padding:10px;
 }
+.panel-heading a{
+    display:block;
+}
+.panel-heading a .glyphicon{
+    float:right;
+}
