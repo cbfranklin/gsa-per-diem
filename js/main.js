@@ -268,6 +268,10 @@ function useMyCurrentLocation() {
                 $(this).attr('selected', 'selected');
             }
         })
+        $('#perdiem-zip,#perdiem-city,#perdiem-state').addClass('animated bounce');
+        setTimeout(function(){
+            $('#perdiem-zip,#perdiem-city,#perdiem-state').removeClass('animated bounce');
+        },2000)
     }
 
     function currentPositionError() {
