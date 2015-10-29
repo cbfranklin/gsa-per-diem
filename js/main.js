@@ -13,6 +13,7 @@ $(function() {
             $(this).attr('selected', 'selected');
         }
     })
+    //init swiper, lock swipes so that one cannot tab thru
     perDiemSwiper = new Swiper('#perdiem-swiper', {
         onlyExternal: true,
         a11y: true

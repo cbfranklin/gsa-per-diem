@@ -1,10 +1,10 @@
-body{
-	margin-top:10px;
+body {
+    margin-top: 10px;
 }
 
 #perdiem-swiper {
     border: 1px solid #ccc;
-    min-height:400px;
+    min-height: 400px;
 }
 
 div.hr {
@@ -13,21 +13,29 @@ div.hr {
     border-bottom: 1px solid #aaa;
     line-height: 0.1em;
     margin: 10px 0 20px;
-    padding-top:10px;
-    font-size:12px;
-    color:#aaa;
+    padding-top: 10px;
+    font-size: 12px;
+    color: #aaa;
 }
 
 div.hr span {
     background: #fff;
     padding: 0 10px;
 }
-.swiper-slide{
-	padding:10px;
+
+.panel-heading a {
+    display: block;
 }
-.panel-heading a{
-    display:block;
+
+.panel-heading a .glyphicon {
+    float: right;
 }
-.panel-heading a .glyphicon{
-    float:right;
+
+.swiper-slide {
+    visibility: hidden;
+    padding: 10px;
+}
+
+.swiper-slide.swiper-slide-active {
+    visibility: visible;
 }
