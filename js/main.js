@@ -1,6 +1,7 @@
 var perDiemSwiper,
     perDiemSearch = {
-        rates: {}
+        rates: {},
+        query: {}
     },
     apiRoot = 'http://localhost:3334'
 
@@ -33,8 +34,30 @@ $(function() {
     $('#perdiem-swiper').on('click', '#perdiem-multiple-rates-check', checkForMultipleRates);
     $('#perdiem-current-location').on('click', useMyCurrentLocation);
 
-    $('#perdiem-swiper').on('click', '#perdiem-rates-selected', ratesSelected)
+    $('#perdiem-swiper').on('click', '#perdiem-rates-selected', ratesSelected);
+
+    $('#perdiem-city,#perdiem-zip').on('keyup', validateLocationParams)
+    $('#perdiem-state').on('change', validateLocationParams)
+
+    $('#perdiem-look-up-rates').on('click', function() {
+        perDiemSwiper.slideTo(3)
+    })
+    $('#perdiem-to-step-2').on('click', function() {
+        perDiemSwiper.slideTo(1)
+    })
+    $('#perdiem-to-date-range').on('click', function() {
+        perDiemSwiper.slideTo(2)
+    })
+    $('#perdiem-look-up-rates-submit').on('click', lookUpRatesSubmit);
 })
+
+function validateLocationParams() {
+    if ($('#perdiem-city').val() === '' && $('#perdiem-state').val() === '' && $('#perdiem-zip').val().length < 5) {
+        $('.perdiem-step-1 #next').addClass('disabled').attr('disabled', 'disabled');
+    } else {
+        $('.perdiem-step-1 #next').removeClass('disabled').removeAttr('disabled');
+    }
+}
 
 function checkForMultipleRates() {
 
@@ -57,21 +80,23 @@ function checkForMultipleRates() {
     console.log('Start FY:', perDiemSearch.startFY, 'End FY:', perDiemSearch.endFY)
 
 
+    perDiemSearch.query.zip = $('#perdiem-zip').val();
+    perDiemSearch.query.state = $('#perdiem-state').val();
+    perDiemSearch.query.city = $('#perdiem-city').val();
 
-
-    if ($('#perdiem-zip').val() !== '') {
+    if (perDiemSearch.query.zip !== '') {
         //zip is available
         console.log('Using ZIP')
-        var req = apiRoot + '/api/rs/perdiem/zip/' + $('#perdiem-zip').val();
+        var req = apiRoot + '/api/rs/perdiem/zip/' + perDiemSearch.query.zip;
     } else {
-        if ($('#perdiem-city').val() !== '') {
+        if (perDiemSearch.query.city !== '') {
             //city and state available
             console.log('Using City & State')
-            var req = apiRoot + '/api/rs/perdiem/city/' + $('#perdiem-city').val(); + '/state/' + $('#perdiem-state').val();
+            var req = apiRoot + '/api/rs/perdiem/city/' + perDiemSearch.query.city + '/state/' + perDiemSearch.query.state;
         } else {
             //state only
             console.log('Using State Only')
-            var req = apiRoot + '/api/rs/perdiem/state/' + $('#perdiem-state').val();
+            var req = apiRoot + '/api/rs/perdiem/state/' + perDiemSearch.query.state;
         }
     }
 
@@ -150,6 +175,18 @@ function checkForMultipleRates() {
         console.log('AJAX Calls Complete!')
             //if multiple rates available, show multiple rates UI
         if (perDiemSearch.rates.fy1.multiple || perDiemSearch.rates.fy2.multiple) {
+            //sort rates, cause the API doesn't
+            function countyAlpha(a, b) {
+                return a.county > b.county;
+            }
+            if (perDiemSearch.rates.fy1.multiple) {
+                perDiemSearch.rates.fy1.rates = perDiemSearch.rates.fy1.rates.sort(countyAlpha);
+            }
+            if (perDiemSearch.rates.fy2.multiple) {
+                perDiemSearch.rates.fy2.rates = perDiemSearch.rates.fy2.rates.sort(countyAlpha);
+
+            }
+            //render template
             var template = $('#templates .multiple-rates').html();
             var rendered = Mustache.render(template, {
                 rates: perDiemSearch.rates
@@ -295,9 +332,11 @@ function calculateRates() {
                 total += lodgingRate;
                 console.log('Rate:', lodgingRate)
                 perDiemSearch.results.breakdown.push({
-                    type: 'first',
+                    date: 'First Day',
                     lodging: lodgingRate,
-                    mie: mieRate
+                    mie: mieRate,
+                    isFirstLast: true,
+                    total: lodgingRate + mieRate
                 })
             }
             //last day
@@ -306,9 +345,11 @@ function calculateRates() {
                 total += mieRate;
                 console.log('MIE at 75%:', mieRate)
                 perDiemSearch.results.breakdown.push({
-                    type: 'last',
+                    date: 'Last Day',
                     mie: mieRate,
-                    lodging: 0
+                    lodging: 0,
+                    isFirstLast: true,
+                    total: mieRate
                 })
             }
             //all other days
@@ -322,16 +363,17 @@ function calculateRates() {
                 var breakdown = perDiemSearch.results.breakdown;
                 var month = date.format('MMMM');
                 for (i in breakdown) {
-                    if (breakdown[i].month === month) {
+                    if (breakdown[i].date === month) {
                         var monthAlreadyExists = true;
                     }
                 }
                 if (!monthAlreadyExists) {
                     perDiemSearch.results.breakdown.push({
-                        type: 'month',
-                        month: date.format('MMMM'),
+                        isRate: true,
+                        date: date.format('MMMM'),
                         lodging: lodgingRate,
-                        mie: mieRate
+                        mie: mieRate,
+                        total: lodgingRate + mieRate
                     })
                 }
 
@@ -339,9 +381,20 @@ function calculateRates() {
         }
     }
     perDiemSearch.results.total = total;
-    console.log('=========\n','Total:', perDiemSearch.results.total);
-    console.log('=========\n','Breakdown:')
+    console.log('=========\n', 'Total:', perDiemSearch.results.total);
+    console.log('=========\n', 'Breakdown:')
     console.table(perDiemSearch.results.breakdown)
+    //if more than one FY, are FYs using same rate?
+    if(perDiemSearch.rates.fy1.rate.county === perDiemSearch.rates.fy2.rate.county){
+        var sameRate = true;
+    }
+    var template = $('#templates .calculator-results').html();
+    var rendered = Mustache.render(template, {
+        perDiemSearch: perDiemSearch,
+        sameRate: sameRate
+    });
+    $('.perdiem-step-5').prepend(rendered);
+    perDiemSwiper.slideTo(5)
 };
 
 function ratesSelected() {
@@ -359,4 +412,12 @@ function ratesSelected() {
 
 function updateProgress(n) {
     $('.progress-bar').attr('aria-valuenow', n).css('width', n + '%')
+}
+
+function lookUpRatesSubmit() {
+    $('input[name="perdiemSearchVO.year"]').val($('#perdiem-rate-lookup-fiscal-year').val())
+    $('input[name="perdiemSearchVO.city"').val($('#perdiem-city').val())
+    $('input[name="perdiemSearchVO.state"').val($('#perdiem-state').val())
+    $('input[name="perdiemSearchVO.zip"').val($('#perdiem-zip').val())
+    $('#perdiem-find-rates-form').submit();
 }
