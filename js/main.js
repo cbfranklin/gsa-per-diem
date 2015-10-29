@@ -3,7 +3,7 @@ var perDiemSwiper,
         rates: {},
         query: {}
     },
-    apiRoot = 'http://dev.oagov.com:3334'
+    apiRoot = 'http://dev.oagov.com:3334/proxy'
 
 $(function() {
     $('#perdiem-zip').val('')
