@@ -20,10 +20,12 @@ $(function() {
     });
 
     $('#start-date-group').datetimepicker({
-        format: 'MM/DD/YYYY'
+        format: 'MM/DD/YYYY',
+        keepInvalid: true
     });
     $('#end-date-group').datetimepicker({
-        format: 'MM/DD/YYYY'
+        format: 'MM/DD/YYYY',
+        keepInvalid: true
     });
 
     $('#perdiem-swiper').on('click', '#next:not(.disabled)', function() {
