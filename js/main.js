@@ -268,9 +268,9 @@ function useMyCurrentLocation() {
                 $(this).attr('selected', 'selected');
             }
         })
-        $('#perdiem-zip,#perdiem-city,#perdiem-state').addClass('animated bounce');
+        $('#perdiem-zip,#perdiem-city,#perdiem-state').addClass('animated flash');
         setTimeout(function(){
-            $('#perdiem-zip,#perdiem-city,#perdiem-state').removeClass('animated bounce');
+            $('#perdiem-zip,#perdiem-city,#perdiem-state').removeClass('animated flash');
         },2000)
     }
 
