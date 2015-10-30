@@ -10,6 +10,12 @@ $(function() {
     perDiemSwiper = new Swiper('#perdiem-swiper', {
         onlyExternal: true,
         a11y: true
+            /*,
+                    effect: 'cube',
+                    cube: {
+                        slideShadows: false,
+                        shadow: false
+                    }*/
     });
 
     $('#start-date-group').datetimepicker({
@@ -34,10 +40,11 @@ $(function() {
 
     //validate location
     $('#perdiem-city,#perdiem-zip').on('keyup', validateLocationParams)
+    validateLocationParams();
 
     //validate date entry
-    $('#perdiem-start-date,#perdiem-end-date').on('keyup',validateDates)
-    $('#start-date-group,#end-date-group').on('click',validateDates)
+    $('#perdiem-start-date,#perdiem-end-date').on('keyup', validateDates)
+    $('#start-date-group,#end-date-group').on('click', validateDates)
     validateDates();
 
     $('#perdiem-state').on('change', validateLocationParams)
@@ -53,15 +60,16 @@ $(function() {
     })
     $('#perdiem-look-up-rates-submit').on('click', lookUpRatesSubmit);
 })
-function validateDates(){
+
+function validateDates() {
     var valid = /\d{1,2}\/\d{1,2}\/\d{4}/;
-    if($('#perdiem-start-date').val().match(valid) && $('#perdiem-end-date').val().match(valid)){
+    if ($('#perdiem-start-date').val().match(valid) && $('#perdiem-end-date').val().match(valid) /*&& moment($('#perdiem-start-date').val()).isAfter()*/ ) {
         $('#perdiem-multiple-rates-check').removeClass('disabled').removeAttr('disabled');
-    }
-    else{
+    } else {
         $('#perdiem-multiple-rates-check').addClass('disabled').attr('disabled', 'disabled');
     }
 }
+
 function validateLocationParams() {
     if ($('#perdiem-city').val() === '' && $('#perdiem-state').val() === '' && $('#perdiem-zip').val().length < 5) {
         $('.perdiem-step-1 #next').addClass('disabled').attr('disabled', 'disabled');
@@ -185,7 +193,19 @@ function checkForMultipleRates() {
     $.when(getStartFY(), getEndFY()).done(function() {
         console.log('AJAX Calls Complete!')
             //if multiple rates available, show multiple rates UI
-        if (perDiemSearch.rates.fy1.multiple || perDiemSearch.rates.fy2.multiple) {
+        if (perDiemSearch.rates.fy2) {
+            if (perDiemSearch.rates.fy1.multiple || perDiemSearch.rates.fy2.multiple) {
+                displayRates()
+            }
+        } else {
+            if (perDiemSearch.rates.fy1.multiple) {
+                displayRates()
+            }
+        }
+
+        function displayRates() {
+
+
             //sort rates, cause the API doesn't
             function countyAlpha(a, b) {
                 return a.county > b.county;
@@ -193,9 +213,11 @@ function checkForMultipleRates() {
             if (perDiemSearch.rates.fy1.multiple) {
                 perDiemSearch.rates.fy1.rates = perDiemSearch.rates.fy1.rates.sort(countyAlpha);
             }
-            if (perDiemSearch.rates.fy2.multiple) {
-                perDiemSearch.rates.fy2.rates = perDiemSearch.rates.fy2.rates.sort(countyAlpha);
+            if (perDiemSearch.rates.fy2) {
+                if (perDiemSearch.rates.fy2.multiple) {
+                    perDiemSearch.rates.fy2.rates = perDiemSearch.rates.fy2.rates.sort(countyAlpha);
 
+                }
             }
             //render template
             var template = $('#templates .multiple-rates').html();
@@ -280,9 +302,9 @@ function useMyCurrentLocation() {
             }
         })
         $('#perdiem-zip,#perdiem-city,#perdiem-state').addClass('animated flash');
-        setTimeout(function(){
+        setTimeout(function() {
             $('#perdiem-zip,#perdiem-city,#perdiem-state').removeClass('animated flash');
-        },2000)
+        }, 2000)
     }
 
     function currentPositionError() {
@@ -399,8 +421,8 @@ function calculateRates() {
     console.log('=========\n', 'Total:', perDiemSearch.results.total);
     console.log('=========\n', 'Breakdown:')
     console.table(perDiemSearch.results.breakdown)
-    //if more than one FY, are FYs using same rate?
-    if(perDiemSearch.rates.fy1.rate.county === perDiemSearch.rates.fy2.rate.county){
+        //if more than one FY, are FYs using same rate?
+    if (perDiemSearch.rates.fy1.rate.county === perDiemSearch.rates.fy2.rate.county) {
         var sameRate = true;
     }
     var template = $('#templates .calculator-results').html();
@@ -413,14 +435,17 @@ function calculateRates() {
 };
 
 function ratesSelected() {
-    var m = $('#perdiem-fiscal-year-1 option:selected').index();
-    var n = $('#perdiem-fiscal-year-2 option:selected').index();
-    console.log('User Selected:', $('#perdiem-fiscal-year-1 option:selected').text(), 'For FY', perDiemSearch.rates.fy1.year)
-    perDiemSearch.rates.fy1.rate = perDiemSearch.rates.fy1.rates[m]
-    if (perDiemSearch.rates.fy2) {
+    if (perDiemSearch.rates.fy1.rates.multiple) {
+        var m = $('#perdiem-fiscal-year-1 option:selected').index();
+        perDiemSearch.rates.fy1.rate = perDiemSearch.rates.fy1.rates[m]
+        console.log('User Selected:', $('#perdiem-fiscal-year-1 option:selected').text(), 'For FY', perDiemSearch.rates.fy1.year)
+    }
+    if (perDiemSearch.rates.fy2.rates.multiple) {
+        var n = $('#perdiem-fiscal-year-2 option:selected').index();
         perDiemSearch.rates.fy2.rate = perDiemSearch.rates.fy2.rates[n]
         console.log('User Selected:', $('#perdiem-fiscal-year-2 option:selected').text(), 'For FY', perDiemSearch.rates.fy2.year)
     }
+
     //temp
     calculateRates()
 }

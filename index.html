@@ -131,7 +131,7 @@
                     </div>
                 </div>
                 <div class="perdiem-step-3a swiper-slide">
-                    <h4>Date Range of Your Trip:</h4>
+                    <h4>3. Date Range of Your Trip:</h4>
                     <div class="input-group date" id="start-date-group">
                         <span class="input-group-addon" id="start-date">Start Date</span>
                         <input id="perdiem-start-date" type="text" class="form-control" placeholder="mm/dd/yy" aria-describedby="start-date">
@@ -278,7 +278,7 @@
                 <option>{{county}}</option>
                 {{/rates}}
             </select>
-            {{/fy1}} {{#fy2}}
+            {{/fy1}} {{#fy2}}{{#multiple}}
             <br>
             <label for="perdiem-fiscal-year-2">Fiscal Year {{year}}</label>
             <select id="perdiem-fiscal-year-2" class="form-control swiper-no-swiping">
@@ -286,7 +286,7 @@
                 <option>{{county}}</option>
                 {{/rates}}
             </select>
-            {{/fy2}}
+            {{/multiple}}{{/fy2}}
             <br>
             <div class="row">
                 <div class="col-sm-6">
