@@ -103,7 +103,7 @@ function checkForMultipleRates() {
     perDiemSearch.query.state = $('#perdiem-state').val();
     perDiemSearch.query.city = $('#perdiem-city').val();
 
-    console.log('User Query:', '')
+    console.log('User Query:', 'State:', perDiemSearch.query.state, 'City:', perDiemSearch.query.city, 'ZIP:', perDiemSearch.query.zip)
 
     if (perDiemSearch.query.zip !== '') {
         //zip is available
@@ -425,8 +425,10 @@ function calculateRates() {
     console.log('=========\n', 'Breakdown:')
     console.table(perDiemSearch.results.breakdown)
         //if more than one FY, are FYs using same rate?
-    if (perDiemSearch.rates.fy1.rate.county === perDiemSearch.rates.fy2.rate.county) {
-        var sameRate = true;
+    if (perDiemSearch.rates.fy2) {
+        if (perDiemSearch.rates.fy1.rate.county === perDiemSearch.rates.fy2.rate.county) {
+            var sameRate = true;
+        }
     }
     var template = $('#templates .calculator-results').html();
     var rendered = Mustache.render(template, {
@@ -438,17 +440,23 @@ function calculateRates() {
 };
 
 function ratesSelected() {
-    if (perDiemSearch.rates.fy1.rates.multiple) {
+    if (perDiemSearch.rates.fy1.multiple) {
         var m = $('#perdiem-fiscal-year-1 option:selected').index();
         perDiemSearch.rates.fy1.rate = perDiemSearch.rates.fy1.rates[m]
         console.log('User Selected:', $('#perdiem-fiscal-year-1 option:selected').text(), 'For FY', perDiemSearch.rates.fy1.year)
+    } else {
+        console.log('fy1 no multiple')
     }
     if (perDiemSearch.rates.fy2) {
-        if (perDiemSearch.rates.fy2.rates.multiple) {
+        console.log('fy2 exists')
+        if (perDiemSearch.rates.fy2.multiple) {
+            console.log('fy2 exists with multiple')
             var n = $('#perdiem-fiscal-year-2 option:selected').index();
             perDiemSearch.rates.fy2.rate = perDiemSearch.rates.fy2.rates[n]
             console.log('User Selected:', $('#perdiem-fiscal-year-2 option:selected').text(), 'For FY', perDiemSearch.rates.fy2.year)
         }
+    } else {
+        console.log('fy2 does not exist')
     }
 
     //temp
