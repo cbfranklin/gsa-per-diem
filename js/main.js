@@ -40,6 +40,9 @@ $(function() {
     $('#perdiem-swiper').on('click', '#perdiem-rates-selected', ratesSelected);
 
     $('#perdiem-city,#perdiem-zip').on('keyup', validateLocationParams)
+    $('#perdiem-start-date,#perdiem-end-date').on('keyup',validateDates)
+    $('#start-date-group,#end-date-group').on('click',validateDates)
+
     $('#perdiem-state').on('change', validateLocationParams)
 
     $('#perdiem-look-up-rates').on('click', function() {
@@ -53,7 +56,15 @@ $(function() {
     })
     $('#perdiem-look-up-rates-submit').on('click', lookUpRatesSubmit);
 })
-
+function validateDates(){
+    var valid = /\d{1,2}\/\d{1,2}\/\d{4}/;
+    if($('#perdiem-start-date').val().match(valid) && $('#perdiem-end-date').val().match(valid)){
+        $('#perdiem-multiple-rates-check').removeClass('disabled').removeAttr('disabled');
+    }
+    else{
+        $('#perdiem-multiple-rates-check').addClass('disabled').attr('disabled', 'disabled');
+    }
+}
 function validateLocationParams() {
     if ($('#perdiem-city').val() === '' && $('#perdiem-state').val() === '' && $('#perdiem-zip').val().length < 5) {
         $('.perdiem-step-1 #next').addClass('disabled').attr('disabled', 'disabled');
