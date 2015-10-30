@@ -103,6 +103,8 @@ function checkForMultipleRates() {
     perDiemSearch.query.state = $('#perdiem-state').val();
     perDiemSearch.query.city = $('#perdiem-city').val();
 
+    console.log('User Query:', '')
+
     if (perDiemSearch.query.zip !== '') {
         //zip is available
         console.log('Using ZIP')
@@ -205,7 +207,6 @@ function checkForMultipleRates() {
 
         function displayRates() {
 
-
             //sort rates, cause the API doesn't
             function countyAlpha(a, b) {
                 return a.county > b.county;
@@ -283,7 +284,6 @@ function useMyCurrentLocation() {
                 }
                 populateForm();
                 $btn.button('reset')
-                $('.perdiem-step-1 #next').removeClass('disabled');
             } else {
                 //error
                 console.log('Geocode Error!')
@@ -301,6 +301,9 @@ function useMyCurrentLocation() {
                 $(this).attr('selected', 'selected');
             }
         })
+        setTimeout(function() {
+            validateLocationParams();
+        }, 250)
         $('#perdiem-zip,#perdiem-city,#perdiem-state').addClass('animated flash');
         setTimeout(function() {
             $('#perdiem-zip,#perdiem-city,#perdiem-state').removeClass('animated flash');
@@ -440,10 +443,12 @@ function ratesSelected() {
         perDiemSearch.rates.fy1.rate = perDiemSearch.rates.fy1.rates[m]
         console.log('User Selected:', $('#perdiem-fiscal-year-1 option:selected').text(), 'For FY', perDiemSearch.rates.fy1.year)
     }
-    if (perDiemSearch.rates.fy2.rates.multiple) {
-        var n = $('#perdiem-fiscal-year-2 option:selected').index();
-        perDiemSearch.rates.fy2.rate = perDiemSearch.rates.fy2.rates[n]
-        console.log('User Selected:', $('#perdiem-fiscal-year-2 option:selected').text(), 'For FY', perDiemSearch.rates.fy2.year)
+    if (perDiemSearch.rates.fy2) {
+        if (perDiemSearch.rates.fy2.rates.multiple) {
+            var n = $('#perdiem-fiscal-year-2 option:selected').index();
+            perDiemSearch.rates.fy2.rate = perDiemSearch.rates.fy2.rates[n]
+            console.log('User Selected:', $('#perdiem-fiscal-year-2 option:selected').text(), 'For FY', perDiemSearch.rates.fy2.year)
+        }
     }
 
     //temp
