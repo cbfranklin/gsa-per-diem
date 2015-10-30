@@ -6,14 +6,7 @@ var perDiemSwiper,
     apiRoot = 'http://dev.oagov.com:3334/proxy'
 
 $(function() {
-    $('#perdiem-zip').val('')
-    $('#perdiem-city').val('')
-    $('#perdiem-state option').each(function() {
-        if ($(this).val() === "") {
-            $(this).attr('selected', 'selected');
-        }
-    })
-    //init swiper, lock swipes so that one cannot tab thru
+    //init swiper
     perDiemSwiper = new Swiper('#perdiem-swiper', {
         onlyExternal: true,
         a11y: true
@@ -34,7 +27,7 @@ $(function() {
     $('#perdiem-swiper').on('click', '#prev:not(.disabled)', function() {
         perDiemSwiper.slidePrev()
     })
-    $('#perdiem-swiper').on('click', '#perdiem-multiple-rates-check', checkForMultipleRates);
+    $('#perdiem-multiple-rates-check').on('click', checkForMultipleRates);
     $('#perdiem-current-location').on('click', useMyCurrentLocation);
 
     $('#perdiem-swiper').on('click', '#perdiem-rates-selected', ratesSelected);

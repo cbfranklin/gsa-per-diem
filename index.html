@@ -38,7 +38,7 @@
                     <div class="hr"><span>or</span></div>
                     <div class="row">
                         <div class="col-md-6">
-                            <select class="form-control" id="perdiem-state">
+                            <select class="form-control swiper-no-swiping" id="perdiem-state">
                                 <option value="">Select a State</option>
                                 <option value="AL">Alabama</option>
                                 <option value="AZ">Arizona</option>
@@ -160,7 +160,7 @@
                 <div class="perdiem-step-3b swiper-slide">
                     <h4>Fiscal Year</h4>
                     <br>
-                    <select id="perdiem-rate-lookup-fiscal-year" class="form-control">
+                    <select id="perdiem-rate-lookup-fiscal-year" class="form-control swiper-no-swiping">
                         <option>2016</option>
                         <option>2015</option>
                         <option>2014</option>
@@ -273,7 +273,7 @@
             <h4>Multiple Rates are Available. Please Choose One:</h4>
             <br> {{#fy1}}
             <label for="perdiem-fiscal-year-1">Fiscal Year {{year}}</label>
-            <select id="perdiem-fiscal-year-1" class="form-control">
+            <select id="perdiem-fiscal-year-1" class="form-control swiper-no-swiping">
                 {{#rates}}
                 <option>{{county}}</option>
                 {{/rates}}
@@ -281,7 +281,7 @@
             {{/fy1}} {{#fy2}}
             <br>
             <label for="perdiem-fiscal-year-2">Fiscal Year {{year}}</label>
-            <select id="perdiem-fiscal-year-2" class="form-control">
+            <select id="perdiem-fiscal-year-2" class="form-control swiper-no-swiping">
                 {{#rates}}
                 <option>{{county}}</option>
                 {{/rates}}
