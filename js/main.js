@@ -39,9 +39,13 @@ $(function() {
 
     $('#perdiem-swiper').on('click', '#perdiem-rates-selected', ratesSelected);
 
+    //validate location
     $('#perdiem-city,#perdiem-zip').on('keyup', validateLocationParams)
+
+    //validate date entry
     $('#perdiem-start-date,#perdiem-end-date').on('keyup',validateDates)
     $('#start-date-group,#end-date-group').on('click',validateDates)
+    validateDates();
 
     $('#perdiem-state').on('change', validateLocationParams)
 
