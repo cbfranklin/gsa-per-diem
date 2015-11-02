@@ -9,8 +9,8 @@ var perDiemSwiper,
 
 $(function() {
     console.log('Initiating Per Diem App...')
-    validDatesBegin = moment(validDatesBegin,'MM/DD/YYYY');
-    validDatesEnd = moment(validDatesEnd,'MM/DD/YYYY')
+    validDatesBegin = moment(validDatesBegin, 'MM/DD/YYYY');
+    validDatesEnd = moment(validDatesEnd, 'MM/DD/YYYY')
         //init swiper
     perDiemSwiper = new Swiper('#perdiem-swiper', {
         onlyExternal: true,
@@ -53,9 +53,9 @@ $(function() {
 
     //validate date entry
     $('#perdiem-start-date,#perdiem-end-date').on('keyup', validateDates)
-    //$('#perdiem-start-date-group,#perdiem-end-date-group').on('click', validateDates)
-    $('#perdiem-start-date-group').on('dp.change',validateDates)
-    $('#perdiem-end-date-group').on('dp.change',validateDates)
+        //$('#perdiem-start-date-group,#perdiem-end-date-group').on('click', validateDates)
+    $('#perdiem-start-date-group').on('dp.change', validateDates)
+    $('#perdiem-end-date-group').on('dp.change', validateDates)
     validateDates();
 
     $('#perdiem-state').on('change', validateLocationParams)
@@ -86,15 +86,15 @@ function validateDates() {
     var startDateVal = $('#perdiem-start-date').val()
     var endDateVal = $('#perdiem-end-date').val()
     if (startDateVal.match(valid) && endDateVal.match(valid)) {
-        if (moment(startDateVal,'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd) && moment(endDateVal,'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd) && moment(startDateVal,'MM/DD/YYYY').isBefore(moment(endDateVal))) {
+        if (moment(startDateVal, 'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd) && moment(endDateVal, 'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd) && moment(startDateVal, 'MM/DD/YYYY').isBefore(moment(endDateVal))) {
             $('#perdiem-multiple-rates-check').removeClass('disabled').removeAttr('disabled');
             console.log('Start and/or End Dates are Valid!')
             $('#perdiem-dates-error').hide()
         } else {
-            if (!moment(startDateVal,'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd)) {
+            if (!moment(startDateVal, 'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd)) {
                 console.log('Start Date is Invalid!')
             }
-            if (!moment(endDateVal,'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd)) {
+            if (!moment(endDateVal, 'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd)) {
                 console.log('End Date is Invalid!')
             }
             $('#perdiem-multiple-rates-check').addClass('disabled').attr('disabled', 'disabled');
@@ -119,6 +119,7 @@ function validateLocationParams() {
 function checkForMultipleRates() {
     $('#perdiem-multiple-rates-check').html('Next Step <span class="glyphicon glyphicon-refresh spinning"></span>')
     $('#perdiem-location-error').hide()
+    $('#perdiem-api-error').hide();
         //what fiscal year is start date
     perDiemSearch.startDate = moment($('#perdiem-start-date').val(), 'MM/DD/YYYY')
     if (perDiemSearch.startDate.month() > 8) {
@@ -182,56 +183,9 @@ function checkForMultipleRates() {
         function getStartFY() {
             console.log('FY1 AJAX Call...')
             return $.ajax({
-                url: fy1req,
-            }).done(function(data) {
-                //no rates
-                if (!data.rates || data.rates.length === 0) {
-                    //if search has state, search again for state
-                    if (reqType === 'city-state') {
-                        //build a new request, ignore city
-                        buildReq(true);
-                    } else {
-                        //else error
-                        locationError()
-                    }
-                    reqError = true;
-                } else {
-                    reqError = false;
-                    var rates = data.rates[0].rate;
-                    if (rates.length > 1) {
-                        //multiple rates are available for FY1
-                        for (i in rates) {
-                            if (rates[i].county === ' ') {
-                                rates[i].county = 'Standard Rate'
-                            }
-                        }
-                        perDiemSearch.rates.fy1 = {
-                            year: perDiemSearch.startFY,
-                            multiple: true,
-                            rates: rates
-                        }
-                        console.log('Available Rates for FY1:', perDiemSearch.startFY, ':', rates)
-                    } else {
-                        console.log('Available Rate for FY1:', perDiemSearch.startFY, ':', rates[0])
-                        perDiemSearch.rates.fy1 = {
-                            year: perDiemSearch.startFY,
-                            multiple: false,
-                            rate: rates[0]
-                        }
-                    }
-                }
-            });
-        }
-
-        //if search includes 2 fiscal years
-        function getEndFY() {
-            if (perDiemSearch.startFY !== perDiemSearch.endFY) {
-                console.log('FY2 AJAX Call...')
-                var fy2req = req + '/year/' + perDiemSearch.endFY;
-                return $.ajax({
-                    url: fy2req,
+                    url: fy1req,
                 }).done(function(data) {
-                    //data = JSON.parse(data)
+                    //no rates
                     if (!data.rates || data.rates.length === 0) {
                         //if search has state, search again for state
                         if (reqType === 'city-state') {
@@ -246,28 +200,87 @@ function checkForMultipleRates() {
                         reqError = false;
                         var rates = data.rates[0].rate;
                         if (rates.length > 1) {
+                            //multiple rates are available for FY1
                             for (i in rates) {
                                 if (rates[i].county === ' ') {
                                     rates[i].county = 'Standard Rate'
                                 }
                             }
-                            perDiemSearch.rates.fy2 = {
-                                year: perDiemSearch.endFY,
+                            perDiemSearch.rates.fy1 = {
+                                year: perDiemSearch.startFY,
                                 multiple: true,
                                 rates: rates
                             }
-                            console.log('Available Rates for FY2:', perDiemSearch.endFY, ': ', rates)
+                            console.log('Available Rates for FY1:', perDiemSearch.startFY, ':', rates)
                         } else {
-                            console.log('Available Rate for FY2:', perDiemSearch.endFY, ':', rates[0])
-                            perDiemSearch.rates.fy2 = {
-                                year: perDiemSearch.endFY,
+                            console.log('Available Rate for FY1:', perDiemSearch.startFY, ':', rates[0])
+                            perDiemSearch.rates.fy1 = {
+                                year: perDiemSearch.startFY,
                                 multiple: false,
                                 rate: rates[0]
                             }
                         }
                     }
+                })
+                .fail(function() {
+                    console.log('FY1 AJAX Call Failed!')
+                    $('#perdiem-multiple-rates-check').html('Next Step <span class="glyphicon glyphicon-chevron-right"></span>')
+                    reqError = true;
+                    $('#perdiem-api-error').show()
+                })
+        }
 
-                });
+        //if search includes 2 fiscal years
+        function getEndFY() {
+            if (perDiemSearch.startFY !== perDiemSearch.endFY) {
+                console.log('FY2 AJAX Call...')
+                var fy2req = req + '/year/' + perDiemSearch.endFY;
+                return $.ajax({
+                        url: fy2req,
+                    }).done(function(data) {
+                        //data = JSON.parse(data)
+                        if (!data.rates || data.rates.length === 0) {
+                            //if search has state, search again for state
+                            if (reqType === 'city-state') {
+                                //build a new request, ignore city
+                                buildReq(true);
+                            } else {
+                                //else error
+                                locationError()
+                            }
+                            reqError = true;
+                        } else {
+                            reqError = false;
+                            var rates = data.rates[0].rate;
+                            if (rates.length > 1) {
+                                for (i in rates) {
+                                    if (rates[i].county === ' ') {
+                                        rates[i].county = 'Standard Rate'
+                                    }
+                                }
+                                perDiemSearch.rates.fy2 = {
+                                    year: perDiemSearch.endFY,
+                                    multiple: true,
+                                    rates: rates
+                                }
+                                console.log('Available Rates for FY2:', perDiemSearch.endFY, ': ', rates)
+                            } else {
+                                console.log('Available Rate for FY2:', perDiemSearch.endFY, ':', rates[0])
+                                perDiemSearch.rates.fy2 = {
+                                    year: perDiemSearch.endFY,
+                                    multiple: false,
+                                    rate: rates[0]
+                                }
+                            }
+                        }
+
+                    })
+                    .fail(function() {
+                        console.log('FY2 AJAX Call Failed!')
+                        $('#perdiem-multiple-rates-check').html('Next Step <span class="glyphicon glyphicon-chevron-right"></span>')
+                        $('#perdiem-api-error').show()
+                        reqError = true;
+                    })
             } else {
                 return true
             }
@@ -277,7 +290,7 @@ function checkForMultipleRates() {
 
         $.when(getStartFY(), getEndFY()).done(function() {
             if (reqError === true) {
-                console.log('AJAX Call(s) Failed!')
+                console.log('AJAX Call(s) Returned Zero Results!')
             } else {
                 console.log('AJAX Call(s) Successful!')
                     //if multiple rates available, show multiple rates UI
@@ -419,10 +432,10 @@ function calculateRates() {
         total: 0
     };
     console.log('Calculating...')
-    var start = moment(perDiemSearch.startDate,'MM/DD/YYYY');
-    var end = moment(perDiemSearch.endDate,'MM/DD/YYYY');
-    var startDate = moment(perDiemSearch.startDate,'MM/DD/YYYY');
-    var endDate = moment(perDiemSearch.endDate,'MM/DD/YYYY');
+    var start = moment(perDiemSearch.startDate, 'MM/DD/YYYY');
+    var end = moment(perDiemSearch.endDate, 'MM/DD/YYYY');
+    var startDate = moment(perDiemSearch.startDate, 'MM/DD/YYYY');
+    var endDate = moment(perDiemSearch.endDate, 'MM/DD/YYYY');
     //single day trip
     if (perDiemSearch.startDate === perDiemSearch.endDate) {
         console.log('One Day Trip (No Overnight):', 'MIE:', perDiemSearch.rates.fy1.rate.meals * 0.75)
