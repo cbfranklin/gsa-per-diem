@@ -4,9 +4,14 @@ var perDiemSwiper,
         query: {}
     },
     apiRoot = 'http://dev.oagov.com:3334/proxy'
+    validDatesBegin = '10/1/2012',
+    validDatesEnd = '09/30/2016';
 
 $(function() {
-    //init swiper
+    console.log('Initiating Per Diem App...')
+    validDatesBegin = moment(validDatesBegin);
+    validDatesEnd = moment(validDatesEnd)
+        //init swiper
     perDiemSwiper = new Swiper('#perdiem-swiper', {
         onlyExternal: true,
         a11y: true
@@ -26,6 +31,7 @@ $(function() {
         format: 'MM/DD/YYYY',
         keepInvalid: true
     });
+
 
     $('#perdiem-swiper').on('click', '#next:not(.disabled)', function() {
         perDiemSwiper.slideNext()
@@ -75,10 +81,27 @@ function clearLocationForm() {
 
 function validateDates() {
     var valid = /\d{1,2}\/\d{1,2}\/\d{4}/;
-    if ($('#perdiem-start-date').val().match(valid) && $('#perdiem-end-date').val().match(valid) /*&& moment($('#perdiem-start-date').val()).isAfter()*/ ) {
-        $('#perdiem-multiple-rates-check').removeClass('disabled').removeAttr('disabled');
+    var startDateVal = $('#perdiem-start-date').val()
+    var endDateVal = $('#perdiem-end-date').val()
+    if (startDateVal.match(valid) && endDateVal.match(valid)) {
+        if (moment(startDateVal).isBetween(validDatesBegin, validDatesEnd) && moment(endDateVal).isBetween(validDatesBegin, validDatesEnd) && moment(startDateVal).isBefore(moment(endDateVal))) {
+            $('#perdiem-multiple-rates-check').removeClass('disabled').removeAttr('disabled');
+            console.log('Start and End Dates are Valid!')
+            $('#perdiem-dates-error').hide()
+        } else {
+            if (!moment(startDateVal).isBetween(validDatesBegin, validDatesEnd)) {
+                console.log('Start Date is Invalid!')
+            }
+            if (!moment(endDateVal).isBetween(validDatesBegin, validDatesEnd)) {
+                console.log('End Date is Invalid!')
+            }
+            $('#perdiem-multiple-rates-check').addClass('disabled').attr('disabled', 'disabled');
+            $('#perdiem-dates-error').show()
+        }
     } else {
         $('#perdiem-multiple-rates-check').addClass('disabled').attr('disabled', 'disabled');
+        console.log('Start and/or End Date are Not Correctly Formatted!')
+        $('#perdiem-dates-error').show()
     }
 }
 

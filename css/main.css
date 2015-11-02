@@ -7,7 +7,7 @@ body {
     min-height: 400px;
 }
 
-#perdiem-location-error{
+#perdiem-location-error,#perdiem-dates-error{
     display:none;
 }
 
