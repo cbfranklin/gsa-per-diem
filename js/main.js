@@ -9,8 +9,8 @@ var perDiemSwiper,
 
 $(function() {
     console.log('Initiating Per Diem App...')
-    validDatesBegin = moment(validDatesBegin);
-    validDatesEnd = moment(validDatesEnd)
+    validDatesBegin = moment(validDatesBegin,'MM/DD/YYYY');
+    validDatesEnd = moment(validDatesEnd,'MM/DD/YYYY')
         //init swiper
     perDiemSwiper = new Swiper('#perdiem-swiper', {
         onlyExternal: true,
@@ -86,7 +86,7 @@ function validateDates() {
     if (startDateVal.match(valid) && endDateVal.match(valid)) {
         if (moment(startDateVal).isBetween(validDatesBegin, validDatesEnd) && moment(endDateVal).isBetween(validDatesBegin, validDatesEnd) && moment(startDateVal).isBefore(moment(endDateVal))) {
             $('#perdiem-multiple-rates-check').removeClass('disabled').removeAttr('disabled');
-            console.log('Start and End Dates are Valid!')
+            console.log('Start and/or End Dates are Valid!')
             $('#perdiem-dates-error').hide()
         } else {
             if (!moment(startDateVal).isBetween(validDatesBegin, validDatesEnd)) {
@@ -97,6 +97,7 @@ function validateDates() {
             }
             $('#perdiem-multiple-rates-check').addClass('disabled').attr('disabled', 'disabled');
             $('#perdiem-dates-error').show()
+            console.log('Start and/or End Dates are Out of Range!')
         }
     } else {
         $('#perdiem-multiple-rates-check').addClass('disabled').attr('disabled', 'disabled');
