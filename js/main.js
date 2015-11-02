@@ -3,7 +3,7 @@ var perDiemSwiper,
         rates: {},
         query: {}
     },
-    apiRoot = 'http://dev.oagov.com:3334/proxy'
+    apiRoot = 'http://dev.oagov.com:3334/proxy',
     validDatesBegin = '10/1/2012',
     validDatesEnd = '09/30/2016';
 
@@ -23,11 +23,11 @@ $(function() {
                     }*/
     });
 
-    $('#start-date-group').datetimepicker({
+    $('#perdiem-start-date-group').datetimepicker({
         format: 'MM/DD/YYYY',
         keepInvalid: true
     });
-    $('#end-date-group').datetimepicker({
+    $('#perdiem-end-date-group').datetimepicker({
         format: 'MM/DD/YYYY',
         keepInvalid: true
     });
@@ -53,7 +53,9 @@ $(function() {
 
     //validate date entry
     $('#perdiem-start-date,#perdiem-end-date').on('keyup', validateDates)
-    $('#start-date-group,#end-date-group').on('click', validateDates)
+    //$('#perdiem-start-date-group,#perdiem-end-date-group').on('click', validateDates)
+    $('#perdiem-start-date-group').on('dp.change',validateDates)
+    $('#perdiem-end-date-group').on('dp.change',validateDates)
     validateDates();
 
     $('#perdiem-state').on('change', validateLocationParams)
@@ -84,15 +86,15 @@ function validateDates() {
     var startDateVal = $('#perdiem-start-date').val()
     var endDateVal = $('#perdiem-end-date').val()
     if (startDateVal.match(valid) && endDateVal.match(valid)) {
-        if (moment(startDateVal).isBetween(validDatesBegin, validDatesEnd) && moment(endDateVal).isBetween(validDatesBegin, validDatesEnd) && moment(startDateVal).isBefore(moment(endDateVal))) {
+        if (moment(startDateVal,'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd) && moment(endDateVal,'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd) && moment(startDateVal,'MM/DD/YYYY').isBefore(moment(endDateVal))) {
             $('#perdiem-multiple-rates-check').removeClass('disabled').removeAttr('disabled');
             console.log('Start and/or End Dates are Valid!')
             $('#perdiem-dates-error').hide()
         } else {
-            if (!moment(startDateVal).isBetween(validDatesBegin, validDatesEnd)) {
+            if (!moment(startDateVal,'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd)) {
                 console.log('Start Date is Invalid!')
             }
-            if (!moment(endDateVal).isBetween(validDatesBegin, validDatesEnd)) {
+            if (!moment(endDateVal,'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd)) {
                 console.log('End Date is Invalid!')
             }
             $('#perdiem-multiple-rates-check').addClass('disabled').attr('disabled', 'disabled');
@@ -129,7 +131,7 @@ function checkForMultipleRates() {
     if (perDiemSearch.endDate.month() > 8) {
         perDiemSearch.endFY = perDiemSearch.endDate.year() + 1
     } else {
-        perDiemSearch.endFY = endDate.year()
+        perDiemSearch.endFY = perDiemSearch.endDate.year()
     }
 
     console.log('Start Date:', perDiemSearch.startDate.format('MM-DD-YYYY'), 'End Date:', perDiemSearch.endDate.format('MM-DD-YYYY'))
@@ -417,10 +419,10 @@ function calculateRates() {
         total: 0
     };
     console.log('Calculating...')
-    var start = moment(perDiemSearch.startDate);
-    var end = moment(perDiemSearch.endDate);
-    var startDate = moment(perDiemSearch.startDate);
-    var endDate = moment(perDiemSearch.endDate);
+    var start = moment(perDiemSearch.startDate,'MM/DD/YYYY');
+    var end = moment(perDiemSearch.endDate,'MM/DD/YYYY');
+    var startDate = moment(perDiemSearch.startDate,'MM/DD/YYYY');
+    var endDate = moment(perDiemSearch.endDate,'MM/DD/YYYY');
     //single day trip
     if (perDiemSearch.startDate === perDiemSearch.endDate) {
         console.log('One Day Trip (No Overnight):', 'MIE:', perDiemSearch.rates.fy1.rate.meals * 0.75)
