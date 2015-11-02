@@ -58,6 +58,9 @@ $(function() {
     $('#perdiem-to-date-range').on('click', function() {
         perDiemSwiper.slideTo(2)
     })
+    $('#perdiem-back-to-date-range').on('click', function() {
+        perDiemSwiper.slideTo(2)
+    })
     $('#perdiem-look-up-rates-submit').on('click', lookUpRatesSubmit);
 })
 
@@ -79,8 +82,9 @@ function validateLocationParams() {
 }
 
 function checkForMultipleRates() {
-
-    //what fiscal year is start date
+    $('#perdiem-multiple-rates-check').html('Next Step <span class="glyphicon glyphicon-refresh spinning"></span>')
+    $('#perdiem-location-error').hide()
+        //what fiscal year is start date
     perDiemSearch.startDate = moment($('#perdiem-start-date').val(), 'MM/DD/YYYY')
     if (perDiemSearch.startDate.month() > 8) {
         perDiemSearch.startFY = perDiemSearch.startDate.year() + 1
@@ -98,138 +102,189 @@ function checkForMultipleRates() {
     console.log('Start Date:', perDiemSearch.startDate.format('MM-DD-YYYY'), 'End Date:', perDiemSearch.endDate.format('MM-DD-YYYY'))
     console.log('Start FY:', perDiemSearch.startFY, 'End FY:', perDiemSearch.endFY)
 
+    buildReq();
 
-    perDiemSearch.query.zip = $('#perdiem-zip').val();
-    perDiemSearch.query.state = $('#perdiem-state').val();
-    perDiemSearch.query.city = $('#perdiem-city').val();
+    var reqError = false;
 
-    console.log('User Query:', 'State:', perDiemSearch.query.state, 'City:', perDiemSearch.query.city, 'ZIP:', perDiemSearch.query.zip)
+    function buildReq(ignoreCity) {
+        perDiemSearch.query.zip = $('#perdiem-zip').val();
+        perDiemSearch.query.state = $('#perdiem-state').val();
+        perDiemSearch.query.city = $('#perdiem-city').val();
 
-    if (perDiemSearch.query.zip !== '') {
-        //zip is available
-        console.log('Using ZIP')
-        var req = apiRoot + '/api/rs/perdiem/zip/' + perDiemSearch.query.zip;
-    } else {
-        if (perDiemSearch.query.city !== '') {
-            //city and state available
-            console.log('Using City & State')
-            var req = apiRoot + '/api/rs/perdiem/city/' + perDiemSearch.query.city + '/state/' + perDiemSearch.query.state;
-        } else {
-            //state only
-            console.log('Using State Only')
-            var req = apiRoot + '/api/rs/perdiem/state/' + perDiemSearch.query.state;
+        console.log('User Query:', 'State:', perDiemSearch.query.state, 'City:', perDiemSearch.query.city, 'ZIP:', perDiemSearch.query.zip)
+        if (ignoreCity) {
+            console.log('Ignoring City Param...')
         }
+        if (perDiemSearch.query.zip !== '') {
+            //zip is available
+            console.log('Using ZIP...')
+            var req = apiRoot + '/api/rs/perdiem/zip/' + perDiemSearch.query.zip;
+            var reqType = 'zip';
+        } else {
+            if (perDiemSearch.query.city !== '' && !ignoreCity) {
+                //city and state available
+                console.log('Using City & State...')
+                var req = apiRoot + '/api/rs/perdiem/city/' + perDiemSearch.query.city + '/state/' + perDiemSearch.query.state;
+                var reqType = 'city-state';
+            } else {
+                //state only
+                console.log('Using State Only...')
+                var req = apiRoot + '/api/rs/perdiem/state/' + perDiemSearch.query.state;
+                varreqType = 'state';
+            }
+        }
+
+        getReq(req, reqType);
+
     }
 
-    var fy1req = req + '/year/' + perDiemSearch.startFY;
 
-    function getStartFY() {
-        console.log('FY1 AJAX Call...')
-        return $.ajax({
-            url: fy1req,
-        }).done(function(data) {
-            //data = JSON.parse(data)
-            var rates = data.rates[0].rate;
-            if (rates.length > 1) {
-                //multiple rates are available for FY1
-                for (i in rates) {
-                    if (rates[i].county === ' ') {
-                        rates[i].county = 'Standard Rate'
+
+
+    function getReq(req, reqType) {
+        var fy1req = req + '/year/' + perDiemSearch.startFY;
+
+        function getStartFY() {
+            console.log('FY1 AJAX Call...')
+            return $.ajax({
+                url: fy1req,
+            }).done(function(data) {
+                //no rates
+                if (!data.rates || data.rates.length === 0) {
+                    //if search has state, search again for state
+                    if (reqType === 'city-state') {
+                        //build a new request, ignore city
+                        buildReq(true);
+                    } else {
+                        //else error
+                        locationError()
+                    }
+                    reqError = true;
+                } else {
+                    reqError = false;
+                    var rates = data.rates[0].rate;
+                    if (rates.length > 1) {
+                        //multiple rates are available for FY1
+                        for (i in rates) {
+                            if (rates[i].county === ' ') {
+                                rates[i].county = 'Standard Rate'
+                            }
+                        }
+                        perDiemSearch.rates.fy1 = {
+                            year: perDiemSearch.startFY,
+                            multiple: true,
+                            rates: rates
+                        }
+                        console.log('Available Rates for FY1:', perDiemSearch.startFY, ':', rates)
+                    } else {
+                        console.log('Available Rate for FY1:', perDiemSearch.startFY, ':', rates[0])
+                        perDiemSearch.rates.fy1 = {
+                            year: perDiemSearch.startFY,
+                            multiple: false,
+                            rate: rates[0]
+                        }
                     }
                 }
-                perDiemSearch.rates.fy1 = {
-                    year: perDiemSearch.startFY,
-                    multiple: true,
-                    rates: rates
-                }
-                console.log('Available Rates for FY1:', perDiemSearch.startFY, ':', rates)
+            });
+        }
+
+        //if search includes 2 fiscal years
+        function getEndFY() {
+            if (perDiemSearch.startFY !== perDiemSearch.endFY) {
+                console.log('FY2 AJAX Call...')
+                var fy2req = req + '/year/' + perDiemSearch.endFY;
+                return $.ajax({
+                    url: fy2req,
+                }).done(function(data) {
+                    //data = JSON.parse(data)
+                    if (!data.rates || data.rates.length === 0) {
+                        //if search has state, search again for state
+                        if (reqType === 'city-state') {
+                            //build a new request, ignore city
+                            buildReq(true);
+                        } else {
+                            //else error
+                            locationError()
+                        }
+                        reqError = true;
+                    } else {
+                        reqError = false;
+                        var rates = data.rates[0].rate;
+                        if (rates.length > 1) {
+                            for (i in rates) {
+                                if (rates[i].county === ' ') {
+                                    rates[i].county = 'Standard Rate'
+                                }
+                            }
+                            perDiemSearch.rates.fy2 = {
+                                year: perDiemSearch.endFY,
+                                multiple: true,
+                                rates: rates
+                            }
+                            console.log('Available Rates for FY2:', perDiemSearch.endFY, ': ', rates)
+                        } else {
+                            console.log('Available Rate for FY2:', perDiemSearch.endFY, ':', rates[0])
+                            perDiemSearch.rates.fy2 = {
+                                year: perDiemSearch.endFY,
+                                multiple: false,
+                                rate: rates[0]
+                            }
+                        }
+                    }
+
+                });
             } else {
-                console.log('Available Rate for FY1:', perDiemSearch.startFY, ':', rates[0])
-                perDiemSearch.rates.fy1 = {
-                    year: perDiemSearch.startFY,
-                    multiple: false,
-                    rate: rates[0]
+                return true
+            }
+        }
+
+        console.log('Checking available rates...')
+
+        $.when(getStartFY(), getEndFY()).done(function() {
+            if (reqError === true) {
+                console.log('AJAX Call(s) Failed!')
+            } else {
+                console.log('AJAX Call(s) Successful!')
+                    //if multiple rates available, show multiple rates UI
+                if (perDiemSearch.rates.fy2) {
+                    if (perDiemSearch.rates.fy1.multiple || perDiemSearch.rates.fy2.multiple) {
+                        displayRates()
+                    }
+                } else {
+                    if (perDiemSearch.rates.fy1.multiple) {
+                        displayRates()
+                    } else {
+                        calculateRates()
+                    }
                 }
+            }
+
+            function displayRates() {
+
+                //sort rates, cause the API doesn't
+                function countyAlpha(a, b) {
+                    return a.county > b.county;
+                }
+                if (perDiemSearch.rates.fy1.multiple) {
+                    perDiemSearch.rates.fy1.rates = perDiemSearch.rates.fy1.rates.sort(countyAlpha);
+                }
+                if (perDiemSearch.rates.fy2) {
+                    if (perDiemSearch.rates.fy2.multiple) {
+                        perDiemSearch.rates.fy2.rates = perDiemSearch.rates.fy2.rates.sort(countyAlpha);
+
+                    }
+                }
+                //render template
+                var template = $('#templates .multiple-rates').html();
+                var rendered = Mustache.render(template, {
+                    rates: perDiemSearch.rates
+                });
+                $('.perdiem-step-4').html(rendered);
+                perDiemSwiper.slideTo(4)
+                $('#perdiem-multiple-rates-check').html('Next Step <span class="glyphicon glyphicon-chevron-right"></span>')
             }
         });
     }
-
-    //if search includes 2 fiscal years
-    function getEndFY() {
-        if (perDiemSearch.startFY !== perDiemSearch.endFY) {
-            console.log('FY2 AJAX Call...')
-            var fy2req = req + '/year/' + perDiemSearch.endFY;
-            return $.ajax({
-                url: fy2req,
-            }).done(function(data) {
-                //data = JSON.parse(data)
-                var rates = data.rates[0].rate;
-                if (rates.length > 1) {
-                    for (i in rates) {
-                        if (rates[i].county === ' ') {
-                            rates[i].county = 'Standard Rate'
-                        }
-                    }
-                    perDiemSearch.rates.fy2 = {
-                        year: perDiemSearch.endFY,
-                        multiple: true,
-                        rates: rates
-                    }
-                    console.log('Available Rates for FY2:', perDiemSearch.endFY, ': ', rates)
-                } else {
-                    console.log('Available Rate for FY2:', perDiemSearch.endFY, ':', rates[0])
-                    perDiemSearch.rates.fy2 = {
-                        year: perDiemSearch.endFY,
-                        multiple: false,
-                        rate: rates[0]
-                    }
-                }
-            });
-        } else {
-            return true
-        }
-    }
-
-    console.log('Checking available rates...')
-
-    $.when(getStartFY(), getEndFY()).done(function() {
-        console.log('AJAX Calls Complete!')
-            //if multiple rates available, show multiple rates UI
-        if (perDiemSearch.rates.fy2) {
-            if (perDiemSearch.rates.fy1.multiple || perDiemSearch.rates.fy2.multiple) {
-                displayRates()
-            }
-        } else {
-            if (perDiemSearch.rates.fy1.multiple) {
-                displayRates()
-            }
-        }
-
-        function displayRates() {
-
-            //sort rates, cause the API doesn't
-            function countyAlpha(a, b) {
-                return a.county > b.county;
-            }
-            if (perDiemSearch.rates.fy1.multiple) {
-                perDiemSearch.rates.fy1.rates = perDiemSearch.rates.fy1.rates.sort(countyAlpha);
-            }
-            if (perDiemSearch.rates.fy2) {
-                if (perDiemSearch.rates.fy2.multiple) {
-                    perDiemSearch.rates.fy2.rates = perDiemSearch.rates.fy2.rates.sort(countyAlpha);
-
-                }
-            }
-            //render template
-            var template = $('#templates .multiple-rates').html();
-            var rendered = Mustache.render(template, {
-                rates: perDiemSearch.rates
-            });
-            $('.perdiem-step-4').html(rendered);
-            perDiemSwiper.slideTo(4)
-        }
-    });
-
 }
 
 
@@ -315,6 +370,13 @@ function useMyCurrentLocation() {
     }
 }
 
+function locationError() {
+    console.log('No Results for Location...')
+    $('#perdiem-location-error').show()
+    $('#perdiem-multiple-rates-check').html('Next Step <span class="glyphicon glyphicon-chevron-right"></span>')
+    perDiemSwiper.slideTo(0)
+}
+
 
 function calculateRates() {
     perDiemSearch.results = {
@@ -336,6 +398,7 @@ function calculateRates() {
     else {
         var total = 0;
         var months = [];
+
         for (var date = start; !date.isAfter(end); date.add(1, 'days')) {
 
             var rateMonth = date.format('M');
@@ -364,10 +427,12 @@ function calculateRates() {
             //add mie at 75% for first and last day (using first two days since it's only a sum)
             var pdsd = moment(perDiemSearch.startDate).format('MM-DD-YYYY');
             var pded = moment(perDiemSearch.endDate).format('MM-DD-YYYY');
+            var month = date.format('MMMM');
             //first day
             if (date.format('MM-DD-YYYY') === pdsd) {
                 var mieRate = rate.meals * 0.75;
                 total += mieRate;
+                console.log('First Day')
                 console.log('MIE at 75%:', mieRate)
                 total += lodgingRate;
                 console.log('Rate:', lodgingRate)
@@ -383,6 +448,7 @@ function calculateRates() {
             else if (date.format('MM-DD-YYYY') === pded) {
                 var mieRate = rate.meals * 0.75;
                 total += mieRate;
+                console.log('Last Day')
                 console.log('MIE at 75%:', mieRate)
                 perDiemSearch.results.breakdown.push({
                     date: 'Last Day',
@@ -395,28 +461,32 @@ function calculateRates() {
             //all other days
             else {
                 total += lodgingRate;
+                console.log(month)
+                console.log('MIE:', mieRate)
                 console.log('Rate:', lodgingRate)
                     //mie at 100%
                 var mieRate = rate.meals;
                 total += mieRate;
-                console.log('MIE:', mieRate)
-                var breakdown = perDiemSearch.results.breakdown;
-                var month = date.format('MMMM');
-                for (i in breakdown) {
-                    if (breakdown[i].date === month) {
-                        var monthAlreadyExists = true;
-                    }
-                }
-                if (!monthAlreadyExists) {
-                    perDiemSearch.results.breakdown.push({
-                        isRate: true,
-                        date: date.format('MMMM'),
-                        lodging: lodgingRate,
-                        mie: mieRate,
-                        total: lodgingRate + mieRate
-                    })
-                }
 
+            }
+            var breakdown = perDiemSearch.results.breakdown;
+            for (i in breakdown) {
+                console.log(breakdown[i].date, month, '?')
+                if (breakdown[i].date === month) {
+                    //console.log(month,'Already Exists')
+                    var monthAlreadyExists = true;
+                }
+            }
+            console.log(monthAlreadyExists)
+            if (!monthAlreadyExists) {
+                console.log('Pushing', month)
+                perDiemSearch.results.breakdown.push({
+                    isRate: true,
+                    date: month,
+                    lodging: lodgingRate,
+                    mie: mieRate,
+                    total: lodgingRate + mieRate
+                })
             }
         }
     }
@@ -448,9 +518,9 @@ function ratesSelected() {
         console.log('fy1 no multiple')
     }
     if (perDiemSearch.rates.fy2) {
-        console.log('fy2 exists')
+        //console.log('fy2 exists')
         if (perDiemSearch.rates.fy2.multiple) {
-            console.log('fy2 exists with multiple')
+            //console.log('fy2 exists with multiple')
             var n = $('#perdiem-fiscal-year-2 option:selected').index();
             perDiemSearch.rates.fy2.rate = perDiemSearch.rates.fy2.rates[n]
             console.log('User Selected:', $('#perdiem-fiscal-year-2 option:selected').text(), 'For FY', perDiemSearch.rates.fy2.year)

@@ -30,6 +30,11 @@
                 <!-- Slides -->
                 <div class="perdiem-step-1 swiper-slide">
                     <h4>1. Choose a Location:</h4>
+                    <div id="perdiem-location-error"
+                    <div class="alert alert-danger" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span> No results could be found for the location you've entered.
+                    </div>
                     <div class="row">
                         <div class="col-md-12">
                             <button data-loading-text="Getting Location..." id="perdiem-current-location" class="btn btn-default btn-block">Use Your Current Location <span class="glyphicon glyphicon-map-marker"></span></button>
@@ -180,28 +185,28 @@
                 <div class="perdiem-step-4 swiper-slide">
                 </div>
                 <div class="swiper-slide perdiem-step-5">
-                <div class="panel-group" id="per-diem-terms-conditions-accordion" role="tablist" aria-multiselectable="true">
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingOne">
-                        <h4 class="panel-title">
+                    <div class="panel-group" id="per-diem-terms-conditions-accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
         <a role="button" data-toggle="collapse" data-parent="#per-diem-terms-conditions-accordion" href="#per-diem-terms-conditions-accordion-content" aria-expanded="true" aria-controls="collapseOne">
           Additional Terms &amp; Conditions <span class="glyphicon glyphicon-chevron-down"></span>
       </a>
       </h4>
-                    </div>
-                    <div id="per-diem-terms-conditions-accordion-content" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                        <div class="panel-body">
-                            <p>Traveler reimbursement is based on the location of the work activities and not the accommodations, unless lodging is not available at the work activity, then the agency may authorize the rate where lodging is obtained.
-                            </p>
-                            <p>Unless otherwise specified, the per diem locality is defined as <em>"all locations within, or entirely surrounded by, the corporate limits of the key city, including independent entities located within those boundaries."</em>
-                            </p>
-                            <p>Per diem localities with county definitions shall include<em>"all locations within, or entirely surrounded by, the corporate limits of the key city as well as the boundaries of the listed counties, including independent entities located within the boundaries of the key city and the listed counties (unless otherwise listed separately)."</em>
-                            </p>
-                            <p>When a military installation or Government - related facility(whether or not specifically named) is located partially within more than one city or county boundary, the applicable per diem rate for the entire installation or facility is the higher of the rates which apply to the cities and / or counties, even though part(s) of such activities may be located outside the defined per diem locality.</p>
+                            </div>
+                            <div id="per-diem-terms-conditions-accordion-content" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="panel-body">
+                                    <p>Traveler reimbursement is based on the location of the work activities and not the accommodations, unless lodging is not available at the work activity, then the agency may authorize the rate where lodging is obtained.
+                                    </p>
+                                    <p>Unless otherwise specified, the per diem locality is defined as <em>"all locations within, or entirely surrounded by, the corporate limits of the key city, including independent entities located within those boundaries."</em>
+                                    </p>
+                                    <p>Per diem localities with county definitions shall include<em>"all locations within, or entirely surrounded by, the corporate limits of the key city as well as the boundaries of the listed counties, including independent entities located within the boundaries of the key city and the listed counties (unless otherwise listed separately)."</em>
+                                    </p>
+                                    <p>When a military installation or Government - related facility(whether or not specifically named) is located partially within more than one city or county boundary, the applicable per diem rate for the entire installation or facility is the higher of the rates which apply to the cities and / or counties, even though part(s) of such activities may be located outside the defined per diem locality.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
                 </div>
             </div>
         </div>
@@ -211,26 +216,21 @@
             </div>
         </div>-->
         <div id="perdiem-results">
-         
         </div>
     </div>
     <div id="templates">
         <script type="template" class="calculator-results">
-            {{#perDiemSearch}}
-            {{#query}}
-            <h4><strong>Your Search for</strong>{{#city}} {{city}}{{/city}}{{#state}} {{state}}{{/state}}{{#zip}} {{zip}}{{/zip}},<strong> Using Rates for {{/query}}</strong><em>{{rates.fy1.rate.county}}{{#rates.fy2.rate.county}}{{^sameRate}} and {{rates.fy2.rate.county}}{{/sameRate}}{{/rates.fy2.rate.county}} </em>:</h4>
-            {{#results}}
+            {{#perDiemSearch}} {{#query}}
+            <h4><strong>Your Search for</strong>{{#city}} {{city}}{{/city}}{{#state}} {{state}}{{/state}}{{#zip}} {{zip}}{{/zip}},<strong> Using Rates for {{/query}}</strong><em>{{rates.fy1.rate.county}}{{#rates.fy2.rate.county}}{{^sameRate}} and {{rates.fy2.rate.county}}{{/sameRate}}{{/rates.fy2.rate.county}} </em>:</h4> {{#results}}
             <div class="well">
-                <h4><strong>Daily Per Diem Rates:</strong></h4>
-                {{#breakdown}}
-                {{#isRate}}
+                <h4><strong>Daily Per Diem Rates:</strong></h4> {{#breakdown}} {{#isRate}}
                 <p>{{date}} Lodging: ${{lodging}}</p>
                 <p>{{date}} M&amp;IE: ${{mie}}</p>
-                {{/isRate}}
-                {{/breakdown}}
+                {{/isRate}} {{/breakdown}}
             </div>
             <div class="well">
-                <h4><strong>Estimated Trip Total:</strong></h4> <h5>${{total}}</h5>
+                <h4><strong>Estimated Trip Total:</strong></h4>
+                <h5>${{total}}</h5>
             </div>
             <div class="panel-group" id="perdiem-trip-breakdown-accordion" role="tablist" aria-multiselectable="true">
                 <div class="panel panel-default">
@@ -251,22 +251,21 @@
                                     <th>Total</th>
                                 </thead>
                                 <tbody>
-                                {{#breakdown}}
+                                    {{#breakdown}}
                                     <tr>
                                         <td>{{date}}{{#isRate}} Rate{{/isRate}}</td>
                                         <td>{{#lodging}}${{lodging}}{{/lodging}}{{^lodging}}-{{/lodging}}</td>
                                         <td>${{mie}}</td>
                                         <td>${{total}}</td>
                                     </tr>
-                                {{/breakdown}}
+                                    {{/breakdown}}
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-        {{/results}}
-        {{/perDiemSearch}}
+            {{/results}} {{/perDiemSearch}}
         </script>
         <script type="template" class="multiple-rates">
             {{#rates}}
@@ -290,7 +289,7 @@
             <br>
             <div class="row">
                 <div class="col-sm-6">
-                    <button id="prev" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-chevron-left"></span> Prev Step</button>
+                    <button id="perdiem-back-to-date-range" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-chevron-left"></span> Prev Step</button>
                 </div>
                 <div class="col-sm-6">
                     <button id="perdiem-rates-selected" class="btn btn-primary btn-block">Next Step <span class="glyphicon glyphicon-chevron-right" </span></button>
