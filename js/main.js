@@ -33,6 +33,9 @@ $(function() {
     $('#perdiem-swiper').on('click', '#prev:not(.disabled)', function() {
         perDiemSwiper.slidePrev()
     })
+
+    $('#perdiem-clear-location-form').on('click', clearLocationForm)
+
     $('#perdiem-multiple-rates-check').on('click', checkForMultipleRates);
     $('#perdiem-current-location').on('click', useMyCurrentLocation);
 
@@ -63,6 +66,12 @@ $(function() {
     })
     $('#perdiem-look-up-rates-submit').on('click', lookUpRatesSubmit);
 })
+
+function clearLocationForm() {
+    $('#perdiem-state').val('');
+    $('#perdiem-zip').val('');
+    $('#perdiem-city').val('')
+}
 
 function validateDates() {
     var valid = /\d{1,2}\/\d{1,2}\/\d{4}/;
