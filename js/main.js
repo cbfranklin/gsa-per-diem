@@ -79,6 +79,7 @@ $(function() {
 })
 
 function newSearch() {
+    console.log('========\n', 'New Search!')
     clearLocationForm()
     perDiemSwiper.slideTo(0)
 }
@@ -125,10 +126,24 @@ function validateDates() {
 }
 
 function validateLocationParams() {
+    console.log('Validating Location...')
+    //if everything is blank
     if ($('#perdiem-city').val() === '' && $('#perdiem-state').val() === '' && $('#perdiem-zip').val().length < 5) {
+        //disabled
         $('.perdiem-step-1 #next').addClass('disabled').attr('disabled', 'disabled');
+        //if not everything is blank
     } else {
-        $('.perdiem-step-1 #next').removeClass('disabled').removeAttr('disabled');
+        //but zip and state are blank (city only)
+        if ($('#perdiem-zip').val().length < 5 && $('#perdiem-state').val() === '') {
+            //disabled
+            $('.perdiem-step-1 #next').addClass('disabled').attr('disabled', 'disabled');
+        }
+        //otherwise
+        else{
+            //enabled
+            $('.perdiem-step-1 #next').removeClass('disabled').removeAttr('disabled');
+        }
+        
     }
 }
 
