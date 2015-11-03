@@ -83,7 +83,7 @@ function clearLocationForm() {
     $('#perdiem-state').val('');
     $('#perdiem-zip').val('');
     $('#perdiem-city').val('');
-    validateDates();
+    validateLocationParams();
 }
 
 function validateDates() {
