@@ -23,6 +23,10 @@ $(function() {
                     }*/
     });
 
+    $.ajaxSetup({
+        timeout: 30000
+    });
+
     $('#perdiem-start-date-group').datetimepicker({
         format: 'MM/DD/YYYY',
         keepInvalid: true
@@ -68,13 +72,13 @@ $(function() {
     $('#perdiem-to-step-2').on('click', function() {
         perDiemSwiper.slideTo(1)
     })
-    $('#perdiem-swiper').on('click', '#perdiem-to-date-range',function() {
+    $('#perdiem-swiper').on('click', '#perdiem-to-date-range', function() {
         perDiemSwiper.slideTo(2)
     })
     $('#perdiem-look-up-rates-submit').on('click', lookUpRatesSubmit);
 })
 
-function newSearch(){
+function newSearch() {
     clearLocationForm()
     perDiemSwiper.slideTo(0)
 }
@@ -509,13 +513,13 @@ function calculateRates() {
                 //console.log('Pushing First Day')
                 var totalRate = lodgingRate + mieRate
                 perDiemSearch.results.breakdown.push({
-                    date: 'First Day',
-                    lodging: formatCurrency(lodgingRate),
-                    mie: formatCurrency(mieRate),
-                    isFirstLast: true,
-                    total: formatCurrency(totalRate)
-                })
-                //console.log(JSON.stringify(perDiemSearch.results.breakdown))
+                        date: 'First Day',
+                        lodging: formatCurrency(lodgingRate),
+                        mie: formatCurrency(mieRate),
+                        isFirstLast: true,
+                        total: formatCurrency(totalRate)
+                    })
+                    //console.log(JSON.stringify(perDiemSearch.results.breakdown))
             }
             //last day (and only day if a same-day trip)
             else if (date.format('MM-DD-YYYY') === pded) {
@@ -534,13 +538,13 @@ function calculateRates() {
                 //console.log(JSON.stringify(perDiemSearch.results.breakdown))
                 //console.log('Pushing Last Day...')
                 perDiemSearch.results.breakdown.push({
-                    date: dateText,
-                    mie: formatCurrency(mieRate),
-                    lodging: 0,
-                    isFirstLast: true,
-                    total: formatCurrency(mieRate)
-                })
-                //console.log(JSON.stringify(perDiemSearch.results.breakdown))
+                        date: dateText,
+                        mie: formatCurrency(mieRate),
+                        lodging: 0,
+                        isFirstLast: true,
+                        total: formatCurrency(mieRate)
+                    })
+                    //console.log(JSON.stringify(perDiemSearch.results.breakdown))
             }
             //all other days
             else {
@@ -556,13 +560,12 @@ function calculateRates() {
                 //loop through
                 for (i in breakdown) {
                     //console.log(i)
-                        //determine if month has already been pushed
+                    //determine if month has already been pushed
                     //console.log(breakdown[i].date, month, '?')
                     if (breakdown[i].date === month) {
                         //console.log(month, 'Already Exists')
                         var monthAlreadyExists = true;
-                    }
-                    else{
+                    } else {
                         var monthAlreadyExists = false;
                         //console.log(month, 'Does not yet exist in breakdown')
                     }
@@ -573,13 +576,13 @@ function calculateRates() {
                     //console.log('Pushing', month)
                     var totalRate = lodgingRate + mieRate
                     perDiemSearch.results.breakdown.push({
-                        isRate: true,
-                        date: month,
-                        lodging: formatCurrency(lodgingRate),
-                        mie: formatCurrency(mieRate),
-                        total: formatCurrency(totalRate)
-                    })
-                    //console.log(JSON.stringify(perDiemSearch.results.breakdown))
+                            isRate: true,
+                            date: month,
+                            lodging: formatCurrency(lodgingRate),
+                            mie: formatCurrency(mieRate),
+                            total: formatCurrency(totalRate)
+                        })
+                        //console.log(JSON.stringify(perDiemSearch.results.breakdown))
                 }
             }
         }
@@ -604,11 +607,10 @@ function calculateRates() {
     perDiemSwiper.slideTo(5)
 };
 
-function formatCurrency(n){
-    if(n % 1 != 0){
+function formatCurrency(n) {
+    if (n % 1 != 0) {
         var formatted = n.toFixed(2)
-    }
-    else{
+    } else {
         var formatted = n
     }
     return formatted;
