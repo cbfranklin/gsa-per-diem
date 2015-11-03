@@ -235,7 +235,7 @@
     <div id="templates">
         <script type="template" class="calculator-results">
             {{#perDiemSearch}} {{#query}}
-            <h4><strong>Your Search for</strong>{{#city}} {{city}}{{/city}}{{#state}} {{state}}{{/state}}{{#zip}} {{zip}}{{/zip}},<strong> Using Rates for {{/query}}</strong><em>{{rates.fy1.rate.county}}{{#rates.fy2.rate.county}}{{^sameRate}} and {{rates.fy2.rate.county}}{{/sameRate}}{{/rates.fy2.rate.county}} </em>:</h4> {{#results}}
+            <h4><strong>Your Search for</strong>{{#city}} {{city}}{{/city}}{{#state}} {{state}}{{/state}}{{#zip}} {{zip}}{{/zip}},<strong> Using Rates for {{/query}}</strong><em>{{rates.fy1.rate.city}} including {{rates.fy1.rate.county}}{{#rates.fy2.rate.county}}{{^sameRate}} and {{rates.fy2.rate.county}} including {{rates.fy2.rate.county}}{{/sameRate}}{{/rates.fy2.rate.county}} </em>:</h4> {{#results}}
             <!--<div class="well">
                 <h4><strong>Daily Per Diem Rates:</strong></h4> {{#breakdown}} {{#isRate}}
                 <p>{{date}} Lodging: ${{lodging}}</p>
@@ -246,7 +246,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <h4><strong>Estimated Trip Total:</strong></h4></div>
-                    <div class="col-sn-6">
+                    <div class="col-sm-6">
                         <h4>${{totalFormatted}}</h4></div>
                 </div>
             </div>
