@@ -78,7 +78,7 @@ $(function() {
 function clearLocationForm() {
     $('#perdiem-state').val('');
     $('#perdiem-zip').val('');
-    $('#perdiem-city').val('')
+    $('#perdiem-city').val('');
 }
 
 function validateDates() {
@@ -86,7 +86,7 @@ function validateDates() {
     var startDateVal = $('#perdiem-start-date').val()
     var endDateVal = $('#perdiem-end-date').val()
     if (startDateVal.match(valid) && endDateVal.match(valid)) {
-        if (moment(startDateVal, 'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd) && moment(endDateVal, 'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd) && moment(startDateVal, 'MM/DD/YYYY').isBefore(moment(endDateVal))) {
+        if (moment(startDateVal, 'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd) && moment(endDateVal, 'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd) /*&& moment(startDateVal, 'MM/DD/YYYY').isBefore(moment(endDateVal,'MM/DD/YYYY')*/)) {
             $('#perdiem-multiple-rates-check').removeClass('disabled').removeAttr('disabled');
             console.log('Start and/or End Dates are Valid!')
             $('#perdiem-dates-error').hide()
@@ -519,7 +519,7 @@ function calculateRates() {
             }
             var breakdown = perDiemSearch.results.breakdown;
             for (i in breakdown) {
-                console.log(breakdown[i].date, month, '?')
+                //console.log(breakdown[i].date, month, '?')
                 if (breakdown[i].date === month) {
                     //console.log(month,'Already Exists')
                     var monthAlreadyExists = true;
