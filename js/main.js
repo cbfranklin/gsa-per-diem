@@ -99,14 +99,16 @@ function validateDates() {
     } else {
         showError()
         console.log('Start and/or End Date are Not Correctly Formatted!')
-        
+
     }
-    function showError(){
+
+    function showError() {
         $('#perdiem-dates-error').show()
         $('#perdiem-dates-info').hide()
         $('#perdiem-multiple-rates-check').addClass('disabled').attr('disabled', 'disabled');
     }
-    function hideError(){
+
+    function hideError() {
         $('#perdiem-dates-error').hide()
         $('#perdiem-dates-info').show()
         $('#perdiem-multiple-rates-check').removeClass('disabled').removeAttr('disabled');
@@ -452,20 +454,28 @@ function calculateRates() {
         var total = 0;
         var months = [];
 
+        var pdsd = moment(perDiemSearch.startDate).format('MM-DD-YYYY');
+        var pded = moment(perDiemSearch.endDate).format('MM-DD-YYYY');
+
         for (var date = start; !date.isAfter(end); date.add(1, 'days')) {
 
-            var rateMonth = date.format('M');
+            var rateMonth = date.format('M') - 1;
+            //console.log('Month index:',rateMonth)
             var rateYear = date.format('YYYY');
 
-            if (rateMonth > 9) {
+            //adjust for fiscal year
+            //if after september
+            if (rateMonth > 8) {
+                //adjust fy by 1
                 var fy = parseFloat(rateYear) + 1
             } else {
+                //else keep the same
                 var fy = parseFloat(rateYear);
             }
-
             var fys = Object.keys(perDiemSearch.rates);
             for (i in fys) {
                 if (perDiemSearch.rates[fys[i]].year === fy) {
+                    //select appropriate rate for this day
                     var rate = perDiemSearch.rates[fys[i]].rate;
                 }
             }
@@ -473,22 +483,23 @@ function calculateRates() {
             console.log('=========\n', 'Adding Date:', date.format('MM-DD-YYYY'), 'Fiscal Year:', fy)
 
 
-
-
-            //add perdiem rate for month
-            var lodgingRate = rate.months.month[date.format('M')].value;
-            //add mie at 75% for first and last day (using first two days since it's only a sum)
-            var pdsd = moment(perDiemSearch.startDate).format('MM-DD-YYYY');
-            var pded = moment(perDiemSearch.endDate).format('MM-DD-YYYY');
+            var lodgingRate = rate.months.month[rateMonth].value;
             var month = date.format('MMMM');
-            //first day
-            if (date.format('MM-DD-YYYY') === pdsd) {
-                var mieRate = rate.meals * 0.75;
-                total += mieRate;
+
+            //first day && not last day
+            if (date.format('MM-DD-YYYY') === pdsd && pdsd !== pded) {
+                console.log()
                 console.log('First Day')
+                    //set mie rate to 0.75
+                var mieRate = rate.meals * 0.75;
                 console.log('MIE at 75%:', mieRate)
-                total += lodgingRate;
+                    //add mie to total
+                total += mieRate;
+                //add lodging to total
                 console.log('Rate:', lodgingRate)
+                total += lodgingRate;
+                //console.log(JSON.stringify(perDiemSearch.results.breakdown))
+                //console.log('Pushing First Day')
                 perDiemSearch.results.breakdown.push({
                     date: 'First Day',
                     lodging: lodgingRate,
@@ -496,50 +507,71 @@ function calculateRates() {
                     isFirstLast: true,
                     total: lodgingRate + mieRate
                 })
+                //console.log(JSON.stringify(perDiemSearch.results.breakdown))
             }
-            //last day
+            //last day (and only day if a same-day trip)
             else if (date.format('MM-DD-YYYY') === pded) {
-                var mieRate = rate.meals * 0.75;
-                total += mieRate;
+                //if same-day, change breakdown text
+                if (pdsd === pded) {
+                    var dateText = 'Single Day';
+                } else {
+                    var dateText = 'Last Day'
+                }
                 console.log('Last Day')
+                var mieRate = rate.meals * 0.75;
                 console.log('MIE at 75%:', mieRate)
+                    //add mie to total
+                total += mieRate;
+                //NO LODGING
+                //console.log(JSON.stringify(perDiemSearch.results.breakdown))
+                //console.log('Pushing Last Day...')
                 perDiemSearch.results.breakdown.push({
-                    date: 'Last Day',
+                    date: dateText,
                     mie: mieRate,
                     lodging: 0,
                     isFirstLast: true,
                     total: mieRate
                 })
+                //console.log(JSON.stringify(perDiemSearch.results.breakdown))
             }
             //all other days
             else {
-                total += lodgingRate;
-                console.log(month)
-                console.log('MIE:', mieRate)
-                console.log('Rate:', lodgingRate)
-                    //mie at 100%
+                //mie at 100%
                 var mieRate = rate.meals;
+                console.log('Month:', month)
+                console.log('Rate:', lodgingRate)
+                console.log('MIE:', mieRate)
+                total += lodgingRate;
                 total += mieRate;
-
-            }
-            var breakdown = perDiemSearch.results.breakdown;
-            for (i in breakdown) {
-                //console.log(breakdown[i].date, month, '?')
-                if (breakdown[i].date === month) {
-                    //console.log(month,'Already Exists')
-                    var monthAlreadyExists = true;
+                //define existing breakdown
+                var breakdown = perDiemSearch.results.breakdown;
+                //loop through
+                for (i in breakdown) {
+                    //console.log(i)
+                        //determine if month has already been pushed
+                    //console.log(breakdown[i].date, month, '?')
+                    if (breakdown[i].date === month) {
+                        console.log(month, 'Already Exists')
+                        var monthAlreadyExists = true;
+                    }
+                    else{
+                        var monthAlreadyExists = false;
+                        console.log(month, 'Does not yet exist in breakdown')
+                    }
                 }
-            }
-            console.log(monthAlreadyExists)
-            if (!monthAlreadyExists) {
-                console.log('Pushing', month)
-                perDiemSearch.results.breakdown.push({
-                    isRate: true,
-                    date: month,
-                    lodging: lodgingRate,
-                    mie: mieRate,
-                    total: lodgingRate + mieRate
-                })
+                console.log('monthAlreadyExists?',monthAlreadyExists)
+                if (!monthAlreadyExists) {
+                    //console.log(JSON.stringify(perDiemSearch.results.breakdown))
+                    console.log('Pushing', month)
+                    perDiemSearch.results.breakdown.push({
+                        isRate: true,
+                        date: month,
+                        lodging: lodgingRate,
+                        mie: mieRate,
+                        total: lodgingRate + mieRate
+                    })
+                    //console.log(JSON.stringify(perDiemSearch.results.breakdown))
+                }
             }
         }
     }
