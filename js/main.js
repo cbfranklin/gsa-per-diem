@@ -503,10 +503,10 @@ function calculateRates() {
                 var totalRate = lodgingRate + mieRate
                 perDiemSearch.results.breakdown.push({
                     date: 'First Day',
-                    lodging: lodgingRate.toFixed(2),
-                    mie: mieRate.toFixed(2),
+                    lodging: formatCurrency(lodgingRate),
+                    mie: formatCurrency(mieRate),
                     isFirstLast: true,
-                    total: totalRate.toFixed(2)
+                    total: formatCurrency(totalRate)
                 })
                 //console.log(JSON.stringify(perDiemSearch.results.breakdown))
             }
@@ -528,10 +528,10 @@ function calculateRates() {
                 //console.log('Pushing Last Day...')
                 perDiemSearch.results.breakdown.push({
                     date: dateText,
-                    mie: mieRate.toFixed(2),
+                    mie: formatCurrency(mieRate),
                     lodging: 0,
                     isFirstLast: true,
-                    total: mieRate.toFixed(2)
+                    total: formatCurrency(mieRate)
                 })
                 //console.log(JSON.stringify(perDiemSearch.results.breakdown))
             }
@@ -552,25 +552,25 @@ function calculateRates() {
                         //determine if month has already been pushed
                     //console.log(breakdown[i].date, month, '?')
                     if (breakdown[i].date === month) {
-                        console.log(month, 'Already Exists')
+                        //console.log(month, 'Already Exists')
                         var monthAlreadyExists = true;
                     }
                     else{
                         var monthAlreadyExists = false;
-                        console.log(month, 'Does not yet exist in breakdown')
+                        //console.log(month, 'Does not yet exist in breakdown')
                     }
                 }
-                console.log('monthAlreadyExists?',monthAlreadyExists)
+                //console.log('monthAlreadyExists?',monthAlreadyExists)
                 if (!monthAlreadyExists) {
                     //console.log(JSON.stringify(perDiemSearch.results.breakdown))
-                    console.log('Pushing', month)
+                    //console.log('Pushing', month)
                     var totalRate = lodgingRate + mieRate
                     perDiemSearch.results.breakdown.push({
                         isRate: true,
                         date: month,
-                        lodging: lodgingRate.toFixed(2),
-                        mie: mieRate.toFixed(2),
-                        total: totalRate.toFixed(2)
+                        lodging: formatCurrency(lodgingRate),
+                        mie: formatCurrency(mieRate),
+                        total: formatCurrency(totalRate)
                     })
                     //console.log(JSON.stringify(perDiemSearch.results.breakdown))
                 }
@@ -587,6 +587,7 @@ function calculateRates() {
             var sameRate = true;
         }
     }
+    perDiemSearch.results.totalFormatted = formatCurrency(perDiemSearch.results.total)
     var template = $('#templates .calculator-results').html();
     var rendered = Mustache.render(template, {
         perDiemSearch: perDiemSearch,
@@ -595,6 +596,16 @@ function calculateRates() {
     $('.perdiem-step-5').prepend(rendered);
     perDiemSwiper.slideTo(5)
 };
+
+function formatCurrency(n){
+    if(n % 1 != 0){
+        var formatted = n.toFixed(2)
+    }
+    else{
+        var formatted = n
+    }
+    return formatted;
+}
 
 function ratesSelected() {
     if (perDiemSearch.rates.fy1.multiple) {
