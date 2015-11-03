@@ -85,26 +85,31 @@ function validateDates() {
     var valid = /\d{1,2}\/\d{1,2}\/\d{4}/;
     var startDateVal = $('#perdiem-start-date').val()
     var endDateVal = $('#perdiem-end-date').val()
-    if (startDateVal.match(valid) && endDateVal.match(valid)) {
-        if (moment(startDateVal, 'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd) && moment(endDateVal, 'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd) /*&& moment(startDateVal, 'MM/DD/YYYY').isBefore(moment(endDateVal,'MM/DD/YYYY'))*/) {
-            $('#perdiem-multiple-rates-check').removeClass('disabled').removeAttr('disabled');
+    if (startDateVal.match(valid) && endDateVal.match(valid) && moment(startDateVal, 'MM/DD/YYYY').isValid() && moment(endDateVal, 'MM/DD/YYYY').isValid()) {
+        if (moment(startDateVal, 'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd) && moment(endDateVal, 'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd)) {
+            hideError()
             console.log('Start and/or End Dates are Valid!')
-            $('#perdiem-dates-error').hide()
+        } else if (moment(startDateVal, 'MM/DD/YYYY').isBefore(moment(endDateVal, 'MM/DD/YYYY')) || startDateVal === endDateVal) {
+            hideError()
+            console.log('Start and/or End Dates are Valid!')
         } else {
-            if (!moment(startDateVal, 'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd)) {
-                console.log('Start Date is Invalid!')
-            }
-            if (!moment(endDateVal, 'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd)) {
-                console.log('End Date is Invalid!')
-            }
-            $('#perdiem-multiple-rates-check').addClass('disabled').attr('disabled', 'disabled');
-            $('#perdiem-dates-error').show()
+            showError()
             console.log('Start and/or End Dates are Out of Range!')
         }
     } else {
-        $('#perdiem-multiple-rates-check').addClass('disabled').attr('disabled', 'disabled');
+        showError()
         console.log('Start and/or End Date are Not Correctly Formatted!')
+        
+    }
+    function showError(){
         $('#perdiem-dates-error').show()
+        $('#perdiem-dates-info').hide()
+        $('#perdiem-multiple-rates-check').addClass('disabled').attr('disabled', 'disabled');
+    }
+    function hideError(){
+        $('#perdiem-dates-error').hide()
+        $('#perdiem-dates-info').show()
+        $('#perdiem-multiple-rates-check').removeClass('disabled').removeAttr('disabled');
     }
 }
 
@@ -120,7 +125,7 @@ function checkForMultipleRates() {
     $('#perdiem-multiple-rates-check').html('Next Step <span class="glyphicon glyphicon-refresh spinning"></span>')
     $('#perdiem-location-error').hide()
     $('#perdiem-api-error').hide();
-        //what fiscal year is start date
+    //what fiscal year is start date
     perDiemSearch.startDate = moment($('#perdiem-start-date').val(), 'MM/DD/YYYY')
     if (perDiemSearch.startDate.month() > 8) {
         perDiemSearch.startFY = perDiemSearch.startDate.year() + 1

@@ -7,6 +7,10 @@ body {
     min-height: 400px;
 }
 
+#perdiem-swiper .btn-block{
+    margin-bottom:10px;
+}
+
 #perdiem-location-error,#perdiem-dates-error,#perdiem-api-error{
     display:none;
 }
