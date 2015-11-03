@@ -42,6 +42,8 @@ $(function() {
 
     $('#perdiem-clear-location-form').on('click', clearLocationForm)
 
+    $('#perdiem-new-search').on('click', newSearch)
+
     $('#perdiem-multiple-rates-check').on('click', checkForMultipleRates);
     $('#perdiem-current-location').on('click', useMyCurrentLocation);
 
@@ -74,6 +76,11 @@ $(function() {
     })
     $('#perdiem-look-up-rates-submit').on('click', lookUpRatesSubmit);
 })
+
+function newSearch(){
+    clearLocationForm()
+    perDiemSwiper.slideTo(0)
+}
 
 function clearLocationForm() {
     $('#perdiem-state').val('');
