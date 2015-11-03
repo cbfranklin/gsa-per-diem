@@ -424,7 +424,7 @@ function useMyCurrentLocation() {
             } else {
                 //error
                 console.log('Geocode Error!')
-                $btn.button('reset')
+                $('')
             }
         });
     }

@@ -289,18 +289,18 @@
             {{#rates}}
             <h4>Multiple Rates are Available. Please Choose One:</h4>
             <br> {{#fy1}}
-            <label for="perdiem-fiscal-year-1">Fiscal Year {{year}}</label>
+            <label for="perdiem-fiscal-year-1">Fiscal Year {{year}} County</label>
             <select id="perdiem-fiscal-year-1" class="form-control swiper-no-swiping">
                 {{#rates}}
-                <option>{{county}}</option>
+                <option>{{county}} includes {{city}}</option>
                 {{/rates}}
             </select>
             {{/fy1}} {{#fy2}}{{#multiple}}
             <br>
-            <label for="perdiem-fiscal-year-2">Fiscal Year {{year}}</label>
+            <label for="perdiem-fiscal-year-2">Fiscal Year {{year}} County</label>
             <select id="perdiem-fiscal-year-2" class="form-control swiper-no-swiping">
                 {{#rates}}
-                <option>{{county}}</option>
+                <option>{{county}} including {{city}}</option>
                 {{/rates}}
             </select>
             {{/multiple}}{{/fy2}}
