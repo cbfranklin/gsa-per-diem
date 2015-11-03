@@ -600,7 +600,7 @@ function calculateRates() {
         perDiemSearch: perDiemSearch,
         sameRate: sameRate
     });
-    $('.perdiem-step-5').prepend(rendered);
+    $('#perdiem-results').html(rendered);
     perDiemSwiper.slideTo(5)
 };
 
