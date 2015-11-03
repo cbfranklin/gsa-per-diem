@@ -68,10 +68,7 @@ $(function() {
     $('#perdiem-to-step-2').on('click', function() {
         perDiemSwiper.slideTo(1)
     })
-    $('#perdiem-to-date-range').on('click', function() {
-        perDiemSwiper.slideTo(2)
-    })
-    $('#perdiem-back-to-date-range').on('click', function() {
+    $('#perdiem-swiper').on('click', '#perdiem-to-date-range',function() {
         perDiemSwiper.slideTo(2)
     })
     $('#perdiem-look-up-rates-submit').on('click', lookUpRatesSubmit);
@@ -86,6 +83,7 @@ function clearLocationForm() {
     $('#perdiem-state').val('');
     $('#perdiem-zip').val('');
     $('#perdiem-city').val('');
+    validateDates();
 }
 
 function validateDates() {
@@ -238,7 +236,7 @@ function checkForMultipleRates() {
                 })
                 .fail(function() {
                     console.log('FY1 AJAX Call Failed!')
-                    $('#perdiem-multiple-rates-check').html('Next Step <span class="glyphicon glyphicon-chevron-right"></span>')
+                    $('#perdiem-multiple-rates-check').html('Next Step <span class="glyphicon glyphicon-arrow-right"></span>')
                     reqError = true;
                     $('#perdiem-api-error').show()
                 })
@@ -291,7 +289,7 @@ function checkForMultipleRates() {
                     })
                     .fail(function() {
                         console.log('FY2 AJAX Call Failed!')
-                        $('#perdiem-multiple-rates-check').html('Next Step <span class="glyphicon glyphicon-chevron-right"></span>')
+                        $('#perdiem-multiple-rates-check').html('Next Step <span class="glyphicon glyphicon-arrow-right"></span>')
                         $('#perdiem-api-error').show()
                         reqError = true;
                     })
@@ -343,7 +341,7 @@ function checkForMultipleRates() {
                 });
                 $('.perdiem-step-4').html(rendered);
                 perDiemSwiper.slideTo(4)
-                $('#perdiem-multiple-rates-check').html('Next Step <span class="glyphicon glyphicon-chevron-right"></span>')
+                $('#perdiem-multiple-rates-check').html('Next Step <span class="glyphicon glyphicon-arrow-right"></span>')
             }
         });
     }
@@ -435,12 +433,14 @@ function useMyCurrentLocation() {
 function locationError() {
     console.log('No Results for Location...')
     $('#perdiem-location-error').show()
-    $('#perdiem-multiple-rates-check').html('Next Step <span class="glyphicon glyphicon-chevron-right"></span>')
+    $('#perdiem-multiple-rates-check').html('Next Step <span class="glyphicon glyphicon-arrow-right"></span>')
     perDiemSwiper.slideTo(0)
 }
 
 
 function calculateRates() {
+    $('#perdiem-multiple-rates-check').html('Next Step <span class="glyphicon glyphicon-refresh spinning"></span>')
+    $('#perdiem-multiple-rates-check,#perdiem-rates-selected').html('Next Step <span class="glyphicon glyphicon-arrow-right"></span>')
     perDiemSearch.results = {
         breakdown: [],
         total: 0
