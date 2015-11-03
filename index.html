@@ -235,7 +235,7 @@
     <div id="templates">
         <script type="template" class="calculator-results">
             {{#perDiemSearch}} {{#query}}
-            <h4><strong>Your Search for</strong>{{#city}} {{city}}{{/city}}{{#state}} {{state}}{{/state}}{{#zip}} {{zip}}{{/zip}},<strong> Using Rates for {{/query}}</strong><em>{{rates.fy1.rate.city}} including {{rates.fy1.rate.county}}{{#rates.fy2.rate.county}}{{^sameRate}} and {{rates.fy2.rate.county}} including {{rates.fy2.rate.county}}{{/sameRate}}{{/rates.fy2.rate.county}} </em>:</h4> {{#results}}
+            <h4><strong>Your Search for</strong>{{#city}} {{city}}{{/city}}{{#state}} {{state}}{{/state}}{{#zip}} {{zip}}{{/zip}},<strong> Using Rates for {{/query}}</strong><em>{{rates.fy1.rate.county}} including {{rates.fy1.rate.city}}{{#rates.fy2.rate.county}}{{^sameRate}} and {{rates.fy2.rate.county}} including {{rates.fy2.rate.county}}{{/sameRate}}{{/rates.fy2.rate.county}} </em>:</h4> {{#results}}
             <!--<div class="well">
                 <h4><strong>Daily Per Diem Rates:</strong></h4> {{#breakdown}} {{#isRate}}
                 <p>{{date}} Lodging: ${{lodging}}</p>
@@ -292,7 +292,7 @@
             <label for="perdiem-fiscal-year-1">Fiscal Year {{year}}, Destination County</label>
             <select id="perdiem-fiscal-year-1" class="form-control swiper-no-swiping">
                 {{#rates}}
-                <option>{{county}} includes {{city}}</option>
+                <option>{{county}} including {{city}}</option>
                 {{/rates}}
             </select>
             {{/fy1}} {{#fy2}}{{#multiple}}
