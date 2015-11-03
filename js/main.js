@@ -131,15 +131,18 @@ function validateLocationParams() {
     if ($('#perdiem-city').val() === '' && $('#perdiem-state').val() === '' && $('#perdiem-zip').val().length < 5) {
         //disabled
         $('.perdiem-step-1 #next').addClass('disabled').attr('disabled', 'disabled');
+        console.log('All Blank')
         //if not everything is blank
     } else {
         //but zip and state are blank (city only)
         if ($('#perdiem-zip').val().length < 5 && $('#perdiem-state').val() === '') {
             //disabled
+            console.log('No Zip or State')
             $('.perdiem-step-1 #next').addClass('disabled').attr('disabled', 'disabled');
         }
         //otherwise
         else{
+            console.log('Zip or State exists')
             //enabled
             $('.perdiem-step-1 #next').removeClass('disabled').removeAttr('disabled');
         }
