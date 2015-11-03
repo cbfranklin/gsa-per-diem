@@ -86,7 +86,7 @@ function validateDates() {
     var startDateVal = $('#perdiem-start-date').val()
     var endDateVal = $('#perdiem-end-date').val()
     if (startDateVal.match(valid) && endDateVal.match(valid)) {
-        if (moment(startDateVal, 'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd) && moment(endDateVal, 'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd) /*&& moment(startDateVal, 'MM/DD/YYYY').isBefore(moment(endDateVal,'MM/DD/YYYY')*/)) {
+        if (moment(startDateVal, 'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd) && moment(endDateVal, 'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd) /*&& moment(startDateVal, 'MM/DD/YYYY').isBefore(moment(endDateVal,'MM/DD/YYYY'))*/) {
             $('#perdiem-multiple-rates-check').removeClass('disabled').removeAttr('disabled');
             console.log('Start and/or End Dates are Valid!')
             $('#perdiem-dates-error').hide()
