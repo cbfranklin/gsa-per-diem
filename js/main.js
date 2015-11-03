@@ -663,9 +663,62 @@ function updateProgress(n) {
 }
 
 function lookUpRatesSubmit() {
+    var fullState = USStates[$('#perdiem-state').val().toLowerCase()];
     $('input[name="perdiemSearchVO.year"]').val($('#perdiem-rate-lookup-fiscal-year').val())
     $('input[name="perdiemSearchVO.city"').val($('#perdiem-city').val())
-    $('input[name="perdiemSearchVO.state"').val($('#perdiem-state').val())
+    $('input[name="perdiemSearchVO.state"').val(fullState)
     $('input[name="perdiemSearchVO.zip"').val($('#perdiem-zip').val())
     $('#perdiem-find-rates-form').submit();
+}
+
+var USStates = {
+  "al": "Alabama",
+  "ak": "Alaska",
+  "az": "Arizona",
+  "ar": "Arkansas",
+  "ca": "California",
+  "co": "Colorado",
+  "ct": "Connecticut",
+  "de": "Delaware",
+  "fl": "Florida",
+  "ga": "Georgia",
+  "hi": "Hawaii",
+  "id": "Idaho",
+  "il": "Illinois",
+  "in": "Indiana",
+  "ia": "Iowa",
+  "ks": "Kansas",
+  "ky": "Kentucky",
+  "la": "Louisiana",
+  "me": "Maine",
+  "md": "Maryland",
+  "ma": "Massachusetts",
+  "mi": "Michigan",
+  "mn": "Montana",
+  "ms": "Mississippi",
+  "mo": "Missouri",
+  "ne": "Nebraska",
+  "nv": "Nevada",
+  "nh": "New Hampshire",
+  "nj": "New Jersey",
+  "nm": "New Mexico",
+  "ny": "New York",
+  "nc": "North Carolina",
+  "nd": "North Dakota",
+  "oh": "Ohio",
+  "ok": "Oklahoma",
+  "or": "Oregon",
+  "pa": "Pennsylvania",
+  "ri": "Rhode Island",
+  "sc": "South Carolina",
+  "sd": "South Dakota",
+  "tn": "Tennessee",
+  "tx": "Texas",
+  "ut": "Utah",
+  "vt": "Vermont",
+  "va": "Virginia",
+  "wa": "Washington",
+  "wv": "West Virginia",
+  "wi": "Wisconsin",
+  "wy": "Wyoming"
 }
