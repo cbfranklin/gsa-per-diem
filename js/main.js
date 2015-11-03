@@ -500,12 +500,13 @@ function calculateRates() {
                 total += lodgingRate;
                 //console.log(JSON.stringify(perDiemSearch.results.breakdown))
                 //console.log('Pushing First Day')
+                var totalRate = lodgingRate + mieRate
                 perDiemSearch.results.breakdown.push({
                     date: 'First Day',
-                    lodging: lodgingRate,
-                    mie: mieRate,
+                    lodging: lodgingRate.toFixed(2),
+                    mie: mieRate.toFixed(2),
                     isFirstLast: true,
-                    total: lodgingRate + mieRate
+                    total: totalRate.toFixed(2)
                 })
                 //console.log(JSON.stringify(perDiemSearch.results.breakdown))
             }
@@ -527,10 +528,10 @@ function calculateRates() {
                 //console.log('Pushing Last Day...')
                 perDiemSearch.results.breakdown.push({
                     date: dateText,
-                    mie: mieRate,
+                    mie: mieRate.toFixed(2),
                     lodging: 0,
                     isFirstLast: true,
-                    total: mieRate
+                    total: mieRate.toFixed(2)
                 })
                 //console.log(JSON.stringify(perDiemSearch.results.breakdown))
             }
@@ -563,12 +564,13 @@ function calculateRates() {
                 if (!monthAlreadyExists) {
                     //console.log(JSON.stringify(perDiemSearch.results.breakdown))
                     console.log('Pushing', month)
+                    var totalRate = lodgingRate + mieRate
                     perDiemSearch.results.breakdown.push({
                         isRate: true,
                         date: month,
-                        lodging: lodgingRate,
-                        mie: mieRate,
-                        total: lodgingRate + mieRate
+                        lodging: lodgingRate.toFixed(2),
+                        mie: mieRate.toFixed(2),
+                        total: totalRate.toFixed(2)
                     })
                     //console.log(JSON.stringify(perDiemSearch.results.breakdown))
                 }
