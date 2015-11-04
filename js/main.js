@@ -7,11 +7,6 @@ var perDiemSwiper,
     validDatesBegin = '10/1/2012',
     validDatesEnd = '09/30/2016';
 
-//IE
-if (!console.table){
-    console.table = {}
-}
-
 $(function() {
     console.log('Initiating Per Diem App...')
     validDatesBegin = moment(validDatesBegin, 'MM/DD/YYYY');
