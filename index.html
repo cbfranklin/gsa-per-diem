@@ -238,9 +238,7 @@
             {{#perDiemSearch}} {{#query}}
             <h4><strong>Your Search for</strong>{{#city}} {{city}}{{/city}}{{#state}} {{state}}{{/state}}{{#zip}} {{zip}}{{/zip}},<strong> Using Rates for {{/query}}</strong><em>{{rates.fy1.rate.county}} including {{rates.fy1.rate.city}}{{#rates.fy2.rate.county}}{{^sameRate}} and {{rates.fy2.rate.county}} including {{rates.fy2.rate.county}}{{/sameRate}}{{/rates.fy2.rate.county}} </em>:</h4> {{#results}}
             <div class="well perdiem-trip-total">
-                <div class="row">
-                    <h4><strong>Estimated Trip Total: </strong>${{totalFormatted}}</h4>
-                </div>
+                <h4><strong>Estimated Trip Total: </strong>${{totalFormatted}}</h4>
             </div>
             <div class="well perdiem-trip-total">
                 <h4><strong>Daily Per Diem Rates:</strong></h4> {{#rateInfo}}

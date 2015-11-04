@@ -24,7 +24,7 @@ $(function() {
     });
 
     $.ajaxSetup({
-        timeout: 30000
+        timeout: 10000
     });
 
     $('#perdiem-start-date-group').datetimepicker({
@@ -81,6 +81,7 @@ $(function() {
 function newSearch() {
     console.log('========\n', 'New Search!')
     clearLocationForm()
+    clearDateForm()
     perDiemSwiper.slideTo(0)
 }
 
@@ -89,6 +90,12 @@ function clearLocationForm() {
     $('#perdiem-zip').val('');
     $('#perdiem-city').val('');
     validateLocationParams();
+}
+
+function clearDateForm() {
+    $('#perdiem-start-date').val('');
+    $('#perdiem-end-date').val('');
+    validateDates();
 }
 
 function validateDates() {
