@@ -664,11 +664,16 @@ function updateProgress(n) {
 
 function lookUpRatesSubmit() {
     var fullState = USStates[$('#perdiem-state').val().toLowerCase()];
-    $('input[name="perdiemSearchVO.year"]').val($('#perdiem-rate-lookup-fiscal-year').val())
+    /*$('input[name="perdiemSearchVO.year"]').val($('#perdiem-rate-lookup-fiscal-year').val())
     $('input[name="perdiemSearchVO.city"').val($('#perdiem-city').val())
     $('input[name="perdiemSearchVO.state"').val(fullState)
     $('input[name="perdiemSearchVO.zip"').val($('#perdiem-zip').val())
-    $('#perdiem-find-rates-form').submit();
+    $('#perdiem-find-rates-form').submit();*/
+
+    var url = "http://www.gsa.gov/portal/category/100120?perdiemSearchVO.year="+$('#perdiem-rate-lookup-fiscal-year').val()+"&perdiemSearchVO.city="+$('#perdiem-city').val()+"&perdiemSearchVO.state="+fullState+"&perdiemSearchVO.zip="+$('#perdiem-zip').val()+"&resultName=getPerdiemRatesBySearchVO&currentCategory.categoryId=100120&x=44&y=13"
+
+
+    window.open(url)
 }
 
 var USStates = {
