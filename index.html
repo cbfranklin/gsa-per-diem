@@ -44,6 +44,7 @@
                     <div class="hr"><span>or</span></div>
                     <div class="row">
                         <div class="col-md-6">
+                            <label for="perdiem-state">State</label>
                             <select class="form-control swiper-no-swiping" id="perdiem-state">
                                 <option value="">Select a State</option>
                                 <option value="AL">Alabama</option>
@@ -100,13 +101,15 @@
                             </select>
                         </div>
                         <div class="col-md-6">
-                            <input id="perdiem-city" type="text" class="form-control" placeholder="City (Optional)">
+                        <label for="perdiem-city">City (Optional)</label>
+                            <input id="perdiem-city" type="text" class="form-control">
                         </div>
                     </div>
                     <div class="hr"><span>or</span></div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <input id="perdiem-zip" type="text" class="form-control" placeholder="ZIP">
+                        <label for="perdiem-zip">ZIP</label>
+                            <input id="perdiem-zip" type="text" class="form-control">
                         </div>
                     </div>
                     <br>
@@ -238,13 +241,13 @@
             {{#perDiemSearch}} {{#query}}
             <h4><strong>Your Search for</strong>{{#city}} {{city}}{{/city}}{{#state}} {{state}}{{/state}}{{#zip}} {{zip}}{{/zip}},<strong> Using Rates for {{/query}}</strong><em>{{rates.fy1.rate.county}} including {{rates.fy1.rate.city}}{{#rates.fy2.rate.county}}{{^sameRate}} and {{rates.fy2.rate.county}} including {{rates.fy2.rate.county}}{{/sameRate}}{{/rates.fy2.rate.county}} </em>:</h4> {{#results}}
             <div class="well perdiem-trip-total">
-                <h4><strong>Estimated Trip Total: </strong>${{totalFormatted}}</h4>
-            </div>
-            <div class="well perdiem-trip-total">
                 <h4><strong>Daily Per Diem Rates:</strong></h4> {{#rateInfo}}
                 <p>{{date}} Lodging: ${{lodging}}</p>
                 <p>{{date}} M&amp;IE: ${{mie}}</p>
                 {{/rateInfo}}
+            </div>
+            <div class="well perdiem-trip-total">
+                <h4><strong>Estimated Trip Total: </strong>${{totalFormatted}}</h4>
             </div>
             <div class="panel-group" id="perdiem-trip-breakdown-accordion" role="tablist" aria-multiselectable="true">
                 <div class="panel panel-default">
@@ -287,6 +290,7 @@
             <br> {{#fy1}}
             <label for="perdiem-fiscal-year-1">Fiscal Year {{year}}, Destination County</label>
             <select id="perdiem-fiscal-year-1" class="form-control swiper-no-swiping">
+            <option value="">Select a Rate</option>
                 {{#rates}}
                 <option>{{county}} including {{city}}</option>
                 {{/rates}}
@@ -295,6 +299,7 @@
             <br>
             <label for="perdiem-fiscal-year-2">Fiscal Year {{year}}, Destination County</label>
             <select id="perdiem-fiscal-year-2" class="form-control swiper-no-swiping">
+                <option value="">Select a Rate</option>
                 {{#rates}}
                 <option>{{county}} including {{city}}</option>
                 {{/rates}}
@@ -306,7 +311,7 @@
                     <button id="perdiem-to-date-range" class="btn btn-default btn-block"><span class="glyphicon glyphicon-arrow-left"></span> Prev Step</button>
                 </div>
                 <div class="col-sm-6">
-                    <button id="perdiem-rates-selected" class="btn btn-primary btn-block">Next Step <span class="glyphicon glyphicon-arrow-right" </span></button>
+                    <button id="perdiem-rates-selected" class="btn btn-primary btn-block disabled" disabled>Next Step <span class="glyphicon glyphicon-arrow-right" </span></button>
                 </div>
             </div>
             {{/rates}}

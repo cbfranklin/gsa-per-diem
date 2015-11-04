@@ -51,6 +51,7 @@ $(function() {
     $('#perdiem-multiple-rates-check').on('click', checkForMultipleRates);
     $('#perdiem-current-location').on('click', useMyCurrentLocation);
 
+    $('#perdiem-swiper').on('change','#perdiem-fiscal-year-1,#perdiem-fiscal-year-2',validateMultipleRates);
     $('#perdiem-swiper').on('click', '#perdiem-rates-selected', ratesSelected);
 
     //validate location
@@ -96,6 +97,16 @@ function clearDateForm() {
     $('#perdiem-start-date').val('');
     $('#perdiem-end-date').val('');
     validateDates();
+}
+
+function validateMultipleRates(){
+    console.log('Validating Rates...')
+    if($('#perdiem-fiscal-year-1').val() === '' && $('#perdiem-fiscal-year-2').val()){
+        $('#perdiem-rates-selected').addClass('disabled').attr('disabled', 'disabled');
+    }
+    else{
+       $('#perdiem-rates-selected').removeClass('disabled').removeAttr('disabled'); 
+    }
 }
 
 function validateDates() {
@@ -678,7 +689,7 @@ function formatCurrency(n) {
 
 function ratesSelected() {
     if (perDiemSearch.rates.fy1.multiple) {
-        var m = $('#perdiem-fiscal-year-1 option:selected').index();
+        var m = $('#perdiem-fiscal-year-1 option:selected').index() - 1;
         perDiemSearch.rates.fy1.rate = perDiemSearch.rates.fy1.rates[m]
         console.log('User Selected:', $('#perdiem-fiscal-year-1 option:selected').text(), 'For FY', perDiemSearch.rates.fy1.year)
     } else {
@@ -688,7 +699,7 @@ function ratesSelected() {
         //console.log('fy2 exists')
         if (perDiemSearch.rates.fy2.multiple) {
             //console.log('fy2 exists with multiple')
-            var n = $('#perdiem-fiscal-year-2 option:selected').index();
+            var n = $('#perdiem-fiscal-year-2 option:selected').index() - 1;
             perDiemSearch.rates.fy2.rate = perDiemSearch.rates.fy2.rates[n]
             console.log('User Selected:', $('#perdiem-fiscal-year-2 option:selected').text(), 'For FY', perDiemSearch.rates.fy2.year)
         }
