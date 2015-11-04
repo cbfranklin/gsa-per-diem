@@ -17,6 +17,8 @@
     "eonasdan-bootstrap-datetimepicker": "~4.17.37",
     "jquery": "~2.1.4",
     "swiper": "~3.1.7",
-    "mustache": "~2.2.0"
+    "mustache": "~2.2.0",
+    "placeholders": "~4.0.1",
+    "console-shim": "*"
   }
 }
