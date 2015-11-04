@@ -228,7 +228,6 @@
                     </div>
                     <button id="perdiem-new-search" class="btn btn-primary btn-block">New Search <span class="glyphicon glyphicon-home" </span></button>
                 </div>
-                            
             </div>
         </div>
         <br>
@@ -239,17 +238,14 @@
             <h4><strong>Your Search for</strong>{{#city}} {{city}}{{/city}}{{#state}} {{state}}{{/state}}{{#zip}} {{zip}}{{/zip}},<strong> Using Rates for {{/query}}</strong><em>{{rates.fy1.rate.county}} including {{rates.fy1.rate.city}}{{#rates.fy2.rate.county}}{{^sameRate}} and {{rates.fy2.rate.county}} including {{rates.fy2.rate.county}}{{/sameRate}}{{/rates.fy2.rate.county}} </em>:</h4> {{#results}}
             <div class="well perdiem-trip-total">
                 <div class="row">
-                    <div class="col-sm-6">
-                        <h4><strong>Estimated Trip Total:</strong></h4></div>
-                    <div class="col-sm-6">
-                        <h4>${{totalFormatted}}</h4></div>
+                    <h4><strong>Estimated Trip Total: </strong>${{totalFormatted}}</h4>
                 </div>
             </div>
             <div class="well perdiem-trip-total">
                 <h4><strong>Daily Per Diem Rates:</strong></h4> {{#rateInfo}}
                 <p>{{date}} Lodging: ${{lodging}}</p>
                 <p>{{date}} M&amp;IE: ${{mie}}</p>
-                 {{/rateInfo}}
+                {{/rateInfo}}
             </div>
             <div class="panel-group" id="perdiem-trip-breakdown-accordion" role="tablist" aria-multiselectable="true">
                 <div class="panel panel-default">
