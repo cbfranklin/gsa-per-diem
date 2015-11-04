@@ -331,6 +331,8 @@ function checkForMultipleRates() {
                 if (perDiemSearch.rates.fy2) {
                     if (perDiemSearch.rates.fy1.multiple || perDiemSearch.rates.fy2.multiple) {
                         displayRates()
+                    }else {
+                        calculateRates()
                     }
                 } else {
                     if (perDiemSearch.rates.fy1.multiple) {
