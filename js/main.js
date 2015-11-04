@@ -127,12 +127,12 @@ function validateDates() {
 
 function validateLocationParams() {
     console.log('Validating Location...')
-    //if everything is blank
+        //if everything is blank
     if ($('#perdiem-city').val() === '' && $('#perdiem-state').val() === '' && $('#perdiem-zip').val().length < 5) {
         //disabled
         $('.perdiem-step-1 #next').addClass('disabled').attr('disabled', 'disabled');
         console.log('All Blank')
-        //if not everything is blank
+            //if not everything is blank
     } else {
         //but zip and state are blank (city only)
         if ($('#perdiem-zip').val().length < 5 && $('#perdiem-state').val() === '') {
@@ -141,12 +141,12 @@ function validateLocationParams() {
             $('.perdiem-step-1 #next').addClass('disabled').attr('disabled', 'disabled');
         }
         //otherwise
-        else{
+        else {
             console.log('Zip or State exists')
-            //enabled
+                //enabled
             $('.perdiem-step-1 #next').removeClass('disabled').removeAttr('disabled');
         }
-        
+
     }
 }
 
@@ -307,7 +307,6 @@ function checkForMultipleRates() {
                                 }
                             }
                         }
-
                     })
                     .fail(function() {
                         console.log('FY2 AJAX Call Failed!')
@@ -331,7 +330,7 @@ function checkForMultipleRates() {
                 if (perDiemSearch.rates.fy2) {
                     if (perDiemSearch.rates.fy1.multiple || perDiemSearch.rates.fy2.multiple) {
                         displayRates()
-                    }else {
+                    } else {
                         calculateRates()
                     }
                 } else {
@@ -467,6 +466,7 @@ function calculateRates() {
     $('#perdiem-multiple-rates-check,#perdiem-rates-selected').html('Next Step <span class="glyphicon glyphicon-arrow-right"></span>')
     perDiemSearch.results = {
         breakdown: [],
+        rateInfo: [],
         total: 0
     };
     console.log('Calculating...')
@@ -517,9 +517,42 @@ function calculateRates() {
             var lodgingRate = rate.months.month[rateMonth].value;
             var month = date.format('MMMM');
 
+
+            //rate info now separate from breakdown
+            var rateInfo = perDiemSearch.results.rateInfo;
+            //loop through
+            console.log('rateInfo Length:', rateInfo.length)
+            for (i in rateInfo) {
+                console.log(i, rateInfo[i].date)
+                    //determine if month has already been pushed
+                    //console.log(breakdown[i].date, month, '?')
+                if (rateInfo[i].date === month) {
+                    console.log(month, 'Already Exists')
+                    var monthAlreadyExists = true;
+                } else {
+                    var monthAlreadyExists = false;
+                    console.log(month, 'Does not yet exist in breakdown')
+                }
+            }
+            if (rateInfo.length === 0) {
+                var monthAlreadyExists = false;
+                //console.log(month, 'Does not yet exist in rateInfo')
+            }
+            //console.log('monthAlreadyExists?', monthAlreadyExists)
+            if (monthAlreadyExists === false) {
+                //console.log(JSON.stringify(perDiemSearch.results.breakdown))
+                console.log('Pushing', month)
+                perDiemSearch.results.rateInfo.push({
+                    date: month,
+                    lodging: formatCurrency(lodgingRate),
+                    mie: formatCurrency(rate.meals)
+                })
+                console.log(perDiemSearch.results.rateInfo)
+
+            }
+
             //first day && not last day
             if (date.format('MM-DD-YYYY') === pdsd && pdsd !== pded) {
-                console.log()
                 console.log('First Day')
                     //set mie rate to 0.75
                 var mieRate = rate.meals * 0.75;
@@ -672,60 +705,60 @@ function lookUpRatesSubmit() {
     $('input[name="perdiemSearchVO.zip"').val($('#perdiem-zip').val())
     $('#perdiem-find-rates-form').submit();*/
 
-    var url = "http://www.gsa.gov/portal/category/100120?perdiemSearchVO.year="+$('#perdiem-rate-lookup-fiscal-year').val()+"&perdiemSearchVO.city="+$('#perdiem-city').val()+"&perdiemSearchVO.state="+fullState+"&perdiemSearchVO.zip="+$('#perdiem-zip').val()+"&resultName=getPerdiemRatesBySearchVO&currentCategory.categoryId=100120&x=44&y=13"
+    var url = "http://www.gsa.gov/portal/category/100120?perdiemSearchVO.year=" + $('#perdiem-rate-lookup-fiscal-year').val() + "&perdiemSearchVO.city=" + $('#perdiem-city').val() + "&perdiemSearchVO.state=" + fullState + "&perdiemSearchVO.zip=" + $('#perdiem-zip').val() + "&resultName=getPerdiemRatesBySearchVO&currentCategory.categoryId=100120&x=44&y=13"
 
 
     window.open(url)
 }
 
 var USStates = {
-  "al": "Alabama",
-  "ak": "Alaska",
-  "az": "Arizona",
-  "ar": "Arkansas",
-  "ca": "California",
-  "co": "Colorado",
-  "ct": "Connecticut",
-  "de": "Delaware",
-  "fl": "Florida",
-  "ga": "Georgia",
-  "hi": "Hawaii",
-  "id": "Idaho",
-  "il": "Illinois",
-  "in": "Indiana",
-  "ia": "Iowa",
-  "ks": "Kansas",
-  "ky": "Kentucky",
-  "la": "Louisiana",
-  "me": "Maine",
-  "md": "Maryland",
-  "ma": "Massachusetts",
-  "mi": "Michigan",
-  "mn": "Montana",
-  "ms": "Mississippi",
-  "mo": "Missouri",
-  "ne": "Nebraska",
-  "nv": "Nevada",
-  "nh": "New Hampshire",
-  "nj": "New Jersey",
-  "nm": "New Mexico",
-  "ny": "New York",
-  "nc": "North Carolina",
-  "nd": "North Dakota",
-  "oh": "Ohio",
-  "ok": "Oklahoma",
-  "or": "Oregon",
-  "pa": "Pennsylvania",
-  "ri": "Rhode Island",
-  "sc": "South Carolina",
-  "sd": "South Dakota",
-  "tn": "Tennessee",
-  "tx": "Texas",
-  "ut": "Utah",
-  "vt": "Vermont",
-  "va": "Virginia",
-  "wa": "Washington",
-  "wv": "West Virginia",
-  "wi": "Wisconsin",
-  "wy": "Wyoming"
+    "al": "Alabama",
+    "ak": "Alaska",
+    "az": "Arizona",
+    "ar": "Arkansas",
+    "ca": "California",
+    "co": "Colorado",
+    "ct": "Connecticut",
+    "de": "Delaware",
+    "fl": "Florida",
+    "ga": "Georgia",
+    "hi": "Hawaii",
+    "id": "Idaho",
+    "il": "Illinois",
+    "in": "Indiana",
+    "ia": "Iowa",
+    "ks": "Kansas",
+    "ky": "Kentucky",
+    "la": "Louisiana",
+    "me": "Maine",
+    "md": "Maryland",
+    "ma": "Massachusetts",
+    "mi": "Michigan",
+    "mn": "Montana",
+    "ms": "Mississippi",
+    "mo": "Missouri",
+    "ne": "Nebraska",
+    "nv": "Nevada",
+    "nh": "New Hampshire",
+    "nj": "New Jersey",
+    "nm": "New Mexico",
+    "ny": "New York",
+    "nc": "North Carolina",
+    "nd": "North Dakota",
+    "oh": "Ohio",
+    "ok": "Oklahoma",
+    "or": "Oregon",
+    "pa": "Pennsylvania",
+    "ri": "Rhode Island",
+    "sc": "South Carolina",
+    "sd": "South Dakota",
+    "tn": "Tennessee",
+    "tx": "Texas",
+    "ut": "Utah",
+    "vt": "Vermont",
+    "va": "Virginia",
+    "wa": "Washington",
+    "wv": "West Virginia",
+    "wi": "Wisconsin",
+    "wy": "Wyoming"
 }

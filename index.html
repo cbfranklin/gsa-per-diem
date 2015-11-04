@@ -246,17 +246,17 @@
                 </div>
             </div>
             <div class="well perdiem-trip-total">
-                <h4><strong>Daily Per Diem Rates:</strong></h4> {{#breakdown}} {{#isRate}}
+                <h4><strong>Daily Per Diem Rates:</strong></h4> {{#rateInfo}}
                 <p>{{date}} Lodging: ${{lodging}}</p>
                 <p>{{date}} M&amp;IE: ${{mie}}</p>
-                {{/isRate}} {{/breakdown}}
+                 {{/rateInfo}}
             </div>
             <div class="panel-group" id="perdiem-trip-breakdown-accordion" role="tablist" aria-multiselectable="true">
                 <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="headingOne">
                         <h4 class="panel-title">
         <a role="button" data-toggle="collapse" data-parent="#perdiem-trip-breakdown-accordion" href="#perdiem-trip-breakdown-accordion-content" aria-expanded="false" aria-controls="collapseOne">
-          Trip Breakdown <span class="glyphicon glyphicon-chevron-up"></span>
+          Trip Breakdown <span class="glyphicon glyphicon-chevron-down"></span>
       </a>
       </h4>
                     </div>
