@@ -120,14 +120,14 @@ function validateDates() {
     }
 
     function showError() {
-        $('#perdiem-dates-error').show()
-        $('#perdiem-dates-info').hide()
+        //$('#perdiem-dates-error').show()
+        //$('#perdiem-dates-info').hide()
         $('#perdiem-multiple-rates-check').addClass('disabled').attr('disabled', 'disabled');
     }
 
     function hideError() {
-        $('#perdiem-dates-error').hide()
-        $('#perdiem-dates-info').show()
+        //$('#perdiem-dates-error').hide()
+        //$('#perdiem-dates-info').show()
         $('#perdiem-multiple-rates-check').removeClass('disabled').removeAttr('disabled');
     }
 }
