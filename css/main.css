@@ -5,6 +5,7 @@ body {
 #perdiem-swiper {
     /*border: 1px solid #ccc;*/
     min-height: 500px;
+    width:100%;
 }
 
 #perdiem-swiper .btn-block{
