@@ -1,11 +1,48 @@
 body {
     margin-top: 10px;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+#perdiem-swiper .well, #perdiem-swiper .panel-group * {
+  -webkit-border-radius: 0 !important;
+     -moz-border-radius: 0 !important;
+          border-radius: 0 !important;
 }
 
 #perdiem-swiper {
     /*border: 1px solid #ccc;*/
     min-height: 500px;
     width:100%;
+}
+
+h1,h2,h3,h4,h5{
+    font-weight:bold;
+}
+
+.perdiem-unbold{
+    font-weight:normal;
+}
+
+
+#perdiem-swiper .panel-title{
+    color:#000;
+    font-weight:normal;
+}
+.perdiem-step{
+    margin-bottom:15px;
+    width:100%;
+}
+.perdiem-step-number {
+    border-radius: 50%;
+    width: 25px;
+    height: 25px; 
+    display:block;
+    float:left;
+    background:#3A45BF;
+    color:#fff;
+    text-align:center;
+    padding-top:2px;
+    margin-right:5px;
+    margin-top:-2px;
 }
 
 #perdiem-swiper .btn-block{
@@ -16,8 +53,22 @@ body {
     display:none;
 }
 
-.perdiem-trip-total{
-    background:#DFF0D8;
+#perdiem-state{
+    margin-bottom:10px;
+}
+
+.well-kakhi, .panel-kahki .panel-heading{
+    background:#EDEADF;
+}
+
+
+
+.well-info{
+    background:#d9edf7;
+}
+
+.well-info-bright{
+    background:#F1F6FB
 }
 
 div.hr {
@@ -66,4 +117,50 @@ div.hr span {
 @-webkit-keyframes spin2 {
     from { -webkit-transform: rotate(0deg); }
     to { -webkit-transform: rotate(360deg); }
+}
+
+.btn-perdiem-secondary { 
+  color: #000000; 
+  background-color: #E3EFF7; 
+  border-color: #CCDDE8; 
+} 
+ 
+.btn-perdiem-secondary:hover, 
+.btn-perdiem-secondary:focus, 
+.btn-perdiem-secondary:active, 
+.btn-perdiem-secondary.active, 
+.open .dropdown-toggle.btn-perdiem-secondary { 
+  color: #000000; 
+  background-color: #D0E6F5; 
+  border-color: #CCDDE8; 
+} 
+ 
+.btn-perdiem-secondary:active, 
+.btn-perdiem-secondary.active, 
+.open .dropdown-toggle.btn-perdiem-secondary { 
+  background-image: none; 
+} 
+ 
+.btn-perdiem-secondary.disabled, 
+.btn-perdiem-secondary[disabled], 
+fieldset[disabled] .btn-perdiem-secondary, 
+.btn-perdiem-secondary.disabled:hover, 
+.btn-perdiem-secondary[disabled]:hover, 
+fieldset[disabled] .btn-perdiem-secondary:hover, 
+.btn-perdiem-secondary.disabled:focus, 
+.btn-perdiem-secondary[disabled]:focus, 
+fieldset[disabled] .btn-perdiem-secondary:focus, 
+.btn-perdiem-secondary.disabled:active, 
+.btn-perdiem-secondary[disabled]:active, 
+fieldset[disabled] .btn-perdiem-secondary:active, 
+.btn-perdiem-secondary.disabled.active, 
+.btn-perdiem-secondary[disabled].active, 
+fieldset[disabled] .btn-perdiem-secondary.active { 
+  background-color: #E3EFF7; 
+  border-color: #CCDDE8; 
+} 
+ 
+.btn-perdiem-secondary .badge { 
+  color: #E3EFF7; 
+  background-color: #000000; 
 }

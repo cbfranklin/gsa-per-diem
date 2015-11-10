@@ -21,8 +21,10 @@
     <link rel="stylesheet" href="bower_components/animate.css/animate.css" />
     <!--<link rel="stylesheet" href="http://devastoweb.wip.gsa.gov:8090/resources/css/asto_1.1/all.css" />-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" />
+    <!--<link rel="stylesheet" href="css/all.css" />-->
     <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" />
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
@@ -31,14 +33,14 @@
             <div class="swiper-wrapper">
                 <!-- Slides -->
                 <div class="perdiem-step-1 swiper-slide">
-                    <h4>1. Choose a Location:</h4>
+                    <h4 class="perdiem-step"><span class="perdiem-step-number">1</span> Choose a Location:</h4>
                     <div id="perdiem-location-error" <div class="alert alert-danger" role="alert">
-                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        
                         <span class="sr-only">Error:</span> No results could be found for the location you've entered.
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <button data-loading-text="Getting Location..." id="perdiem-current-location" class="btn btn-default btn-block">Use Your Current Location <span class="glyphicon glyphicon-map-marker"></span></button>
+                            <button data-loading-text="Getting Location..." id="perdiem-current-location" class="btn btn-perdiem-secondary btn-block"><span class="glyphicon glyphicon-map-marker"></span> Use Your Current Location</button>
                         </div>
                     </div>
                     <div class="hr"><span>or</span></div>
@@ -113,21 +115,27 @@
                         </div>
                     </div>
                     <br>
-                    <button id="next" class="btn btn-primary btn-block disabled">Next Step <span class="glyphicon glyphicon-arrow-right" </span></button>
-                    <button id="perdiem-clear-location-form" class="btn btn-default btn-block">Reset <span class="glyphicon glyphicon-arrow-eraser" </span></button>
+                    <div class="row">
+                    <div class="col-xs-6">
+                    <button id="perdiem-clear-location-form" class="btn btn-default btn-block">Reset </button>
+                    </div>
+                    <div class="col-xs-6">
+                     <button id="next" class="btn btn-primary btn-block disabled">Next </button>
+                    </div>
+                    </div>
                 </div>
                 <div class="swiper-slide">
-                    <h4>2. Would You Like To:</h4>
+                    <h4 class="perdiem-step"><span class="perdiem-step-number">2</span> Would You Like To:</h4>
                     <br>
                     <div class="row">
-                        <div class="col-md-6">
-                            <button id="next" class="btn btn-primary btn-block btn-lg">Calculate Expenses <span class="glyphicon glyphicon-arrow-right" </span></button>
+                        <div class="col-sm-6">
+                            <button id="next" class="btn btn-primary btn-block">Calculate Expenses </button>
                         </div>
-                        <div class="col-md-6">
-                            <button id="perdiem-look-up-rates" class="btn btn-primary btn-block btn-lg">Look Up Rates <span class="glyphicon glyphicon-arrow-right" </span></button>
+                        <div class="col-sm-6">
+                            <button id="perdiem-look-up-rates" class="btn btn-primary btn-block">Look Up Rates </button>
                         </div>
-                        <div class="col-md-12">
-                            <button id="prev" class="btn btn-default btn-block"><span class="glyphicon glyphicon-arrow-left"></span> Prev Step</button>
+                        <div class="col-sm-6">
+                            <button id="prev" class="btn btn-default btn-block"> Back</button>
                         </div>
                     </div>
                     <div style="display:none">
@@ -144,15 +152,9 @@
                     </div>
                 </div>
                 <div class="swiper-slide">
-                    <h4>3. Date Range of Your Trip:</h4>
-                    <div id="perdiem-dates-info" <div class="alert alert-info" role="alert">
-                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                        <span class="sr-only">Warning:</span> Please enter your start and end dates of travel. Valid dates are between 10/1/2012 and 09/30/2016
-                    </div>
-                    <div id="perdiem-dates-error" <div class="alert alert-warning" role="alert">
-                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                        <span class="sr-only">Warning:</span> Please make sure the dates you have entered are valid.
-                    </div>
+                    <h4 class="perdiem-step"><span class="perdiem-step-number">3</span> Enter Travel Dates</h4><h5><span class="perdiem-unbold">(Valid dates are between 10/1/2012 and 09/30/2016)</span></h5>
+                    <div class="row">
+                    <div class="col-sm-6">
                     <div class="input-group date" id="perdiem-start-date-group">
                         <span class="input-group-addon" id="start-date">Start Date</span>
                         <input id="perdiem-start-date" type="text" class="form-control" placeholder="mm/dd/yy" aria-describedby="start-date">
@@ -160,7 +162,8 @@
                         <span class="glyphicon glyphicon-calendar"></span>
                         </span>
                     </div>
-                    <br>
+                    </div>
+                    <div class="col-sm-6">
                     <div class="input-group date" id="perdiem-end-date-group">
                         <span class="input-group-addon" id="end-date">End Date</span>
                         <input id="perdiem-end-date" type="text" class="form-control" placeholder="mm/dd/yy" aria-describedby="end-date">
@@ -168,24 +171,25 @@
                         <span class="glyphicon glyphicon-calendar"></span>
                         </span>
                     </div>
+                    </div></div>
                     <br>
                     <div id="perdiem-api-error">
                         <div class="alert alert-danger" role="alert">
-                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            
                             <span class="sr-only">Error:</span> The Per Diem API is not responding. Please try again later.
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-6">
-                            <button id="prev" class="btn btn-default btn-block"><span class="glyphicon glyphicon-arrow-left"></span> Prev Step</button>
+                        <div class="col-xs-6">
+                            <button id="prev" class="btn btn-default btn-block"> Back</button>
                         </div>
-                        <div class="col-sm-6">
-                            <button id="perdiem-multiple-rates-check" class="disabled btn btn-primary btn-block">Next Step <span class="glyphicon glyphicon-arrow-right" </span></button>
+                        <div class="col-xs-6">
+                            <button id="perdiem-multiple-rates-check" class="disabled btn btn-primary btn-block">Next </button>
                         </div>
                     </div>
                 </div>
                 <div class="swiper-slide">
-                    <h4>Fiscal Year</h4>
+                    <h4 class="perdiem-step"><span class="perdiem-step-number">3</span>Fiscal Year</h4>
                     <br>
                     <select id="perdiem-rate-lookup-fiscal-year" class="form-control swiper-no-swiping">
                         <option>2016</option>
@@ -196,20 +200,18 @@
                     </select>
                     <br>
                     <div class="row">
-                        <div class="col-sm-6">
-                            <button id="perdiem-to-step-2" class="btn btn-default btn-block"><span class="glyphicon glyphicon-arrow-left"></span> Prev Step</button>
+                        <div class="col-xs-6">
+                            <button id="perdiem-to-step-2" class="btn btn-default btn-block"> Back</button>
                         </div>
-                        <div class="col-sm-6">
-                            <button id="perdiem-look-up-rates-submit" class="btn btn-primary btn-block">Look Up Rates <span class="glyphicon glyphicon-arrow-right" </span></button>
+                        <div class="col-xs-6">
+                            <button id="perdiem-look-up-rates-submit" class="btn btn-primary btn-block">Look Up Rates </button>
                         </div>
                     </div>
-                </div>
-                <div class="perdiem-step-4 swiper-slide">
                 </div>
                 <div class="swiper-slide">
                     <div id="perdiem-results"></div>
                     <div class="panel-group" id="per-diem-terms-conditions-accordion" role="tablist" aria-multiselectable="true">
-                        <div class="panel panel-default">
+                        <div class="panel">
                             <div class="panel-heading" role="tab" id="headingOne">
                                 <h4 class="panel-title">
         <a role="button" data-toggle="collapse" data-parent="#per-diem-terms-conditions-accordion" href="#per-diem-terms-conditions-accordion-content" aria-expanded="true" aria-controls="collapseOne">
@@ -230,7 +232,10 @@
                             </div>
                         </div>
                     </div>
-                    <button id="perdiem-new-search" class="btn btn-primary btn-block">New Search <span class="glyphicon glyphicon-home" </span></button>
+                    <div class="row">
+                    <div class="col-sm-6">
+                    <button id="perdiem-new-search" class="btn btn-primary btn-block">New Search </button>
+                    </div></div>
                 </div>
             </div>
         </div>
@@ -239,18 +244,28 @@
     <div id="templates">
         <script type="template" class="calculator-results">
             {{#perDiemSearch}} {{#query}}
-            <h4><strong>Your Search for</strong>{{#city}} {{city}}{{/city}}{{#state}} {{state}}{{/state}}{{#zip}} {{zip}}{{/zip}},<strong> Using Rates for {{/query}}</strong><em>{{rates.fy1.rate.county}} including {{rates.fy1.rate.city}}{{#rates.fy2.rate.county}}{{^sameRate}} and {{rates.fy2.rate.county}} including {{rates.fy2.rate.county}}{{/sameRate}}{{/rates.fy2.rate.county}} </em>:</h4> {{#results}}
-            <div class="well perdiem-trip-total">
-                <h4><strong>Daily Per Diem Rates:</strong></h4> {{#rateInfo}}
+            <h4>Your Search for<span class="perdiem-unbold">{{#city}} {{city}}{{/city}}{{#state}} {{state}}{{/state}}{{#zip}} {{zip}}{{/zip}}</span></h4><h5>Using Rates for {{/query}}<span class="perdiem-unbold">{{rates.fy1.rate.county}} including {{rates.fy1.rate.city}}{{#rates.fy2.rate.county}}{{^sameRate}} and {{rates.fy2.rate.county}} including {{rates.fy2.rate.county}}{{/sameRate}}{{/rates.fy2.rate.county}}:</span></h5> {{#results}}
+            <div class="well well-info-bright">
+            <div class="row">
+            <div class="col-sm-3">
+                <h4><strong>Daily Per Diem Rates:</strong></h4> 
+                </div>
+                <div class="col-sm-9">
+                <h4></h4>
+                {{#rateInfo}}
                 <p>{{date}} Lodging: ${{lodging}}</p>
                 <p>{{date}} M&amp;IE: ${{mie}}</p>
                 {{/rateInfo}}
+                </div>
+                </div>
             </div>
-            <div class="well perdiem-trip-total">
-                <h4><strong>Estimated Trip Total: </strong>${{totalFormatted}}</h4>
+            <div class="well well-info">
+            <div class="row"><div class="col-sm-3">
+                <h4>Estimated Trip Total:</h4>
+                </div><div class="col-sm-9"><h4>${{totalFormatted}}</h4></div></div>
             </div>
             <div class="panel-group" id="perdiem-trip-breakdown-accordion" role="tablist" aria-multiselectable="true">
-                <div class="panel panel-default">
+                <div class="panel panel-info">
                     <div class="panel-heading" role="tab" id="headingOne">
                         <h4 class="panel-title">
         <a role="button" data-toggle="collapse" data-parent="#perdiem-trip-breakdown-accordion" href="#perdiem-trip-breakdown-accordion-content" aria-expanded="false" aria-controls="collapseOne">
@@ -270,14 +285,17 @@
                                 <tbody>
                                     {{#breakdown}}
                                     <tr>
-                                        <td>{{date}}{{#isRate}} Rate{{/isRate}}</td>
+                                        <td>{{date}}{{#isRate}} Rate{{/isRate}}{{#fullDate}} ({{fullDate}}){{/fullDate}}</td>
                                         <td>{{#lodging}}${{lodging}}{{/lodging}}{{^lodging}}-{{/lodging}}</td>
-                                        <td>${{mie}}</td>
+                                        <td>${{mie}}{{#isFirstLast}}*{{/isFirstLast}}</td>
                                         <td>${{total}}</td>
                                     </tr>
                                     {{/breakdown}}
                                 </tbody>
                             </table>
+                            <div class="well well-kakhi">
+                        *The first and last calendar dates of M&amp;IE are calculated at 75%
+                    </div>
                         </div>
                     </div>
                 </div>
@@ -308,10 +326,10 @@
             <br>
             <div class="row">
                 <div class="col-sm-6">
-                    <button id="perdiem-to-date-range" class="btn btn-default btn-block"><span class="glyphicon glyphicon-arrow-left"></span> Prev Step</button>
+                    <button id="perdiem-to-date-range" class="btn btn-default btn-block"> Back</button>
                 </div>
                 <div class="col-sm-6">
-                    <button id="perdiem-rates-selected" class="btn btn-primary btn-block disabled" disabled>Next Step <span class="glyphicon glyphicon-arrow-right" </span></button>
+                    <button id="perdiem-rates-selected" class="btn btn-primary btn-block disabled" disabled>Next </button>
                 </div>
             </div>
             {{/rates}}

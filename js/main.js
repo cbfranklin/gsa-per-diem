@@ -115,28 +115,28 @@ function validateDates() {
     var endDateVal = $('#perdiem-end-date').val()
     if (startDateVal.match(valid) && endDateVal.match(valid) && moment(startDateVal, 'MM/DD/YYYY').isValid() && moment(endDateVal, 'MM/DD/YYYY').isValid()) {
         if (moment(startDateVal, 'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd) && moment(endDateVal, 'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd)) {
-            hideError()
+            enableNext()
             console.log('Start and/or End Dates are Valid!')
         } else if (moment(startDateVal, 'MM/DD/YYYY').isBefore(moment(endDateVal, 'MM/DD/YYYY')) || startDateVal === endDateVal) {
-            hideError()
+            enableNext()
             console.log('Start and/or End Dates are Valid!')
         } else {
-            showError()
+            disableNext()
             console.log('Start and/or End Dates are Out of Range!')
         }
     } else {
-        showError()
+        disableNext()
         console.log('Start and/or End Date are Not Correctly Formatted!')
 
     }
 
-    function showError() {
+    function disableNext() {
         //$('#perdiem-dates-error').show()
         //$('#perdiem-dates-info').hide()
         $('#perdiem-multiple-rates-check').addClass('disabled').attr('disabled', 'disabled');
     }
 
-    function hideError() {
+    function enableNext() {
         //$('#perdiem-dates-error').hide()
         //$('#perdiem-dates-info').show()
         $('#perdiem-multiple-rates-check').removeClass('disabled').removeAttr('disabled');
@@ -585,6 +585,7 @@ function calculateRates() {
                 var totalRate = lodgingRate + mieRate
                 perDiemSearch.results.breakdown.push({
                         date: 'First Day',
+                        fullDate: date.format('MM/DD/YY'),
                         lodging: formatCurrency(lodgingRate),
                         mie: formatCurrency(mieRate),
                         isFirstLast: true,
@@ -610,6 +611,7 @@ function calculateRates() {
                 //console.log('Pushing Last Day...')
                 perDiemSearch.results.breakdown.push({
                         date: dateText,
+                        fullDate: date.format('MM/DD/YY'),
                         mie: formatCurrency(mieRate),
                         lodging: 0,
                         isFirstLast: true,
