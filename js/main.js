@@ -345,16 +345,23 @@ function checkForMultipleRates() {
             } else {
                 console.log('AJAX Call(s) Successful!')
                     //if multiple rates available, show multiple rates UI
+                    console.log(perDiemSearch.rates.fy1)
+                    if(perDiemSearch.rates.fy2)  console.log(perDiemSearch.rates.fy2)
+                   
                 if (perDiemSearch.rates.fy2) {
                     if (perDiemSearch.rates.fy1.multiple || perDiemSearch.rates.fy2.multiple) {
+                        console.log(displayRates)
                         displayRates()
                     } else {
+                        console.log(calculateRates)
                         calculateRates()
                     }
                 } else {
                     if (perDiemSearch.rates.fy1.multiple) {
+                        console.log(displayRates)
                         displayRates()
                     } else {
+                        console.log(dcalculateRates)
                         calculateRates()
                     }
                 }
@@ -380,7 +387,7 @@ function checkForMultipleRates() {
                 var rendered = Mustache.render(template, {
                     rates: perDiemSearch.rates
                 });
-                $('.perdiem-step-4').html(rendered);
+                $('.perdiem-choose-rates').html(rendered);
                 perDiemSwiper.slideTo(4)
                 $('#perdiem-multiple-rates-check').html('Next Step <span class="glyphicon glyphicon-arrow-right"></span>')
             }
@@ -709,7 +716,6 @@ function ratesSelected() {
         console.log('fy2 does not exist')
     }
 
-    //temp
     calculateRates()
 }
 
