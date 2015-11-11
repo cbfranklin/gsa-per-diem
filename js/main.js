@@ -140,7 +140,7 @@ function validateDates() {
             
         }
         if(!endDateVal.match(valid) || !endDate.isValid()){
-            if(startDateVal !== ''){
+            if(endDateVal !== ''){
                 $('#perdiem-end-date').addClass('perdiem-invalid')
             }
         }
