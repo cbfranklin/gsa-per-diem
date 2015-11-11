@@ -5,10 +5,13 @@ var perDiemSwiper,
     },
     apiRoot = 'http://dev.oagov.com:3334/proxy',
     validDatesBegin = '10/1/2012',
+    //must be updated when API is updated
     validDatesEnd = '09/30/2016';
 
+//doc ready
 $(function() {
     console.log('Initiating Per Diem App...')
+    //set valid search dates to moment objs
     validDatesBegin = moment(validDatesBegin, 'MM/DD/YYYY');
     validDatesEnd = moment(validDatesEnd, 'MM/DD/YYYY')
         //init swiper
@@ -16,15 +19,16 @@ $(function() {
         onlyExternal: true,
         a11y: true
     });
-
+    //global ajax settings
     $.ajaxSetup({
         timeout: 10000
     });
-
+    //test for IE11, print userAgent
    var isIE11 = !!navigator.userAgent.match(/Trident\/7.0;(.*)rv(:*)11/);
-   console.log('UserAgent',navigator.userAgent)
-   console.log('Is',isIE11)
+   console.log('UserAgent:',navigator.userAgent)
+   console.log('Is IE11?:',isIE11)
 
+   //init date pickers
     $('#perdiem-start-date-group').datetimepicker({
         format: 'MM/DD/YYYY',
         keepInvalid: true,
@@ -42,48 +46,62 @@ $(function() {
         debug: isIE11
     });
 
-
+    //enable/disable functionality
     $('#perdiem-swiper').on('click', '#next:not(.disabled)', function() {
         perDiemSwiper.slideNext()
     })
     $('#perdiem-swiper').on('click', '#prev:not(.disabled)', function() {
         perDiemSwiper.slidePrev()
     })
-
-    $('#perdiem-clear-location-form').on('click', clearLocationForm)
-
-    $('#perdiem-new-search').on('click', newSearch)
-
-    $('#perdiem-multiple-rates-check').on('click', checkForMultipleRates);
+    //geolocation
     $('#perdiem-current-location').on('click', useMyCurrentLocation);
 
+    //clear location form
+    $('#perdiem-clear-location-form').on('click', clearLocationForm);
+
+    //reset search, back to first screen
+    $('#perdiem-new-search').on('click', newSearch);
+
+    //perform ajax calls, check for multiple rates
+    $('#perdiem-multiple-rates-check').on('click', checkForMultipleRates);
+
+    //validate multiple rate selection
     $('#perdiem-swiper').on('change', '#perdiem-fiscal-year-1,#perdiem-fiscal-year-2', validateMultipleRates);
+    
+    //perform calculation with selected rates
     $('#perdiem-swiper').on('click', '#perdiem-rates-selected', ratesSelected);
 
     //validate location
     $('#perdiem-city,#perdiem-zip').on('keyup', validateLocationParams)
+    $('#perdiem-state').on('change', validateLocationParams)
     validateLocationParams();
 
-    //validate date entry
+    //validate dates
     $('#perdiem-start-date,#perdiem-end-date').on('keyup', validateDates)
     $('#perdiem-slide-dates:not(input)').on('click', validateDates)
     $('#perdiem-start-date-group').on('dp.change', validateDates)
     $('#perdiem-end-date-group').on('dp.change', validateDates)
     validateDates();
 
-    $('#perdiem-state').on('change', validateLocationParams)
-
+    //to date selection
     $('#perdiem-look-up-rates').on('click', function() {
         perDiemSwiper.slideTo(3)
     })
+
+    //to calculate/lookup selection
     $('#perdiem-to-step-2').on('click', function() {
         perDiemSwiper.slideTo(1)
     })
+
+    //on to date select
     $('#perdiem-swiper').on('click', '#perdiem-to-date-range', function() {
         perDiemSwiper.slideTo(2)
     })
+
+    //launch gsa.gov rate lookup
     $('#perdiem-look-up-rates-submit').on('click', lookUpRatesSubmit);
 
+    //overflow fix
     setTimeout(function(){
         perDiemSwiper.onResize();
     },250)
@@ -105,6 +123,7 @@ function clearLocationForm() {
     $('#perdiem-zip').val('');
     $('#perdiem-city').val('');
     validateLocationParams();
+    $('#perdiem-current-location').focus();
 }
 
 function clearDateForm() {
@@ -173,6 +192,8 @@ function validateDates() {
 }
 
 function validateLocationParams() {
+    resetErrors();
+    var validZIP = /\d{5}/;
     console.log('Validating Location...')
         //if everything is blank
     if ($('#perdiem-city').val() === '' && $('#perdiem-state').val() === '' && $('#perdiem-zip').val().length < 5) {
@@ -182,7 +203,7 @@ function validateLocationParams() {
             //if not everything is blank
     } else {
         //but zip and state are blank (city only)
-        if ($('#perdiem-zip').val().length < 5 && $('#perdiem-state').val() === '') {
+        if (!$('#perdiem-zip').val().match(validZIP) && $('#perdiem-state').val() === '') {
             //disabled
             //console.log('No Zip or State')
             $('.perdiem-step-1 #next').addClass('disabled').attr('disabled', 'disabled');
