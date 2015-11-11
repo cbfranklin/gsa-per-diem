@@ -15,12 +15,6 @@ $(function() {
     perDiemSwiper = new Swiper('#perdiem-swiper', {
         onlyExternal: true,
         a11y: true
-            /*,
-                    effect: 'cube',
-                    cube: {
-                        slideShadows: false,
-                        shadow: false
-                    }*/
     });
 
     $.ajaxSetup({
@@ -296,7 +290,7 @@ function checkForMultipleRates() {
                 })
                 .fail(function() {
                     console.log('FY1 AJAX Call Failed!')
-                    $('#perdiem-multiple-rates-check').html('Next <span class="glyphicon glyphicon-arrow-right"></span>')
+                    $('#perdiem-multiple-rates-check').html('Next')
                     reqError = true;
                     $('#perdiem-api-error').show()
                 })
@@ -348,7 +342,7 @@ function checkForMultipleRates() {
                     })
                     .fail(function() {
                         console.log('FY2 AJAX Call Failed!')
-                        $('#perdiem-multiple-rates-check').html('Next <span class="glyphicon glyphicon-arrow-right"></span>')
+                        $('#perdiem-multiple-rates-check').html('Next')
                         $('#perdiem-api-error').show()
                         reqError = true;
                     })
@@ -403,7 +397,7 @@ function checkForMultipleRates() {
                 });
                 $('.perdiem-choose-rates').html(rendered);
                 perDiemSwiper.slideTo(4)
-                $('#perdiem-multiple-rates-check').html('Next <span class="glyphicon glyphicon-arrow-right"></span>')
+                $('#perdiem-multiple-rates-check').html('Next')
             }
         });
     }
@@ -464,7 +458,6 @@ function useMyCurrentLocation() {
             } else {
                 //error
                 console.log('Geocode Error!')
-                $('')
             }
         });
     }
@@ -495,14 +488,14 @@ function useMyCurrentLocation() {
 function locationError() {
     console.log('No Results for Location...')
     $('#perdiem-location-error').show()
-    $('#perdiem-multiple-rates-check').html('Next <span class="glyphicon glyphicon-arrow-right"></span>')
+    $('#perdiem-multiple-rates-check').html('Next')
     perDiemSwiper.slideTo(0)
 }
 
 
 function calculateRates() {
     $('#perdiem-multiple-rates-check').html('Next <span class="glyphicon glyphicon-refresh spinning"></span>')
-    $('#perdiem-multiple-rates-check,#perdiem-rates-selected').html('Next <span class="glyphicon glyphicon-arrow-right"></span>')
+    $('#perdiem-multiple-rates-check,#perdiem-rates-selected').html('Next')
     perDiemSearch.results = {
         breakdown: [],
         rateInfo: [],
@@ -560,17 +553,17 @@ function calculateRates() {
             //rate info now separate from breakdown
             var rateInfo = perDiemSearch.results.rateInfo;
             //loop through
-            console.log('rateInfo Length:', rateInfo.length)
+            //console.log('rateInfo Length:', rateInfo.length)
             for (i in rateInfo) {
-                console.log(i, rateInfo[i].date)
+                //console.log(i, rateInfo[i].date)
                     //determine if month has already been pushed
                     //console.log(breakdown[i].date, month, '?')
                 if (rateInfo[i].date === month) {
-                    console.log(month, 'Already Exists')
+                    //console.log(month, 'Already Exists')
                     var monthAlreadyExists = true;
                 } else {
                     var monthAlreadyExists = false;
-                    console.log(month, 'Does not yet exist in breakdown')
+                    //console.log(month, 'Does not yet exist in breakdown')
                 }
             }
             if (rateInfo.length === 0) {
@@ -580,13 +573,13 @@ function calculateRates() {
             //console.log('monthAlreadyExists?', monthAlreadyExists)
             if (monthAlreadyExists === false) {
                 //console.log(JSON.stringify(perDiemSearch.results.breakdown))
-                console.log('Pushing', month)
+                //console.log('Pushing', month)
                 perDiemSearch.results.rateInfo.push({
                     date: month,
                     lodging: formatCurrency(lodgingRate),
                     mie: formatCurrency(rate.meals)
                 })
-                console.log(perDiemSearch.results.rateInfo)
+                //console.log(perDiemSearch.results.rateInfo)
 
             }
 
@@ -717,7 +710,7 @@ function ratesSelected() {
         perDiemSearch.rates.fy1.rate = perDiemSearch.rates.fy1.rates[m]
         console.log('User Selected:', $('#perdiem-fiscal-year-1 option:selected').text(), 'For FY', perDiemSearch.rates.fy1.year)
     } else {
-        console.log('fy1 no multiple')
+        //console.log('fy1 no multiple')
     }
     if (perDiemSearch.rates.fy2) {
         //console.log('fy2 exists')
@@ -728,7 +721,7 @@ function ratesSelected() {
             console.log('User Selected:', $('#perdiem-fiscal-year-2 option:selected').text(), 'For FY', perDiemSearch.rates.fy2.year)
         }
     } else {
-        console.log('fy2 does not exist')
+        //console.log('fy2 does not exist')
     }
 
     calculateRates()
@@ -740,15 +733,7 @@ function updateProgress(n) {
 
 function lookUpRatesSubmit() {
     var fullState = USStates[$('#perdiem-state').val().toLowerCase()];
-    /*$('input[name="perdiemSearchVO.year"]').val($('#perdiem-rate-lookup-fiscal-year').val())
-    $('input[name="perdiemSearchVO.city"').val($('#perdiem-city').val())
-    $('input[name="perdiemSearchVO.state"').val(fullState)
-    $('input[name="perdiemSearchVO.zip"').val($('#perdiem-zip').val())
-    $('#perdiem-find-rates-form').submit();*/
-
-    var url = "http://www.gsa.gov/portal/category/100120?perdiemSearchVO.year=" + $('#perdiem-rate-lookup-fiscal-year').val() + "&perdiemSearchVO.city=" + $('#perdiem-city').val() + "&perdiemSearchVO.state=" + fullState + "&perdiemSearchVO.zip=" + $('#perdiem-zip').val() + "&resultName=getPerdiemRatesBySearchVO&currentCategory.categoryId=100120&x=44&y=13"
-
-
+    var url = "http://www.gsa.gov/portal/category/100120?perdiemSearchVO.year=" + $('#perdiem-rate-lookup-fiscal-year').val() + "&perdiemSearchVO.city=" + $('#perdiem-city').val() + "&perdiemSearchVO.state=" + fullState + "&perdiemSearchVO.zip=" + $('#perdiem-zip').val() + "&resultName=getPerdiemRatesBySearchVO&currentCategory.categoryId=100120&x=44&y=13";
     window.open(url)
 }
 
