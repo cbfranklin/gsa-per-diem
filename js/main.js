@@ -51,7 +51,7 @@ $(function() {
     $('#perdiem-multiple-rates-check').on('click', checkForMultipleRates);
     $('#perdiem-current-location').on('click', useMyCurrentLocation);
 
-    $('#perdiem-swiper').on('change','#perdiem-fiscal-year-1,#perdiem-fiscal-year-2',validateMultipleRates);
+    $('#perdiem-swiper').on('change', '#perdiem-fiscal-year-1,#perdiem-fiscal-year-2', validateMultipleRates);
     $('#perdiem-swiper').on('click', '#perdiem-rates-selected', ratesSelected);
 
     //validate location
@@ -99,35 +99,46 @@ function clearDateForm() {
     validateDates();
 }
 
-function validateMultipleRates(){
+function validateMultipleRates() {
     console.log('Validating Rates...')
-    if($('#perdiem-fiscal-year-1').val() === '' && $('#perdiem-fiscal-year-2').val()){
+    if ($('#perdiem-fiscal-year-1').val() === '' && $('#perdiem-fiscal-year-2').val()) {
         $('#perdiem-rates-selected').addClass('disabled').attr('disabled', 'disabled');
-    }
-    else{
-       $('#perdiem-rates-selected').removeClass('disabled').removeAttr('disabled'); 
+    } else {
+        $('#perdiem-rates-selected').removeClass('disabled').removeAttr('disabled');
     }
 }
 
 function validateDates() {
     var valid = /\d{1,2}\/\d{1,2}\/\d{4}/;
-    var startDateVal = $('#perdiem-start-date').val()
-    var endDateVal = $('#perdiem-end-date').val()
-    if (startDateVal.match(valid) && endDateVal.match(valid) && moment(startDateVal, 'MM/DD/YYYY').isValid() && moment(endDateVal, 'MM/DD/YYYY').isValid()) {
-        if (moment(startDateVal, 'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd) && moment(endDateVal, 'MM/DD/YYYY').isBetween(validDatesBegin, validDatesEnd)) {
-            enableNext()
-            console.log('Start and/or End Dates are Valid!')
-        } else if (moment(startDateVal, 'MM/DD/YYYY').isBefore(moment(endDateVal, 'MM/DD/YYYY')) || startDateVal === endDateVal) {
-            enableNext()
-            console.log('Start and/or End Dates are Valid!')
+    var startDateVal = $('#perdiem-start-date').val();
+    var endDateVal = $('#perdiem-end-date').val();
+    var startDate = moment(startDateVal, 'MM/DD/YYYY');
+    var endDate = moment(endDateVal, 'MM/DD/YYYY');
+
+
+    //text is valid and dates are valid
+    if (startDateVal.match(valid) && endDateVal.match(valid) && startDate.isValid() && endDate.isValid()) {
+        //dates are in acceptable range (THIS IS NOT INCLUSIVE)
+        if (startDate.isBetween(validDatesBegin, validDatesEnd) && endDate.isBetween(validDatesBegin, validDatesEnd)) {
+            //start is before or equal to end
+            if (startDate.isBefore(endDate) || startDate.isSame(endDate)) {
+                enableNext()
+                $('#perdiem-start-date').removeClass('perdiem-invalid')
+                $('#perdiem-end-date').removeClass('perdiem-invalid')
+            } else {
+                disableNext()
+            }
         } else {
             disableNext()
-            console.log('Start and/or End Dates are Out of Range!')
         }
     } else {
         disableNext()
-        console.log('Start and/or End Date are Not Correctly Formatted!')
-
+        if(!startDateVal.match(valid) || !startDate.isValid()){
+            $('#perdiem-start-date').addClass('perdiem-invalid')
+        }
+        if(!endDateVal.match(valid) || !endDate.isValid()){
+            $('#perdiem-end-date').addClass('perdiem-invalid')
+        }
     }
 
     function disableNext() {
@@ -345,7 +356,7 @@ function checkForMultipleRates() {
             } else {
                 console.log('AJAX Call(s) Successful!')
                     //if multiple rates available, show multiple rates UI
-                   
+
                 if (perDiemSearch.rates.fy2) {
                     if (perDiemSearch.rates.fy1.multiple || perDiemSearch.rates.fy2.multiple) {
                         displayRates()
