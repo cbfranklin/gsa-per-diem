@@ -56,6 +56,10 @@ h5 {
     margin-top: -2px;
 }
 
+#perdiem-trip-breakdown-accordion-content .panel-body{
+  padding:0px;
+}
+
 .perdiem-invalid {
     -webkit-box-shadow: 0px 0px 1px 1px rgba(255, 0, 0, 0.7)!important;
     -moz-box-shadow: 0px 0px 1px 1px rgba(255, 0, 0, 0.7)!important;
