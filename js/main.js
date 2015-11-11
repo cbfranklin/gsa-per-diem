@@ -77,6 +77,10 @@ $(function() {
         perDiemSwiper.slideTo(2)
     })
     $('#perdiem-look-up-rates-submit').on('click', lookUpRatesSubmit);
+
+    setTimeout(function(){
+        perDiemSwiper.onResize();
+    },250)
 })
 
 function newSearch() {
