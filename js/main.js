@@ -23,11 +23,19 @@ $(function() {
 
     $('#perdiem-start-date-group').datetimepicker({
         format: 'MM/DD/YYYY',
-        keepInvalid: true
+        keepInvalid: true,
+        minDate: validDatesBegin,
+        maxDate: validDatesEnd,
+        useCurrent: true,
+        debug: true
     });
     $('#perdiem-end-date-group').datetimepicker({
         format: 'MM/DD/YYYY',
-        keepInvalid: true
+        keepInvalid: true,
+        minDate: validDatesBegin,
+        maxDate: validDatesEnd,
+        useCurrent: true,
+        debug: true
     });
 
 
@@ -84,6 +92,10 @@ function newSearch() {
     perDiemSwiper.slideTo(0)
 }
 
+function resetErrors(){
+    $('.perdiem-error').hide();
+}
+
 function clearLocationForm() {
     $('#perdiem-state').val('');
     $('#perdiem-zip').val('');
@@ -107,7 +119,8 @@ function validateMultipleRates() {
 }
 
 function validateDates() {
-    var valid = /\d{1,2}\/\d{1,2}\/\d{4}/;
+    resetErrors();
+    var valid = /\d{1,2}\/\d{1,2}\/\d{2,4}/;
     var startDateVal = $('#perdiem-start-date').val();
     var endDateVal = $('#perdiem-end-date').val();
     var startDate = moment(startDateVal, 'MM/DD/YYYY');
@@ -124,6 +137,7 @@ function validateDates() {
                 $('#perdiem-start-date').removeClass('perdiem-invalid')
                 $('#perdiem-end-date').removeClass('perdiem-invalid')
             } else {
+                $('#perdiem-end-before-start').show();
                 disableNext()
             }
         } else {
@@ -145,15 +159,12 @@ function validateDates() {
     }
 
     function disableNext() {
-        //$('#perdiem-dates-error').show()
-        //$('#perdiem-dates-info').hide()
         $('#perdiem-multiple-rates-check').addClass('disabled').attr('disabled', 'disabled');
     }
 
     function enableNext() {
-        //$('#perdiem-dates-error').hide()
-        //$('#perdiem-dates-info').show()
         $('#perdiem-multiple-rates-check').removeClass('disabled').removeAttr('disabled');
+        resetErrors()
     }
 }
 
@@ -184,8 +195,7 @@ function validateLocationParams() {
 
 function checkForMultipleRates() {
     $('#perdiem-multiple-rates-check').html('Next <span class="glyphicon glyphicon-refresh spinning"></span>')
-    $('#perdiem-location-error').hide()
-    $('#perdiem-api-error').hide();
+    resetErrors()
     //what fiscal year is start date
     perDiemSearch.startDate = moment($('#perdiem-start-date').val(), 'MM/DD/YYYY')
     if (perDiemSearch.startDate.month() > 8) {

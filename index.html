@@ -14,7 +14,7 @@
     <script src="bower_components/swiper/dist/js/swiper.jquery.js"></script>
     <script src="bower_components/moment/moment.js"></script>
     <!--<script src="bower_components/moment-timezone/moment-timezone.js"></script>-->
-    <script src="bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js"></script>
     <script src="bower_components/mustache/mustache.js"></script>
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="bower_components/swiper/dist/css/swiper.min.css" />
@@ -34,8 +34,11 @@
                 <!-- Slides -->
                 <div class="perdiem-step-1 swiper-slide">
                     <h4 class="perdiem-step"><span class="perdiem-step-number">1</span> Choose a Location:</h4>
-                    <div id="perdiem-location-error" <div class="alert alert-danger" role="alert">
-                        <span class="sr-only">Error:</span> No results could be found for the location you've entered.
+                    <div id="perdiem-location-error" class="perdiem-error">
+                        <div class="alert alert-danger" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            <span class="sr-only">Error:</span> No results could be found for the location you've entered.
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
@@ -153,8 +156,8 @@
                     </div>
                 </div>
                 <div class="swiper-slide">
-                    <h4 class="perdiem-step"><span class="perdiem-step-number">3</span> Enter Travel Dates</h4>
-                    <h5><span class="perdiem-unbold">(Valid dates are between 10/1/2012 and 09/30/2016)</span></h5>
+                    <h4 class="perdiem-step"><span class="perdiem-step-number">3</span> Enter Travel Dates:</h4>
+                    <h5><span class="perdiem-unbold">(Rates are available between 10/1/2012 and 09/30/2016)</span></h5>
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="input-group date" id="perdiem-start-date-group">
@@ -175,9 +178,15 @@
                             </div>
                         </div>
                     </div>
-                    <br>
-                    <div id="perdiem-api-error">
+                    <div id="perdiem-end-before-start" class="perdiem-error">
                         <div class="alert alert-danger" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            <span class="sr-only">Error:</span> The End Date of your trip can not occur before the Start Date.
+                        </div>
+                    </div>
+                    <div id="perdiem-api-error" class="perdiem-error">
+                        <div class="alert alert-danger" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             <span class="sr-only">Error:</span> The Per Diem API is not responding. Please try again later.
                         </div>
                     </div>

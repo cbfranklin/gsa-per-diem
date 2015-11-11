@@ -61,7 +61,7 @@ border: 1px solid red!important;
     margin-bottom:10px;
 }
 
-#perdiem-location-error,#perdiem-dates-error,#perdiem-api-error{
+.perdiem-error{
     display:none;
 }
 
