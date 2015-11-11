@@ -28,7 +28,7 @@ h5 {
     font-weight: normal;
 }
 
-#perdiem-start-date-group {
+#perdiem-start-date-group, #perdiem-end-date-group {
     margin-bottom: 10px;
 }
 
