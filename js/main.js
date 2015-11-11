@@ -134,10 +134,15 @@ function validateDates() {
     } else {
         disableNext()
         if(!startDateVal.match(valid) || !startDate.isValid()){
-            $('#perdiem-start-date').addClass('perdiem-invalid')
+            if(startDateVal !== ''){
+                $('#perdiem-start-date').addClass('perdiem-invalid')
+            }
+            
         }
         if(!endDateVal.match(valid) || !endDate.isValid()){
-            $('#perdiem-end-date').addClass('perdiem-invalid')
+            if(startDateVal !== ''){
+                $('#perdiem-end-date').addClass('perdiem-invalid')
+            }
         }
     }
 
