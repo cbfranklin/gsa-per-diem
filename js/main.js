@@ -21,7 +21,9 @@ $(function() {
         timeout: 10000
     });
 
-   var isIE11 = !!navigator.userAgent.match(/Trident\/7.0; rv 11/);
+   var isIE11 = !!navigator.userAgent.match(/Trident\/7.0;(.*)rv(:*)11/);
+   console.log('UserAgent',navigator.userAgent)
+   console.log('isIE11',isIE11)
 
     $('#perdiem-start-date-group').datetimepicker({
         format: 'MM/DD/YYYY',
