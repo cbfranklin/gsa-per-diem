@@ -169,7 +169,7 @@ function validateLocationParams() {
 }
 
 function checkForMultipleRates() {
-    $('#perdiem-multiple-rates-check').html('Next Step <span class="glyphicon glyphicon-refresh spinning"></span>')
+    $('#perdiem-multiple-rates-check').html('Next <span class="glyphicon glyphicon-refresh spinning"></span>')
     $('#perdiem-location-error').hide()
     $('#perdiem-api-error').hide();
     //what fiscal year is start date
@@ -276,7 +276,7 @@ function checkForMultipleRates() {
                 })
                 .fail(function() {
                     console.log('FY1 AJAX Call Failed!')
-                    $('#perdiem-multiple-rates-check').html('Next Step <span class="glyphicon glyphicon-arrow-right"></span>')
+                    $('#perdiem-multiple-rates-check').html('Next <span class="glyphicon glyphicon-arrow-right"></span>')
                     reqError = true;
                     $('#perdiem-api-error').show()
                 })
@@ -328,7 +328,7 @@ function checkForMultipleRates() {
                     })
                     .fail(function() {
                         console.log('FY2 AJAX Call Failed!')
-                        $('#perdiem-multiple-rates-check').html('Next Step <span class="glyphicon glyphicon-arrow-right"></span>')
+                        $('#perdiem-multiple-rates-check').html('Next <span class="glyphicon glyphicon-arrow-right"></span>')
                         $('#perdiem-api-error').show()
                         reqError = true;
                     })
@@ -345,23 +345,17 @@ function checkForMultipleRates() {
             } else {
                 console.log('AJAX Call(s) Successful!')
                     //if multiple rates available, show multiple rates UI
-                    console.log(perDiemSearch.rates.fy1)
-                    if(perDiemSearch.rates.fy2)  console.log(perDiemSearch.rates.fy2)
                    
                 if (perDiemSearch.rates.fy2) {
                     if (perDiemSearch.rates.fy1.multiple || perDiemSearch.rates.fy2.multiple) {
-                        console.log(displayRates)
                         displayRates()
                     } else {
-                        console.log(calculateRates)
                         calculateRates()
                     }
                 } else {
                     if (perDiemSearch.rates.fy1.multiple) {
-                        console.log(displayRates)
                         displayRates()
                     } else {
-                        console.log(dcalculateRates)
                         calculateRates()
                     }
                 }
@@ -389,7 +383,7 @@ function checkForMultipleRates() {
                 });
                 $('.perdiem-choose-rates').html(rendered);
                 perDiemSwiper.slideTo(4)
-                $('#perdiem-multiple-rates-check').html('Next Step <span class="glyphicon glyphicon-arrow-right"></span>')
+                $('#perdiem-multiple-rates-check').html('Next <span class="glyphicon glyphicon-arrow-right"></span>')
             }
         });
     }
@@ -481,14 +475,14 @@ function useMyCurrentLocation() {
 function locationError() {
     console.log('No Results for Location...')
     $('#perdiem-location-error').show()
-    $('#perdiem-multiple-rates-check').html('Next Step <span class="glyphicon glyphicon-arrow-right"></span>')
+    $('#perdiem-multiple-rates-check').html('Next <span class="glyphicon glyphicon-arrow-right"></span>')
     perDiemSwiper.slideTo(0)
 }
 
 
 function calculateRates() {
-    $('#perdiem-multiple-rates-check').html('Next Step <span class="glyphicon glyphicon-refresh spinning"></span>')
-    $('#perdiem-multiple-rates-check,#perdiem-rates-selected').html('Next Step <span class="glyphicon glyphicon-arrow-right"></span>')
+    $('#perdiem-multiple-rates-check').html('Next <span class="glyphicon glyphicon-refresh spinning"></span>')
+    $('#perdiem-multiple-rates-check,#perdiem-rates-selected').html('Next <span class="glyphicon glyphicon-arrow-right"></span>')
     perDiemSearch.results = {
         breakdown: [],
         rateInfo: [],
