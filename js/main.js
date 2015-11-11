@@ -108,8 +108,8 @@ function clearLocationForm() {
 }
 
 function clearDateForm() {
-    $('#perdiem-start-date').val('');
-    $('#perdiem-end-date').val('');
+    $('#perdiem-start-date-group').data("DateTimePicker").clear()
+    $('#perdiem-end-date-group').data("DateTimePicker").clear()
     validateDates();
 }
 
