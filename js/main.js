@@ -25,17 +25,13 @@ $(function() {
         format: 'MM/DD/YYYY',
         keepInvalid: true,
         minDate: validDatesBegin,
-        maxDate: validDatesEnd,
-        useCurrent: true,
-        debug: true
+        maxDate: validDatesEnd
     });
     $('#perdiem-end-date-group').datetimepicker({
         format: 'MM/DD/YYYY',
         keepInvalid: true,
         minDate: validDatesBegin,
-        maxDate: validDatesEnd,
-        useCurrent: true,
-        debug: true
+        maxDate: validDatesEnd
     });
 
 
@@ -62,7 +58,7 @@ $(function() {
 
     //validate date entry
     $('#perdiem-start-date,#perdiem-end-date').on('keyup', validateDates)
-        //$('#perdiem-start-date-group,#perdiem-end-date-group').on('click', validateDates)
+    $('#perdiem-slide-dates:not(input)').on('click', validateDates)
     $('#perdiem-start-date-group').on('dp.change', validateDates)
     $('#perdiem-end-date-group').on('dp.change', validateDates)
     validateDates();
