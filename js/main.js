@@ -21,17 +21,21 @@ $(function() {
         timeout: 10000
     });
 
+   var isIE11 = !!navigator.userAgent.match(/Trident\/7.0; rv 11/);
+
     $('#perdiem-start-date-group').datetimepicker({
         format: 'MM/DD/YYYY',
         keepInvalid: true,
         minDate: validDatesBegin,
-        maxDate: validDatesEnd
+        maxDate: validDatesEnd,
+        debug: isIE11
     });
     $('#perdiem-end-date-group').datetimepicker({
         format: 'MM/DD/YYYY',
         keepInvalid: true,
         minDate: validDatesBegin,
-        maxDate: validDatesEnd
+        maxDate: validDatesEnd,
+        debug: isIE11
     });
 
 
