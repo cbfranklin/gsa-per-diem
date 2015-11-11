@@ -245,7 +245,7 @@
     <div id="templates">
         <script type="template" class="calculator-results">
             {{#perDiemSearch}} {{#query}}
-            <h4>Your Search for<span class="perdiem-unbold">{{#city}} {{city}}{{/city}}{{#stateFormatted}} {{stateFormatted}}{{/stateFormatted}}{{#zip}} {{zip}}{{/zip}}</span></h4><h5>Using Rates for {{/query}}<span class="perdiem-unbold">{{rates.fy1.rate.county}} including {{rates.fy1.rate.city}}{{#rates.fy2.rate.county}}{{^sameRate}} and {{rates.fy2.rate.county}} including {{rates.fy2.rate.county}}{{/sameRate}}{{/rates.fy2.rate.county}}:</span></h5> {{#results}}
+            <h4>Your Search for<span class="perdiem-unbold">{{#city}} {{city}}{{#stateFormatted}},{{/stateFormatted}}{{/city}}{{#stateFormatted}} {{stateFormatted}}{{/stateFormatted}}{{#zip}} {{zip}}{{/zip}}</span></h4><h5>Using Rates for {{/query}}<span class="perdiem-unbold">{{rates.fy1.rate.county}} including {{rates.fy1.rate.city}}{{#rates.fy2.rate.county}}{{^sameRate}} and {{rates.fy2.rate.county}} including {{rates.fy2.rate.county}}{{/sameRate}}{{/rates.fy2.rate.county}}:</span></h5> {{#results}}
             <div class="well well-info-bright">
             <div class="row">
             <div class="col-sm-3">
