@@ -677,6 +677,7 @@ function calculateRates() {
             var sameRate = true;
         }
     }
+    perDiemSearch.query.stateFormatted = USStates[perDiemSearch.query.state.toLowerCase()]
     perDiemSearch.results.totalFormatted = formatCurrency(perDiemSearch.results.total)
     var template = $('#templates .calculator-results').html();
     var rendered = Mustache.render(template, {
