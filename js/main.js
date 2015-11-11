@@ -23,11 +23,12 @@ $(function() {
 
    var isIE11 = !!navigator.userAgent.match(/Trident\/7.0;(.*)rv(:*)11/);
    console.log('UserAgent',navigator.userAgent)
-   console.log('isIE11',isIE11)
+   console.log('Is',isIE11)
 
     $('#perdiem-start-date-group').datetimepicker({
         format: 'MM/DD/YYYY',
         keepInvalid: true,
+        useCurrent: false,
         minDate: validDatesBegin,
         maxDate: validDatesEnd,
         debug: isIE11
@@ -35,6 +36,7 @@ $(function() {
     $('#perdiem-end-date-group').datetimepicker({
         format: 'MM/DD/YYYY',
         keepInvalid: true,
+        useCurrent: false,
         minDate: validDatesBegin,
         maxDate: validDatesEnd,
         debug: isIE11
@@ -176,18 +178,18 @@ function validateLocationParams() {
     if ($('#perdiem-city').val() === '' && $('#perdiem-state').val() === '' && $('#perdiem-zip').val().length < 5) {
         //disabled
         $('.perdiem-step-1 #next').addClass('disabled').attr('disabled', 'disabled');
-        console.log('All Blank')
+        //console.log('All Blank')
             //if not everything is blank
     } else {
         //but zip and state are blank (city only)
         if ($('#perdiem-zip').val().length < 5 && $('#perdiem-state').val() === '') {
             //disabled
-            console.log('No Zip or State')
+            //console.log('No Zip or State')
             $('.perdiem-step-1 #next').addClass('disabled').attr('disabled', 'disabled');
         }
         //otherwise
         else {
-            console.log('Zip or State exists')
+            //console.log('Zip or State exists')
                 //enabled
             $('.perdiem-step-1 #next').removeClass('disabled').removeAttr('disabled');
         }
