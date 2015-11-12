@@ -17,6 +17,11 @@ body {
     width: 100%;
 }
 
+
+.tab-wrapper{
+  border:1px solid #ccc;
+  box-shadow:1px 1px 10px #ccc;
+}
 @media (max-width:768px){
   .nav.nav-tabs{
     display:none;
@@ -25,10 +30,6 @@ body {
   border:none;
   box-shadow:none;
 }
-}
-.tab-wrapper{
-  border:1px solid #ccc;
-  box-shadow:1px 1px 10px #ccc;
 }
 .nav-tabs li{
   width:20%;
