@@ -17,11 +17,17 @@ $(function() {
         //init swiper
     perDiemSwiper = new Swiper('#perdiem-swiper', {
         onlyExternal: true,
-        a11y: true
+        a11y: true,
+        widgetPositioning: {
+            horizontal: 'auto',
+            vertical: 'bottom'
+        }
     });
 
     perDiemSwiper.on('slideChangeStart', function() {
-        window.scrollTo(0, 0);
+        $('html, body').animate({
+            scrollTop: $("#perdiem-swiper").offset().top
+        }, 0);
     });
     //global ajax settings
     $.ajaxSetup({
