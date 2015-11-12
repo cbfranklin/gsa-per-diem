@@ -44,11 +44,11 @@ body {
 .nav-tabs li a{
   color:#000;
 }
-h1,
-h2,
-h3,
-h4,
-h5 {
+#perdiem-swiper h1,
+#perdiem-swiper h2,
+#perdiem-swiper h3,
+#perdiem-swiper h4,
+#perdiem-swiper h5 {
     font-weight: bold;
 }
 
@@ -121,7 +121,7 @@ h5 {
     background: #F1F6FB
 }
 
-div.hr {
+#perdiem-swiper div.hr {
     width: 100%;
     text-align: center;
     border-bottom: 1px solid #aaa;
@@ -132,29 +132,29 @@ div.hr {
     color: #aaa;
 }
 
-div.hr span {
+#perdiem-swiper div.hr span {
     background: #fff;
     padding: 0 10px;
 }
 
-.panel-heading a {
+#perdiem-swiper .panel-heading a {
     display: block;
 }
 
-.panel-heading a .glyphicon {
+#perdiem-swiper .panel-heading a .glyphicon {
     float: right;
 }
 
-.swiper-slide {
+#perdiem-swiper .swiper-slide {
     visibility: hidden;
     padding: 10px;
 }
 
-.swiper-slide.swiper-slide-active {
+#perdiem-swiper .swiper-slide.swiper-slide-active {
     visibility: visible;
 }
 
-.glyphicon.spinning {
+#perdiem-swiper .glyphicon.spinning {
     animation: spin 1s infinite linear;
     -webkit-animation: spin2 1s infinite linear;
 }

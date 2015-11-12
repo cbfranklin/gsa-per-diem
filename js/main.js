@@ -436,7 +436,7 @@ function checkForMultipleRates() {
                     }
                 }
                 //render template
-                var template = $('#templates .multiple-rates').html();
+                var template = $('#perdiem-templates .multiple-rates').html();
                 var rendered = Mustache.render(template, {
                     rates: perDiemSearch.rates
                 });
@@ -731,7 +731,7 @@ function calculateRates() {
     }
     perDiemSearch.query.stateFormatted = USStates[perDiemSearch.query.state.toLowerCase()]
     perDiemSearch.results.totalFormatted = formatCurrency(perDiemSearch.results.total)
-    var template = $('#templates .calculator-results').html();
+    var template = $('#perdiem-templates .calculator-results').html();
     var rendered = Mustache.render(template, {
         perDiemSearch: perDiemSearch,
         sameRate: sameRate
