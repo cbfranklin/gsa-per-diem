@@ -29,230 +29,250 @@
 
 <body>
     <div class="container">
-        <div id="perdiem-swiper" class="swiper-container">
-            <div class="swiper-wrapper">
-                <!-- Slides -->
-                <div class="perdiem-step-1 swiper-slide">
-                    <h4 class="perdiem-step"><span class="perdiem-step-number">1</span> Choose a Location:</h4>
-                    <div id="perdiem-location-error" class="perdiem-error">
-                        <div class="alert alert-danger" role="alert">
-                        <p><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                            <span class="sr-only">Error:</span> No results could be found for the location you've entered.</p><p>Please revise your search and try again.</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <button data-loading-text="Getting Location..." id="perdiem-current-location" class="btn btn-perdiem-secondary btn-block"><span class="glyphicon glyphicon-map-marker"></span> Use Your Current Location</button>
-                        </div>
-                    </div>
-                    <div class="hr"><span>or</span></div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label for="perdiem-state">State</label>
-                            <select class="form-control swiper-no-swiping" id="perdiem-state">
-                                <option value="">Select a State</option>
-                                <option value="AL">Alabama</option>
-                                <option value="AZ">Arizona</option>
-                                <option value="AR">Arkansas</option>
-                                <option value="CA">California</option>
-                                <option value="CO">Colorado</option>
-                                <option value="CT">Connecticut</option>
-                                <option value="DE">Delaware</option>
-                                <option value="DC">District of Columbia</option>
-                                <option value="FL">Florida</option>
-                                <option value="GA">Georgia</option>
-                                <option value="ID">Idaho</option>
-                                <option value="IL">Illinois</option>
-                                <option value="IN">Indiana</option>
-                                <option value="IA">Iowa</option>
-                                <option value="KS">Kansas</option>
-                                <option value="KY">Kentucky</option>
-                                <option value="LA">Louisiana</option>
-                                <option value="ME">Maine</option>
-                                <option value="MD">Maryland</option>
-                                <option value="MA">Massachusetts</option>
-                                <option value="MI">Michigan</option>
-                                <option value="MN">Minnesota</option>
-                                <option value="MS">Mississippi</option>
-                                <option value="MO">Missouri</option>
-                                <option value="MT">Montana</option>
-                                <option value="NE">Nebraska</option>
-                                <option value="NV">Nevada</option>
-                                <option value="NH">New Hampshire</option>
-                                <option value="NJ">New Jersey</option>
-                                <option value="NM">New Mexico</option>
-                                <option value="NY">New York</option>
-                                <option value="NC">North Carolina</option>
-                                <option value="ND">North Dakota</option>
-                                <option value="OH">Ohio</option>
-                                <option value="OK">Oklahoma</option>
-                                <option value="OR">Oregon</option>
-                                <option value="PA">Pennsylvania</option>
-                                <option value="RI">Rhode Island</option>
-                                <option value="SC">South Carolina</option>
-                                <option value="SD">South Dakota</option>
-                                <option value="TN">Tennessee</option>
-                                <option value="TX">Texas</option>
-                                <option value="UT">Utah</option>
-                                <option value="VT">Vermont</option>
-                                <option value="VA">Virginia</option>
-                                <option value="WA">Washington</option>
-                                <option value="WV">West Virginia</option>
-                                <option value="WI">Wisconsin</option>
-                                <option value="WY">Wyoming</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="perdiem-city">City (Optional)</label>
-                            <input id="perdiem-city" type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="hr"><span>or</span></div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <label for="perdiem-zip">ZIP</label>
-                            <input id="perdiem-zip" type="text" class="form-control" maxlength="5">
-                        </div>
-                    </div>
-                    <br>
-                    <div class="well well-kakhi">
-                        <p>Rates for Alaska, Hawaii, U.S. Territories and Possessions are set by the <a target="_blank" href="http://www.defensetravel.dod.mil/site/perdiemCalc.cfm">Department of Defense</a>.</p>
-                        <p>Rates for foreign countries are set by the <a target="_blank" href="https://aoprals.state.gov/content.asp?content_id=184&menu_id=78">State Department</a>.</p>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <button id="perdiem-clear-location-form" class="btn btn-default btn-block">Reset </button>
-                        </div>
-                        <div class="col-xs-6">
-                            <button id="next" class="btn btn-primary btn-block disabled">Next </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <h4 class="perdiem-step"><span class="perdiem-step-number">2</span> Would You Like To:</h4>
-                    <br>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <button id="next" class="btn btn-primary btn-block">Calculate Expenses </button>
-                        </div>
-                        <div class="col-sm-6">
-                            <button id="perdiem-look-up-rates" class="btn btn-primary btn-block">Look Up Rates </button>
-                        </div>
-                        <div class="col-sm-6">
-                            <button id="prev" class="btn btn-default btn-block"> Back</button>
-                        </div>
-                    </div>
-                    <div style="display:none">
-                        <form id="perdiem-find-rates-form" method="POST" action="http://www.gsa.gov/portal/category/100120">
-                            <input name="perdiemSearchVO.year" type="hidden">
-                            <input name="perdiemSearchVO.city" type="hidden">
-                            <input name="perdiemSearchVO.state" type="hidden">
-                            <input name="perdiemSearchVO.zip" value="getPerdiemRatesBySearchVO" type="hidden">
-                            <input name="resultName" value="getPerdiemRatesBySearchVO" type="hidden">
-                            <input name="currentCategory.categoryId" value="100120" type="hidden">
-                            <input name="x" value="44" type="hidden">
-                            <input name="y" value="13" type="hidden">
-                        </form>
-                    </div>
-                </div>
-                <div class="swiper-slide perdiem-slide-dates">
-                    <h4 class="perdiem-step"><span class="perdiem-step-number">3</span> Enter Travel Dates:</h4>
-                    <h5><span class="perdiem-unbold">(Rates are available between 10/1/2012 and 09/30/2016)</span></h5>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="input-group date" id="perdiem-start-date-group">
-                                <span class="input-group-addon" id="start-date">Start Date</span>
-                                <input id="perdiem-start-date" type="text" class="form-control" placeholder="mm/dd/yyyy" aria-describedby="start-date">
-                                <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
+        <div class="tab-wrapper">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#perdiem" aria-controls="perdiem" role="tab" data-toggle="tab">Per Diem</a></li>
+                <li role="presentation"><a href="#meals-ie" aria-controls="meals-ie" role="tab" data-toggle="tab">Meals &amp; IE</a></li>
+                <li role="presentation"><a href="#airfares" aria-controls="airfares" role="tab" data-toggle="tab">Airfares</a></li>
+                <li role="presentation"><a href="#hotels" aria-controls="hotels" role="tab" data-toggle="tab">Hotels</a></li>
+                <li role="presentation"><a href="#pov-mileage" aria-controls="pov-mileage" role="tab" data-toggle="tab">POV Mileage</a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="perdiem">
+                    <div id="perdiem-swiper" class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <!-- Slides -->
+                            <div class="perdiem-step-1 swiper-slide">
+                                <h4 class="perdiem-step"><span class="perdiem-step-number">1</span> Choose a Location:</h4>
+                                <div id="perdiem-location-error" class="perdiem-error">
+                                    <div class="alert alert-danger" role="alert">
+                                        <p><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                            <span class="sr-only">Error:</span> No results could be found for the location you've entered.</p>
+                                        <p>Please revise your search and try again.</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <button data-loading-text="Getting Location..." id="perdiem-current-location" class="btn btn-perdiem-secondary btn-block"><span class="glyphicon glyphicon-map-marker"></span> Use Your Current Location</button>
+                                    </div>
+                                </div>
+                                <div class="hr"><span>or</span></div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="perdiem-state">State</label>
+                                        <select class="form-control swiper-no-swiping" id="perdiem-state">
+                                            <option value="">Select a State</option>
+                                            <option value="AL">Alabama</option>
+                                            <option value="AZ">Arizona</option>
+                                            <option value="AR">Arkansas</option>
+                                            <option value="CA">California</option>
+                                            <option value="CO">Colorado</option>
+                                            <option value="CT">Connecticut</option>
+                                            <option value="DE">Delaware</option>
+                                            <option value="DC">District of Columbia</option>
+                                            <option value="FL">Florida</option>
+                                            <option value="GA">Georgia</option>
+                                            <option value="ID">Idaho</option>
+                                            <option value="IL">Illinois</option>
+                                            <option value="IN">Indiana</option>
+                                            <option value="IA">Iowa</option>
+                                            <option value="KS">Kansas</option>
+                                            <option value="KY">Kentucky</option>
+                                            <option value="LA">Louisiana</option>
+                                            <option value="ME">Maine</option>
+                                            <option value="MD">Maryland</option>
+                                            <option value="MA">Massachusetts</option>
+                                            <option value="MI">Michigan</option>
+                                            <option value="MN">Minnesota</option>
+                                            <option value="MS">Mississippi</option>
+                                            <option value="MO">Missouri</option>
+                                            <option value="MT">Montana</option>
+                                            <option value="NE">Nebraska</option>
+                                            <option value="NV">Nevada</option>
+                                            <option value="NH">New Hampshire</option>
+                                            <option value="NJ">New Jersey</option>
+                                            <option value="NM">New Mexico</option>
+                                            <option value="NY">New York</option>
+                                            <option value="NC">North Carolina</option>
+                                            <option value="ND">North Dakota</option>
+                                            <option value="OH">Ohio</option>
+                                            <option value="OK">Oklahoma</option>
+                                            <option value="OR">Oregon</option>
+                                            <option value="PA">Pennsylvania</option>
+                                            <option value="RI">Rhode Island</option>
+                                            <option value="SC">South Carolina</option>
+                                            <option value="SD">South Dakota</option>
+                                            <option value="TN">Tennessee</option>
+                                            <option value="TX">Texas</option>
+                                            <option value="UT">Utah</option>
+                                            <option value="VT">Vermont</option>
+                                            <option value="VA">Virginia</option>
+                                            <option value="WA">Washington</option>
+                                            <option value="WV">West Virginia</option>
+                                            <option value="WI">Wisconsin</option>
+                                            <option value="WY">Wyoming</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="perdiem-city">City (Optional)</label>
+                                        <input id="perdiem-city" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="hr"><span>or</span></div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label for="perdiem-zip">ZIP</label>
+                                        <input id="perdiem-zip" type="text" class="form-control" maxlength="5">
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="well well-kakhi">
+                                    <p>Rates for Alaska, Hawaii, U.S. Territories and Possessions are set by the <a target="_blank" href="http://www.defensetravel.dod.mil/site/perdiemCalc.cfm">Department of Defense</a>.</p>
+                                    <p>Rates for foreign countries are set by the <a target="_blank" href="https://aoprals.state.gov/content.asp?content_id=184&menu_id=78">State Department</a>.</p>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <button id="perdiem-clear-location-form" class="btn btn-default btn-block">Reset </button>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <button id="next" class="btn btn-primary btn-block disabled">Next </button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="input-group date" id="perdiem-end-date-group">
-                                <span class="input-group-addon" id="end-date">End Date</span>
-                                <input id="perdiem-end-date" type="text" class="form-control" placeholder="mm/dd/yyyy" aria-describedby="end-date">
-                                <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
+                            <div class="swiper-slide">
+                                <h4 class="perdiem-step"><span class="perdiem-step-number">2</span> Would You Like To:</h4>
+                                <br>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <button id="next" class="btn btn-primary btn-block">Calculate Expenses </button>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <button id="perdiem-look-up-rates" class="btn btn-primary btn-block">Look Up Rates </button>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <button id="prev" class="btn btn-default btn-block"> Back</button>
+                                    </div>
+                                </div>
+                                <div style="display:none">
+                                    <form id="perdiem-find-rates-form" method="POST" action="http://www.gsa.gov/portal/category/100120">
+                                        <input name="perdiemSearchVO.year" type="hidden">
+                                        <input name="perdiemSearchVO.city" type="hidden">
+                                        <input name="perdiemSearchVO.state" type="hidden">
+                                        <input name="perdiemSearchVO.zip" value="getPerdiemRatesBySearchVO" type="hidden">
+                                        <input name="resultName" value="getPerdiemRatesBySearchVO" type="hidden">
+                                        <input name="currentCategory.categoryId" value="100120" type="hidden">
+                                        <input name="x" value="44" type="hidden">
+                                        <input name="y" value="13" type="hidden">
+                                    </form>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div id="perdiem-end-before-start" class="perdiem-error">
-                        <div class="alert alert-danger" role="alert">
-                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                            <span class="sr-only">Error:</span> The End Date of your trip can not occur before the Start Date.
-                        </div>
-                    </div>
-                    <div id="perdiem-api-error" class="perdiem-error">
-                        <div class="alert alert-danger" role="alert">
-                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                            <span class="sr-only">Error:</span> The Per Diem API is not responding. Please try again later.
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <button id="prev" class="btn btn-default btn-block"> Back</button>
-                        </div>
-                        <div class="col-xs-6">
-                            <button id="perdiem-multiple-rates-check" class="disabled btn btn-primary btn-block">Next </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <h4 class="perdiem-step"><span class="perdiem-step-number">3</span>Fiscal Year</h4>
-                    <br>
-                    <select id="perdiem-rate-lookup-fiscal-year" class="form-control swiper-no-swiping">
-                        <option>2016</option>
-                        <option>2015</option>
-                        <option>2014</option>
-                        <option>2013</option>
-                        <option>2012</option>
-                    </select>
-                    <br>
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <button id="perdiem-to-step-2" class="btn btn-default btn-block"> Back</button>
-                        </div>
-                        <div class="col-xs-6">
-                            <button id="perdiem-look-up-rates-submit" class="btn btn-primary btn-block">Look Up Rates </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide perdiem-choose-rates"></div>
-                <div class="swiper-slide">
-                    <div id="perdiem-results"></div>
-                    <div class="panel-group" id="per-diem-terms-conditions-accordion" role="tablist" aria-multiselectable="true">
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingOne">
-                                <h4 class="panel-title">
-        <a role="button" data-toggle="collapse" data-parent="#per-diem-terms-conditions-accordion" href="#per-diem-terms-conditions-accordion-content" aria-expanded="true" aria-controls="collapseOne">
+                            <div class="swiper-slide perdiem-slide-dates">
+                                <h4 class="perdiem-step"><span class="perdiem-step-number">3</span> Enter Travel Dates:</h4>
+                                <h5><span class="perdiem-unbold">(Rates are available between 10/1/2012 and 09/30/2016)</span></h5>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="input-group date" id="perdiem-start-date-group">
+                                            <span class="input-group-addon" id="start-date">Start Date</span>
+                                            <input id="perdiem-start-date" type="text" class="form-control" placeholder="mm/dd/yyyy" aria-describedby="start-date">
+                                            <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="input-group date" id="perdiem-end-date-group">
+                                            <span class="input-group-addon" id="end-date">End Date</span>
+                                            <input id="perdiem-end-date" type="text" class="form-control" placeholder="mm/dd/yyyy" aria-describedby="end-date">
+                                            <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="perdiem-end-before-start" class="perdiem-error">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span> The End Date of your trip can not occur before the Start Date.
+                                    </div>
+                                </div>
+                                <div id="perdiem-api-error" class="perdiem-error">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span> The Per Diem API is not responding. Please try again later.
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <button id="prev" class="btn btn-default btn-block"> Back</button>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <button id="perdiem-multiple-rates-check" class="disabled btn btn-primary btn-block">Next </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <h4 class="perdiem-step"><span class="perdiem-step-number">3</span>Fiscal Year</h4>
+                                <br>
+                                <select id="perdiem-rate-lookup-fiscal-year" class="form-control swiper-no-swiping">
+                                    <option>2016</option>
+                                    <option>2015</option>
+                                    <option>2014</option>
+                                    <option>2013</option>
+                                    <option>2012</option>
+                                </select>
+                                <br>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <button id="perdiem-to-step-2" class="btn btn-default btn-block"> Back</button>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <button id="perdiem-look-up-rates-submit" class="btn btn-primary btn-block">Look Up Rates </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide perdiem-choose-rates"></div>
+                            <div class="swiper-slide">
+                                <div id="perdiem-results"></div>
+                                <div class="panel-group" id="per-diem-terms-conditions-accordion" role="tablist" aria-multiselectable="true">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingOne">
+                                            <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#per-diem-terms-conditions-accordion" href="#per-diem-terms-conditions-accordion-content" aria-expanded="false" aria-controls="collapseOne">
           Additional Terms &amp; Conditions <span class="glyphicon glyphicon-chevron-down"></span>
       </a>
       </h4>
-                            </div>
-                            <div id="per-diem-terms-conditions-accordion-content" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                                <div class="panel-body">
-                                    <p>Traveler reimbursement is based on the location of the work activities and not the accommodations, unless lodging is not available at the work activity, then the agency may authorize the rate where lodging is obtained.
-                                    </p>
-                                    <p>Unless otherwise specified, the per diem locality is defined as <em>"all locations within, or entirely surrounded by, the corporate limits of the key city, including independent entities located within those boundaries."</em>
-                                    </p>
-                                    <p>Per diem localities with county definitions shall include<em>"all locations within, or entirely surrounded by, the corporate limits of the key city as well as the boundaries of the listed counties, including independent entities located within the boundaries of the key city and the listed counties (unless otherwise listed separately)."</em>
-                                    </p>
-                                    <p>When a military installation or Government - related facility(whether or not specifically named) is located partially within more than one city or county boundary, the applicable per diem rate for the entire installation or facility is the higher of the rates which apply to the cities and / or counties, even though part(s) of such activities may be located outside the defined per diem locality.</p>
+                                        </div>
+                                        <div id="per-diem-terms-conditions-accordion-content" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                            <div class="panel-body">
+                                                <p>Traveler reimbursement is based on the location of the work activities and not the accommodations, unless lodging is not available at the work activity, then the agency may authorize the rate where lodging is obtained.
+                                                </p>
+                                                <p>Unless otherwise specified, the per diem locality is defined as <em>"all locations within, or entirely surrounded by, the corporate limits of the key city, including independent entities located within those boundaries."</em>
+                                                </p>
+                                                <p>Per diem localities with county definitions shall include<em>"all locations within, or entirely surrounded by, the corporate limits of the key city as well as the boundaries of the listed counties, including independent entities located within the boundaries of the key city and the listed counties (unless otherwise listed separately)."</em>
+                                                </p>
+                                                <p>When a military installation or Government - related facility(whether or not specifically named) is located partially within more than one city or county boundary, the applicable per diem rate for the entire installation or facility is the higher of the rates which apply to the cities and / or counties, even though part(s) of such activities may be located outside the defined per diem locality.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <button id="perdiem-new-search" class="btn btn-primary btn-block">New Search </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <button id="perdiem-new-search" class="btn btn-primary btn-block">New Search </button>
-                        </div>
-                    </div>
+                    <br>
                 </div>
+                <div role="tabpanel" class="tab-pane" id="meals-ie"></div>
+                <div role="tabpanel" class="tab-pane" id="airfares"></div>
+                <div role="tabpanel" class="tab-pane" id="hotels"></div>
+                <div role="tabpanel" class="tab-pane" id="pov-mileage"></div>
             </div>
         </div>
-        <br>
     </div>
     <div id="templates">
         <script type="template" class="calculator-results">
