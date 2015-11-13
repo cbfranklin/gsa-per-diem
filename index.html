@@ -38,12 +38,11 @@
             <!-- Tab panes -->
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="perdiem">
-                <div class="perdiem-mobile-content col-md-12 visible-xs">
-                    <h4>Per Diem Rates</h4>
-                    <p>GSA establishes the per diem rates for the lower 48 Continental United States (CONUS), which are the maximum allowances that federal employees are reimbursed for expenses incurred while on official travel.</p>
-                    <p>Use the <a target="_blank" href="mobile.html">Per Diem App</a> to look up rates and calculate your estimated expenses.</p>
-                    <a target="_blank" href="mobile.html" class="btn btn-primary">Per Diem App</a>
-                </div>
+                    <div class="perdiem-mobile-content col-md-12 visible-xs">
+                        <h4>Per Diem Rates</h4>
+                        <p>Allowances for lodging, meal and incidental costs while on official government travel.</p>
+                        <a target="_blank" href="mobile.html" class="btn btn-primary">Get Started</a>
+                    </div>
                     <div id="perdiem-swiper" class="swiper-container hidden-xs">
                         <div class="swiper-wrapper">
                             <!-- Slides -->
@@ -274,43 +273,63 @@
                     <div class="col-md-12">
                         <h4>Meals &amp; Incidental Expenses</h4>
                         <p>This table lists the six M&amp;IE tiers in the lower 48 continental United States. Use the Per Diem rates tab above to look up a travel location and find its total M&amp;IE. Locate that amount in the first “Total” column of the table below. The corresponding row provides specific meal breakdowns for the tier. The portion of the M&amp;IE rate provided for incidental expenses is currently $5 for all tiers.</p>
-                        <div class="dataTables_wrapper" role="grid">
-                            <div class="table-responsive">
-                                <table cellpadding="0" cellspacing="0" border="0" class="stripedTable table">
-                                    <thead>
-                                        <tr role="row">
-                                            <th scope="col" role="columnheader" rowspan="1" colspan="1">Total</th>
-                                            <th scope="col" role="columnheader" rowspan="1" colspan="1"><strong>First &amp; Last Day of Travel</strong></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody role="alert" aria-live="polite" aria-relevant="all">
-                                        <tr class="odd">
-                                            <td>$51</td>
-                                            <td><strong>$38.25</strong></td>
-                                        </tr>
-                                        <tr class="even">
-                                            <td>$54</td>
-                                            <td><strong>$40.50</strong></td>
-                                        </tr>
-                                        <tr class="odd">
-                                            <td>$59</td>
-                                            <td><strong>$44.25</strong></td>
-                                        </tr>
-                                        <tr class="even">
-                                            <td>$64</td>
-                                            <td><strong>$48.00</strong></td>
-                                        </tr>
-                                        <tr class="odd">
-                                            <td>$69</td>
-                                            <td><strong>$51.75</strong></td>
-                                        </tr>
-                                        <tr class="even">
-                                            <td>$74</td>
-                                            <td><strong>$55.50</strong></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                        <div class="table-responsive">
+                            <table cellpadding="0"  cellspacing="0" class="stripedTable dataTable table">
+                                <thead>
+                                    <tr role="row">
+                                        <th scope="col"  role="columnheader" rowspan="1" colspan="1">Total</th>
+                                        <th scope="col"  role="columnheader" rowspan="1" colspan="1">Breakfast
+                                        </th>
+                                        <th scope="col"  role="columnheader" rowspan="1" colspan="1">Lunch</th>
+                                        <th scope="col"  role="columnheader" rowspan="1" colspan="1" >Dinner</th>
+                                        <th scope="col"  role="columnheader" rowspan="1" colspan="1" >IE</th>
+                                    </tr>
+                                </thead>
+                                <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                    <tr class="odd">
+                                        <td class=" "><strong>$51</strong></td>
+                                        <td class=" ">$11</td>
+                                        <td class=" ">$12</td>
+                                        <td class=" ">$23</td>
+                                        <td class=" ">$5</td>
+                                    </tr>
+                                    <tr class="even">
+                                        <td class=" "><strong>$54</strong></td>
+                                        <td class=" ">$12</td>
+                                        <td class=" ">$13</td>
+                                        <td class=" ">$24</td>
+                                        <td class=" ">$5</td>
+                                    </tr>
+                                    <tr class="odd">
+                                        <td class=" "><strong>$59</strong></td>
+                                        <td class=" ">$13</td>
+                                        <td class=" ">$15</td>
+                                        <td class=" ">$26</td>
+                                        <td class=" ">$5</td>
+                                    </tr>
+                                    <tr class="even">
+                                        <td class=" "><strong>$64</strong></td>
+                                        <td class=" ">$15</td>
+                                        <td class=" ">$16</td>
+                                        <td class=" ">$28</td>
+                                        <td class=" ">$5</td>
+                                    </tr>
+                                    <tr class="odd">
+                                        <td class=" "><strong>$69</strong></td>
+                                        <td class=" ">$16</td>
+                                        <td class=" ">$17</td>
+                                        <td class=" ">$31</td>
+                                        <td class=" ">$5</td>
+                                    </tr>
+                                    <tr class="even">
+                                        <td class=" "><strong>$74</strong></td>
+                                        <td class=" ">$17</td>
+                                        <td class=" ">$18</td>
+                                        <td class=" ">$34</td>
+                                        <td class=" ">$5</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                         <p>Refer to the <a href="/mie">breakdown of FY 2016 meals and incidental expenses</a> (M&amp;IE) for full details on current federal allowances in the continental United States.</p>
                     </div>
@@ -345,7 +364,7 @@
                                     </thead>
                                     <tbody>
                                         <tr class="odd">
-                                            <td headers="tbl281id0_0">Privately Owned Automobile</td>
+                                            <td headers="tbl281id0_0">Privately Owned Automobile*</td>
                                             <td headers="tbl281id0_1"><strong>January 1, 2015</strong></td>
                                             <td headers="tbl281id0_2">$0.575</td>
                                         </tr>
@@ -360,15 +379,15 @@
                                             <td headers="tbl281id0_2">$0.545</td>
                                         </tr>
                                         <tr class="even">
-                                            <td headers="tbl281id0_0">Airplane*</td>
+                                            <td headers="tbl281id0_0">Airplane</td>
                                             <td headers="tbl281id0_1"><strong>January 1, 2015</strong></td>
                                             <td headers="tbl281id0_2">$1.29</td>
                                         </tr>
                                     </tbody>
                                 </table>
-                                <p>* Use must be authorized or no Government-furnished automobile available</p>
-                                <p>Visit <a href="/mileage">Privately Owned Vehicle (POV) Mileage reimbursement rates</a> for official government travel requirements and details on calculating reimbursement.</p>
                             </div>
+                            <p>* Use must be authorized or no Government-furnished automobile available</p>
+                            <p>Visit <a href="/mileage">Privately Owned Vehicle (POV) Mileage reimbursement rates</a> for official government travel requirements and details on calculating reimbursement.</p>
                         </div>
                     </div>
                 </div>

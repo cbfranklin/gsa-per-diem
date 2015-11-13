@@ -22,8 +22,11 @@ body {
   box-shadow:1px 1px 10px #ccc;
   background:#fff;
 }
-#homepage-travel-tabs .nav-tabs li.active a{
+#homepage-travel-tabs .nav-tabs li.active{
     background:#fff;
+}
+#homepage-travel-tabs .nav-tabs li.active a{
+    border:none;
 }
 #homepage-travel-tabs .tab-pane{
     overflow:hidden;
@@ -32,9 +35,12 @@ body {
 #homepage-travel-tabs .nav-tabs li{
   width:20%;
 }
-#homepage-travel-tabs .nav-tabs li a{
+#homepage-travel-tabs .nav-tabs{
+   background: #EDEADF; 
+}
+
+#homepage-travel-tabs .nav-tabs li{
   font-weight:bold;
-  background: #EDEADF;
   border-left:1px solid #999;
   margin-right:0;
   text-align:center;
@@ -42,6 +48,20 @@ body {
 #homepage-travel-tabs .nav-tabs li a{
   color:#000;
 }
+
+@media (min-width:480px) and (max-width: 768px) {
+   #homepage-travel-tabs .nav-tabs > li {
+        height:60px;
+    } 
+} 
+@media (max-width: 480px) { 
+    #homepage-travel-tabs .nav-tabs > li {
+        float:none;
+        width:100%;
+        border-bottom:1px solid #999;
+    }
+}
+
 #perdiem-swiper h1,
 #perdiem-swiper h2,
 #perdiem-swiper h3,
