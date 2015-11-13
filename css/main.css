@@ -2,46 +2,44 @@ body {
     margin-top: 10px;
     font-family: 'Source Sans Pro', sans-serif;
 }
-
+/*app*/
 #perdiem-swiper .well,
 #perdiem-swiper .panel-group *,
-.nav-tabs li a {
+#homepage-travel-tabs .nav-tabs li a {
     -webkit-border-radius: 0 !important;
     -moz-border-radius: 0 !important;
     border-radius: 0 !important;
 }
 
 #perdiem-swiper {
-    /*border: 1px solid #ccc;*/
     min-height: 500px;
     width: 100%;
 }
 
 
-.tab-wrapper{
+#homepage-travel-tabs{
   border:1px solid #ccc;
   box-shadow:1px 1px 10px #ccc;
+  background:#fff;
 }
-@media (max-width:768px){
-  .nav.nav-tabs{
-    display:none;
-  }
-  .tab-wrapper{
-  border:none;
-  box-shadow:none;
+#homepage-travel-tabs .nav-tabs li.active a{
+    background:#fff;
 }
+#homepage-travel-tabs .tab-pane{
+    overflow:hidden;
 }
-.nav-tabs li{
+
+#homepage-travel-tabs .nav-tabs li{
   width:20%;
 }
-.nav-tabs li a{
+#homepage-travel-tabs .nav-tabs li a{
   font-weight:bold;
   background: #EDEADF;
   border-left:1px solid #999;
   margin-right:0;
   text-align:center;
 }
-.nav-tabs li a{
+#homepage-travel-tabs .nav-tabs li a{
   color:#000;
 }
 #perdiem-swiper h1,
@@ -108,7 +106,7 @@ body {
     margin-bottom: 10px;
 }
 
-.well-kakhi,
+.well-khaki,
 .panel-kahki .panel-heading {
     background: #EDEADF;
 }

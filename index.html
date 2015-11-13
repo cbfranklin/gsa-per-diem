@@ -13,22 +13,20 @@
     <script src="bower_components/swiper/dist/js/swiper.js"></script>
     <script src="bower_components/swiper/dist/js/swiper.jquery.js"></script>
     <script src="bower_components/moment/moment.js"></script>
-    <!--<script src="bower_components/moment-timezone/moment-timezone.js"></script>-->
     <script src="bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js"></script>
     <script src="bower_components/mustache/mustache.js"></script>
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="bower_components/swiper/dist/css/swiper.min.css" />
     <link rel="stylesheet" href="bower_components/animate.css/animate.css" />
-    <!--<link rel="stylesheet" href="http://devastoweb.wip.gsa.gov:8090/resources/css/asto_1.1/all.css" />-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
-    <!--<link rel="stylesheet" href="css/all.css" />-->
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" />
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
 </head>
+
 <body>
     <div class="container">
-        <div class="tab-wrapper">
+        <div id="homepage-travel-tabs" class="tab-wrapper">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#perdiem" aria-controls="perdiem" role="tab" data-toggle="tab">Per Diem</a></li>
@@ -40,7 +38,13 @@
             <!-- Tab panes -->
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="perdiem">
-                    <div id="perdiem-swiper" class="swiper-container">
+                <div class="perdiem-mobile-content col-md-12 visible-xs">
+                    <h4>Per Diem Rates</h4>
+                    <p>GSA establishes the per diem rates for the lower 48 Continental United States (CONUS), which are the maximum allowances that federal employees are reimbursed for expenses incurred while on official travel.</p>
+                    <p>Use the <a target="_blank" href="mobile.html">Per Diem App</a> to look up rates and calculate your estimated expenses.</p>
+                    <a target="_blank" href="mobile.html" class="btn btn-primary">Per Diem App</a>
+                </div>
+                    <div id="perdiem-swiper" class="swiper-container hidden-xs">
                         <div class="swiper-wrapper">
                             <!-- Slides -->
                             <div class="perdiem-step-1 swiper-slide">
@@ -127,7 +131,7 @@
                                     </div>
                                 </div>
                                 <br>
-                                <div class="well well-kakhi">
+                                <div class="well well-khaki">
                                     <p>Rates for Alaska, Hawaii, U.S. Territories and Possessions are set by the <a target="_blank" href="http://www.defensetravel.dod.mil/site/perdiemCalc.cfm">Department of Defense</a>.</p>
                                     <p>Rates for foreign countries are set by the <a target="_blank" href="https://aoprals.state.gov/content.asp?content_id=184&menu_id=78">State Department</a>.</p>
                                 </div>
@@ -266,10 +270,108 @@
                     </div>
                     <br>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="meals-ie"></div>
-                <div role="tabpanel" class="tab-pane" id="airfares"></div>
-                <div role="tabpanel" class="tab-pane" id="hotels"></div>
-                <div role="tabpanel" class="tab-pane" id="pov-mileage"></div>
+                <div role="tabpanel" class="tab-pane" id="meals-ie">
+                    <div class="col-md-12">
+                        <h4>Meals &amp; Incidental Expenses</h4>
+                        <p>This table lists the six M&amp;IE tiers in the lower 48 continental United States. Use the Per Diem rates tab above to look up a travel location and find its total M&amp;IE. Locate that amount in the first “Total” column of the table below. The corresponding row provides specific meal breakdowns for the tier. The portion of the M&amp;IE rate provided for incidental expenses is currently $5 for all tiers.</p>
+                        <div class="dataTables_wrapper" role="grid">
+                            <div class="table-responsive">
+                                <table cellpadding="0" cellspacing="0" border="0" class="stripedTable table">
+                                    <thead>
+                                        <tr role="row">
+                                            <th scope="col" role="columnheader" rowspan="1" colspan="1">Total</th>
+                                            <th scope="col" role="columnheader" rowspan="1" colspan="1"><strong>First &amp; Last Day of Travel</strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                        <tr class="odd">
+                                            <td>$51</td>
+                                            <td><strong>$38.25</strong></td>
+                                        </tr>
+                                        <tr class="even">
+                                            <td>$54</td>
+                                            <td><strong>$40.50</strong></td>
+                                        </tr>
+                                        <tr class="odd">
+                                            <td>$59</td>
+                                            <td><strong>$44.25</strong></td>
+                                        </tr>
+                                        <tr class="even">
+                                            <td>$64</td>
+                                            <td><strong>$48.00</strong></td>
+                                        </tr>
+                                        <tr class="odd">
+                                            <td>$69</td>
+                                            <td><strong>$51.75</strong></td>
+                                        </tr>
+                                        <tr class="even">
+                                            <td>$74</td>
+                                            <td><strong>$55.50</strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <p>Refer to the <a href="/mie">breakdown of FY 2016 meals and incidental expenses</a> (M&amp;IE) for full details on current federal allowances in the continental United States.</p>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="airfares">
+                    <div class="col-md-12">
+                        <h4>City Pair Airfares</h4>
+                        <p>Visit <a href="/citypair">City Pair Program</a> to learn about its competitive, federally-negotiated airline rates for over 7,500 domestic and international cities.</p>
+                        <p>Search the <a href="http://cpsearch.fas.gsa.gov/">Airline City Pair database</a> directly to look up airfares (Chrome browsers may not be compatible.) Airfares are listed as one-way to allow for multiple destinations, and airfares are valid in either direction. Domestic airfares include taxes, but not additional fuel, facility, and other fees. International airfares are exclusive of taxes and additional fees.</p>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="hotels">
+                    <div class="col-md-12">
+                        <h4>GSA Lodging Programs</h4>
+                        <p>Shop for lodging at competitive, often below-market hotel rates negotiated by the federal government.</p>
+                        <p><a href="https://fedrooms.com">FedRooms</a> provides federal travelers on official business with FTR compliant hotel rooms for transient and extended stays (up to 29 days). The program uses FEMA and ADA-compliant rooms with flexible booking terms at or below per diem rates.</p>
+                        <p>Visit <a href="/lodging">GSALodging</a> for more details on FedRooms and for additional programs offering meeting space, long term lodging, and emergency lodging.</p>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="pov-mileage">
+                    <div class="col-md-12">
+                        <h4>Privately Owned Vehicle Mileage Reimbursement Rates</h4>
+                        <div class="plainTable" id="mileage-table" style=" width: 100%;">
+                            <div class="table-responsive">
+                                <table width="100%" class="plainTable table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" id="tbl281id0_0">Modes of Transportation</th>
+                                            <th scope="col" id="tbl281id0_1">Effective/Applicability Date</th>
+                                            <th scope="col" id="tbl281id0_2">Rate per mile</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="odd">
+                                            <td headers="tbl281id0_0">Privately Owned Automobile</td>
+                                            <td headers="tbl281id0_1"><strong>January 1, 2015</strong></td>
+                                            <td headers="tbl281id0_2">$0.575</td>
+                                        </tr>
+                                        <tr class="even">
+                                            <td headers="tbl281id0_0">Government-furnished automobile</td>
+                                            <td headers="tbl281id0_1"><strong>January 1, 2015</strong></td>
+                                            <td headers="tbl281id0_2">$0.23</td>
+                                        </tr>
+                                        <tr class="odd">
+                                            <td headers="tbl281id0_0">Motorcycle</td>
+                                            <td headers="tbl281id0_1"><strong>January 1, 2015</strong></td>
+                                            <td headers="tbl281id0_2">$0.545</td>
+                                        </tr>
+                                        <tr class="even">
+                                            <td headers="tbl281id0_0">Airplane*</td>
+                                            <td headers="tbl281id0_1"><strong>January 1, 2015</strong></td>
+                                            <td headers="tbl281id0_2">$1.29</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p>* Use must be authorized or no Government-furnished automobile available</p>
+                                <p>Visit <a href="/mileage">Privately Owned Vehicle (POV) Mileage reimbursement rates</a> for official government travel requirements and details on calculating reimbursement.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -329,7 +431,7 @@
                                     {{/breakdown}}
                                 </tbody>
                             </table>
-                            <div class="well well-kakhi">
+                            <div class="well well-khaki">
                                 *The first and last calendar dates of M&amp;IE are calculated at 75%
                             </div>
                         </div>
