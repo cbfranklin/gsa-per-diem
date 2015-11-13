@@ -50,6 +50,8 @@ body {
     font-weight: bold;
 }
 
+
+
 .perdiem-unbold {
     font-weight: normal;
 }
@@ -117,6 +119,10 @@ body {
 
 .well-info-bright {
     background: #F1F6FB
+}
+
+.panel-info{
+    border-color:#e3e3e3;
 }
 
 #perdiem-swiper div.hr {
