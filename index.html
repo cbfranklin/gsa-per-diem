@@ -15,11 +15,15 @@
     <script src="bower_components/moment/moment.js"></script>
     <script src="bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js"></script>
     <script src="bower_components/mustache/mustache.js"></script>
+    <script src="bower_components/bootstrap-tabcollapse/bootstrap-tabcollapse.js"></script>
     <script src="js/main.js"></script>
+    <!--<script src="integration/perdiem.min.js"></script>-->
+    <script src="integration/perdiem.templates.js"></script>
     <link rel="stylesheet" href="bower_components/swiper/dist/css/swiper.min.css" />
     <link rel="stylesheet" href="bower_components/animate.css/animate.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/main.css" />
+    <!--<link rel="stylesheet" href="css/main.css" />-->
+    <link rel="stylesheet" href="integration/perdiem.min.css" />
     <link rel="stylesheet" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" />
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
 </head>
@@ -27,9 +31,8 @@
 <body>
     <div class="container">
         <div id="homepage-travel-tabs" class="tab-wrapper">
-            <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#perdiem" aria-controls="perdiem" role="tab" data-toggle="tab">Per Diem</a></li>
+                <li role="presentation" class="active"><a href="#perdiem-tab" aria-controls="perdiem-tab" role="tab" data-toggle="tab">Per Diem</a></li>
                 <li role="presentation"><a href="#meals-ie" aria-controls="meals-ie" role="tab" data-toggle="tab">Meals &amp; IE</a></li>
                 <li role="presentation"><a href="#airfares" aria-controls="airfares" role="tab" data-toggle="tab">Airfares</a></li>
                 <li role="presentation"><a href="#hotels" aria-controls="hotels" role="tab" data-toggle="tab">Hotels</a></li>
@@ -37,7 +40,7 @@
             </ul>
             <!-- Tab panes -->
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="perdiem">
+                <div role="tabpanel" class="tab-pane active" id="perdiem-tab">
                     <div class="perdiem-mobile-content col-md-12 visible-xs">
                         <h4>Per Diem Rates</h4>
                         <p>Allowances for lodging, meal and incidental costs while on official government travel.</p>
@@ -215,7 +218,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <h4 class="perdiem-step"><span class="perdiem-step-number">3</span>Fiscal Year</h4>
+                                <h4 class="perdiem-step"><span class="perdiem-step-number">3</span>Select Fiscal Year</h4>
                                 <br>
                                 <select id="perdiem-rate-lookup-fiscal-year" class="form-control swiper-no-swiping">
                                     <option>2016</option>
@@ -345,7 +348,7 @@
                     <div class="col-md-12">
                         <h4>GSA Lodging Programs</h4>
                         <p>Shop for lodging at competitive, often below-market hotel rates negotiated by the federal government.</p>
-                        <p><a href="https://fedrooms.com">FedRooms</a> provides federal travelers on official business with FTR compliant hotel rooms for transient and extended stays (up to 29 days). The program uses FEMA and ADA-compliant rooms with flexible booking terms at or below per diem rates.</p>
+                        <p><a href="https://www.fedrooms.com">FedRooms</a> provides federal travelers on official business with FTR compliant hotel rooms for transient and extended stays (up to 29 days). The program uses FEMA and ADA-compliant rooms with flexible booking terms at or below per diem rates.</p>
                         <p>Visit <a href="/lodging">GSALodging</a> for more details on FedRooms and for additional programs offering meeting space, long term lodging, and emergency lodging.</p>
                     </div>
                 </div>
@@ -415,7 +418,7 @@
             <div class="well well-info">
                 <div class="row">
                     <div class="col-sm-3">
-                        <h4>Estimated Trip Total:</h4>
+                        <h4>Estimated Per Diem Total:</h4>
                     </div>
                     <div class="col-sm-9">
                         <h4>${{totalFormatted}}</h4></div>
@@ -426,7 +429,7 @@
                     <div class="panel-heading" role="tab" id="headingOne">
                         <h4 class="panel-title">
         <a role="button" data-toggle="collapse" data-parent="#perdiem-trip-breakdown-accordion" href="#perdiem-trip-breakdown-accordion-content" aria-expanded="false" aria-controls="collapseOne">
-          Trip Breakdown <span class="glyphicon glyphicon-chevron-down"></span>
+          Per Diem Breakdown <span class="glyphicon glyphicon-chevron-down"></span>
       </a>
       </h4>
                     </div>
