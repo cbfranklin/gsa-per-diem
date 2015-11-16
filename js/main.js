@@ -802,7 +802,7 @@ var USStates = {
     "ca": "California",
     "co": "Colorado",
     "ct": "Connecticut",
-    "dc": "DC",
+    "dc": "District of Columbia",
     "de": "Delaware",
     "fl": "Florida",
     "ga": "Georgia",
