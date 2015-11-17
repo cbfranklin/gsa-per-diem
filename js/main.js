@@ -3,8 +3,8 @@ var perDiemSwiper,
         rates: {},
         query: {}
     },
-    //apiRoot = window.location.protocol + '//' + window.location.host,
-    apiRoot = 'http://dev.oagov.com:3334/proxy',
+    apiRoot = window.location.protocol + '//' + window.location.host,
+    //apiRoot = 'http://dev.oagov.com:3334/proxy',
     validDatesBegin = '10/1/2012',
     //must be updated when API is updated
     validDatesEnd = '09/30/2016';
@@ -48,7 +48,8 @@ $(function() {
         useCurrent: false,
         minDate: validDatesBegin,
         maxDate: validDatesEnd,
-        debug: isIE11
+        //debug: isIE11
+        debug: true
     });
     $('#perdiem-end-date-group').datetimepicker({
         format: 'MM/DD/YYYY',

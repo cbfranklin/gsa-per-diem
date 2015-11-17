@@ -1,7 +1,3 @@
-body {
-    margin-top: 10px;
-    font-family: 'Source Sans Pro', sans-serif
-}
 
 #homepage-travel-tabs .nav-tabs li a,
 #perdiem-swiper .panel-group *,
@@ -10,6 +6,11 @@ body {
     -moz-border-radius: 0!important;
     border-radius: 0!important
 }
+
+#homepage-travel-tabs .datepicker table th{
+    background:#fff;
+}
+
 
 #perdiem-swiper {
     min-height: 500px;

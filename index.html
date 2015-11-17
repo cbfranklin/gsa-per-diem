@@ -44,7 +44,7 @@
                     <div class="perdiem-mobile-content col-md-12 visible-xs">
                         <h4>Per Diem Rates</h4>
                         <p>Allowances for lodging, meal and incidental costs while on official government travel.</p>
-                        <a target="_blank" href="mobile.html" class="btn btn-primary">Get Started</a>
+                        <a target="_blank" href="/resources/apps/perdiem" class="btn btn-primary">Get Started</a>
                     </div>
                     <div id="perdiem-swiper" class="swiper-container hidden-xs">
                         <div class="swiper-wrapper">
@@ -133,10 +133,6 @@
                                     </div>
                                 </div>
                                 <br>
-                                <div class="well well-khaki">
-                                    <p>Rates for Alaska, Hawaii, U.S. Territories and Possessions are set by the <a target="_blank" href="http://www.defensetravel.dod.mil/site/perdiemCalc.cfm">Department of Defense</a>.</p>
-                                    <p>Rates for foreign countries are set by the <a target="_blank" href="https://aoprals.state.gov/content.asp?content_id=184&menu_id=78">State Department</a>.</p>
-                                </div>
                                 <div class="row">
                                     <div class="col-xs-6">
                                         <button id="perdiem-clear-location-form" class="btn btn-default btn-block">Reset </button>
@@ -144,6 +140,11 @@
                                     <div class="col-xs-6">
                                         <button id="next" class="btn btn-primary btn-block disabled">Next </button>
                                     </div>
+                                </div>
+                                <br>
+                                <div class="well well-khaki">
+                                    <p>Rates for Alaska, Hawaii, U.S. Territories and Possessions are set by the <a target="_blank" href="http://www.defensetravel.dod.mil/site/perdiemCalc.cfm">Department of Defense</a>.</p>
+                                    <p>Rates for foreign countries are set by the <a target="_blank" href="https://aoprals.state.gov/content.asp?content_id=184&menu_id=78">State Department</a>.</p>
                                 </div>
                             </div>
                             <div class="swiper-slide">
@@ -154,7 +155,7 @@
                                         <button id="next" class="btn btn-primary btn-block">Calculate Expenses </button>
                                     </div>
                                     <div class="col-sm-6">
-                                        <button id="perdiem-look-up-rates" class="btn btn-primary btn-block">Look Up Rates </button>
+                                        <button id="perdiem-look-up-rates" class="btn btn-primary btn-block">Look Up Rates By Fiscal Year </button>
                                     </div>
                                     <div class="col-sm-6">
                                         <button id="prev" class="btn btn-default btn-block"> Back</button>
@@ -233,7 +234,7 @@
                                         <button id="perdiem-to-step-2" class="btn btn-default btn-block"> Back</button>
                                     </div>
                                     <div class="col-xs-6">
-                                        <button id="perdiem-look-up-rates-submit" class="btn btn-primary btn-block">Look Up Rates </button>
+                                        <button id="perdiem-look-up-rates-submit" class="btn btn-primary btn-block">Go </button>
                                     </div>
                                 </div>
                             </div>
@@ -275,9 +276,9 @@
                 <div role="tabpanel" class="tab-pane" id="meals-ie">
                     <div class="col-md-12">
                         <h4>Meals &amp; Incidental Expenses</h4>
-                        <p>This table lists the six M&amp;IE tiers in the lower 48 continental United States. Use the Per Diem rates tab above to look up a travel location and find its total M&amp;IE. Locate that amount in the first “Total” column of the table below. The corresponding row provides specific meal breakdowns for the tier. The portion of the M&amp;IE rate provided for incidental expenses is currently $5 for all tiers.</p>
+                        <p>This table lists the six M&amp;IE tiers in the lower 48 continental United States. Use the Per Diem rates tab above to look up a travel location and find its total M&amp;IE. Locate that amount in the first "Total" column of the table below. The corresponding row provides specific meal breakdowns for the tier. The portion of the M&amp;IE rate provided for incidental expenses is currently $5 for all tiers.</p>
                         <div class="table-responsive">
-                            <table cellpadding="0"  cellspacing="0" class="stripedTable dataTable table">
+                            <table cellpadding="0"  cellspacing="0" class="table">
                                 <thead>
                                     <tr role="row">
                                         <th scope="col"  role="columnheader" rowspan="1" colspan="1">Total</th>
@@ -397,104 +398,7 @@
             </div>
         </div>
     </div>
-    <div id="perdiem-templates">
-        <script type="template" class="calculator-results">
-            {{#perDiemSearch}} {{#query}}
-            <h4>Your Search for<span class="perdiem-unbold">{{#city}} {{city}}{{#stateFormatted}},{{/stateFormatted}}{{/city}}{{#stateFormatted}} {{stateFormatted}}{{/stateFormatted}}{{#zip}} {{zip}}{{/zip}}</span></h4>
-            <h5>Using Rates for {{/query}}<span class="perdiem-unbold">{{rates.fy1.rate.county}} including {{rates.fy1.rate.city}}{{#rates.fy2.rate.county}}{{^sameRate}} and {{rates.fy2.rate.county}} including {{rates.fy2.rate.county}}{{/sameRate}}{{/rates.fy2.rate.county}}:</span></h5> {{#results}}
-            <div class="well well-info-bright">
-                <div class="row">
-                    <div class="col-sm-3">
-                        <h4><strong>Daily Per Diem Rates:</strong></h4>
-                    </div>
-                    <div class="col-sm-9">
-                        <h4></h4> {{#rateInfo}}
-                        <p>{{date}} Lodging: ${{lodging}}</p>
-                        <p>{{date}} M&amp;IE: ${{mie}}</p>
-                        {{/rateInfo}}
-                    </div>
-                </div>
-            </div>
-            <div class="well well-info">
-                <div class="row">
-                    <div class="col-sm-3">
-                        <h4>Estimated Per Diem Total:</h4>
-                    </div>
-                    <div class="col-sm-9">
-                        <h4>${{totalFormatted}}</h4></div>
-                </div>
-            </div>
-            <div class="panel-group" id="perdiem-trip-breakdown-accordion" role="tablist" aria-multiselectable="true">
-                <div class="panel panel-info">
-                    <div class="panel-heading" role="tab" id="headingOne">
-                        <h4 class="panel-title">
-        <a role="button" data-toggle="collapse" data-parent="#perdiem-trip-breakdown-accordion" href="#perdiem-trip-breakdown-accordion-content" aria-expanded="false" aria-controls="collapseOne">
-          Per Diem Breakdown <span class="glyphicon glyphicon-chevron-down"></span>
-      </a>
-      </h4>
-                    </div>
-                    <div id="perdiem-trip-breakdown-accordion-content" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                        <div class="panel-body">
-                            <table class="table table-striped">
-                                <thead>
-                                    <th>Date</th>
-                                    <th>Max. Lodging</th>
-                                    <th>M&amp;IE</th>
-                                    <th>Total</th>
-                                </thead>
-                                <tbody>
-                                    {{#breakdown}}
-                                    <tr>
-                                        <td>{{date}}{{#isRate}} Rate{{/isRate}}{{#fullDate}} ({{fullDate}}){{/fullDate}}</td>
-                                        <td>{{#lodging}}${{lodging}}{{/lodging}}{{^lodging}}-{{/lodging}}</td>
-                                        <td>${{mie}}{{#isFirstLast}}*{{/isFirstLast}}</td>
-                                        <td>${{total}}</td>
-                                    </tr>
-                                    {{/breakdown}}
-                                </tbody>
-                            </table>
-                            <div class="well well-khaki">
-                                *The first and last calendar dates of M&amp;IE are calculated at 75%
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {{/results}} {{/perDiemSearch}}
-        </script>
-        <script type="template" class="multiple-rates">
-            {{#rates}}
-            <h4>Multiple Rates are Available. Please Choose One:</h4>
-            <br> {{#fy1}}
-            <label for="perdiem-fiscal-year-1">Fiscal Year {{year}}, Destination County</label>
-            <select id="perdiem-fiscal-year-1" class="form-control swiper-no-swiping">
-                <option value="">Select a Destination</option>
-                {{#rates}}
-                <option>{{county}} including {{city}}</option>
-                {{/rates}}
-            </select>
-            {{/fy1}} {{#fy2}}{{#multiple}}
-            <br>
-            <label for="perdiem-fiscal-year-2">Fiscal Year {{year}}, Destination County</label>
-            <select id="perdiem-fiscal-year-2" class="form-control swiper-no-swiping">
-                <option value="">Select a Destination</option>
-                {{#rates}}
-                <option>{{county}} including {{city}}</option>
-                {{/rates}}
-            </select>
-            {{/multiple}}{{/fy2}}
-            <br>
-            <div class="row">
-                <div class="col-sm-6">
-                    <button id="perdiem-to-date-range" class="btn btn-default btn-block"> Back</button>
-                </div>
-                <div class="col-sm-6">
-                    <button id="perdiem-rates-selected" class="btn btn-primary btn-block disabled" disabled>Next </button>
-                </div>
-            </div>
-            {{/rates}}
-        </script>
-    </div>
+
 </body>
 
 </html>
