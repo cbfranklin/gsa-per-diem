@@ -17,6 +17,12 @@
     width: 100%
 }
 
+.perdiem-other-rates{
+    font-size:14px;
+    margin:0px;
+    padding:10px;
+}
+
 #homepage-travel-tabs {
     border: 1px solid #ccc;
     box-shadow: 1px 1px 10px #ccc;
