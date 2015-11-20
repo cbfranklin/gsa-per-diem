@@ -118,14 +118,16 @@ $(function() {
     })
     $('#perdiem-tool-intent').on('click', function() {
         perDiemSwiper.slideTo(1)
-        //ga('send', 'event', 'Per Diem Tool Intent', perDiemSearch.locationType);
-        console.log('%cGA SEND EVENT: CATEGORY: Per Diem Tool Intent ACTION: '+perDiemSearch.locationType,gaConsoleCSS)
+            //ga('send', 'event', 'Per Diem Tool Intent', perDiemSearch.locationType);
+        console.log('%cGA SEND EVENT: CATEGORY: Per Diem Tool Intent ACTION: ' + perDiemSearch.locationType, gaConsoleCSS)
     })
 
     //on to date select
     $('#perdiem-swiper').on('click', '#perdiem-to-date-range', function() {
         perDiemSwiper.slideTo(2)
     })
+
+    $('#perdiem-swiper').on('click', '#perdiem-result-print', perDiemResultPrint)
 
     //launch gsa.gov rate lookup
     $('#perdiem-look-up-rates-submit').on('click', lookUpRatesSubmit);
@@ -756,7 +758,7 @@ function calculateRates() {
         //if more than one FY, are FYs using same rate?
     if (perDiemSearch.rates.fy2) {
         if (perDiemSearch.rates.fy1.rate.county === perDiemSearch.rates.fy2.rate.county) {
-            var sameRate = true;
+            perDiemSearch.ratesAreSame = true;
         }
     }
     perDiemSearch.query.stateFormatted = USStates[perDiemSearch.query.state.toLowerCase()]
@@ -764,12 +766,12 @@ function calculateRates() {
     var template = template_calculator_results;
     var rendered = Mustache.render(template, {
         perDiemSearch: perDiemSearch,
-        sameRate: sameRate
+        sameRate: perDiemSearch.ratesAreSame
     });
     $('#perdiem-results').html(rendered);
     perDiemSwiper.slideTo(5)
         //ga('send', 'event', [eventCategory], [eventAction], [eventLabel], [eventValue], [fieldsObject]);
-    console.log('%cGA SEND EVENT: CATEGORY: Per Diem Tool Success, ACTION: '+perDiemSearch.searchType+' LABEL:',gaConsoleCSS)
+    console.log('%cGA SEND EVENT: CATEGORY: Per Diem Tool Success, ACTION: ' + perDiemSearch.searchType + ' LABEL:', gaConsoleCSS)
 };
 
 function formatCurrency(n) {
@@ -813,8 +815,18 @@ function lookUpRatesSubmit() {
     var lookUpYear = $('#perdiem-rate-lookup-fiscal-year').val()
     var url = "http://www.gsa.gov/portal/category/100120?perdiemSearchVO.year=" + lookUpYear + "&perdiemSearchVO.city=" + $('#perdiem-city').val() + "&perdiemSearchVO.state=" + fullState + "&perdiemSearchVO.zip=" + $('#perdiem-zip').val() + "&resultName=getPerdiemRatesBySearchVO&currentCategory.categoryId=100120&x=44&y=13";
     //ga('send', 'event', [eventCategory], [eventAction], [eventLabel], [eventValue], [fieldsObject]);
-    console.log('%cGA SEND EVENT: CATEGORY: Per Diem Tool Success ACTION: Look Up LABEL: '+lookUpYear,gaConsoleCSS)
+    console.log('%cGA SEND EVENT: CATEGORY: Per Diem Tool Success ACTION: Look Up LABEL: ' + lookUpYear, gaConsoleCSS)
     window.open(url)
+}
+
+function perDiemResultPrint() {
+    var w = window.open();
+    var template = template_calculator_results_print;
+    var rendered = Mustache.render(template, {
+        perDiemSearch: perDiemSearch,
+        sameRate: perDiemSearch.ratesAreSame
+    });
+    $(w.document.body).html(rendered+$('#per-diem-terms-conditions-accordion-content').html());
 }
 
 var USStates = {
