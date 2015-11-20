@@ -827,7 +827,12 @@ function perDiemResultPrint() {
         perDiemSearch: perDiemSearch,
         sameRate: perDiemSearch.ratesAreSame
     });
-    $(w.document.body).html(rendered+$('#per-diem-terms-conditions-accordion-content').html());
+    $(w.document.body).html(rendered + $('#per-diem-terms-conditions-accordion-content').html());
+    setTimeout(function() {
+        w.focus();
+        w.print();
+    }, 1000)
+
 }
 
 var USStates = {
