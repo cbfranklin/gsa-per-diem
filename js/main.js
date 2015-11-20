@@ -821,6 +821,7 @@ function lookUpRatesSubmit() {
 
 function perDiemResultPrint() {
     var w = window.open();
+    w.document.title = 'Per Diem Rates';
     var template = template_calculator_results_print;
     var rendered = Mustache.render(template, {
         perDiemSearch: perDiemSearch,
