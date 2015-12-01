@@ -141,12 +141,12 @@
 #perdiem-swiper div.hr {
     width: 100%;
     text-align: center;
-    border-bottom: 1px solid #aaa;
+    border-bottom: 1px solid #333;
     line-height: .1em;
     margin: 10px 0 20px;
     padding-top: 10px;
     font-size: 12px;
-    color: #aaa
+    color: #333
 }
 
 #perdiem-swiper div.hr span {
