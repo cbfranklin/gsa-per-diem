@@ -3,9 +3,10 @@ var perDiemSwiper,
         rates: {},
         query: {},
     },
+    
     gaConsoleCSS = 'background: green; color: white',
-    //apiRoot = window.location.protocol + '//' + window.location.host,
-    apiRoot = 'http://dev.oagov.com:3334/proxy',
+    apiRoot = window.location.protocol + '//' + window.location.host,
+    //apiRoot = 'http://dev.oagov.com:3334/proxy',
     validDatesBegin = '10/1/2012',
     //must be updated when API is updated
     validDatesEnd = '09/30/2016';
@@ -13,6 +14,7 @@ var perDiemSwiper,
 
 //doc ready
 $(function() {
+    //homepage travel tabs collapse in mobile
     $('#homepage-travel-tabs').tabCollapse();
 
     //set valid search dates to moment objs
@@ -118,7 +120,9 @@ $(function() {
     })
     $('#perdiem-tool-intent').on('click', function() {
         perDiemSwiper.slideTo(1)
-            //ga('send', 'event', 'Per Diem Tool Intent', perDiemSearch.locationType);
+        if (typeof(ga) != "undefined") {
+            ga('send', 'event', 'Per Diem Tool Intent', perDiemSearch.locationType);
+        }
         console.log('%cGA SEND EVENT: CATEGORY: Per Diem Tool Intent ACTION: ' + perDiemSearch.locationType, gaConsoleCSS)
     })
 
@@ -232,18 +236,15 @@ function validateLocationParams() {
     if ($('#perdiem-city').val() === '' && $('#perdiem-state').val() === '' && $('#perdiem-zip').val().length < 5) {
         //disabled
         $('#perdiem-tool-intent').addClass('disabled').attr('disabled', 'disabled');
-        //
         //if not everything is blank
     } else {
         //but zip and state are blank (city only)
         if (!$('#perdiem-zip').val().match(validZIP) && $('#perdiem-state').val() === '') {
             //disabled
-            //
             $('#perdiem-tool-intent').addClass('disabled').attr('disabled', 'disabled');
         }
         //otherwise
         else {
-            //
             //enabled
             $('#perdiem-tool-intent').removeClass('disabled').removeAttr('disabled');
         }
@@ -592,7 +593,6 @@ function calculateRates() {
         for (var date = start; !date.isAfter(end); date.add(1, 'days')) {
 
             var rateMonth = date.format('M') - 1;
-            //
             var rateYear = date.format('YYYY');
 
             //adjust for fiscal year
@@ -615,12 +615,10 @@ function calculateRates() {
 
 
             //months are not always index in order:
-            console.log('rateMonth', rateMonth + 1)
+
             for (i in rate.months.month) {
-                console.log(rate.months.month[i])
                 if (rate.months.month[i].number === rateMonth + 1) {
                     var lodgingRate = rate.months.month[i].value;
-                    console.log('LODGING RATE', lodgingRate)
                 }
             }
 
@@ -631,33 +629,23 @@ function calculateRates() {
             //rate info now separate from breakdown
             var rateInfo = perDiemSearch.results.rateInfo;
             //loop through
-            //
             for (i in rateInfo) {
-                //
                 //determine if month has already been pushed
-                //
                 if (rateInfo[i].date === month) {
-                    //
                     var monthAlreadyExists = true;
                 } else {
                     var monthAlreadyExists = false;
-                    //
                 }
             }
             if (rateInfo.length === 0) {
                 var monthAlreadyExists = false;
-                //
             }
-            //
             if (monthAlreadyExists === false) {
-                //
-                //
                 perDiemSearch.results.rateInfo.push({
-                        date: month,
-                        lodging: formatCurrency(lodgingRate),
-                        mie: formatCurrency(rate.meals)
-                    })
-                    //
+                    date: month,
+                    lodging: formatCurrency(lodgingRate),
+                    mie: formatCurrency(rate.meals)
+                })
 
             }
 
@@ -672,18 +660,15 @@ function calculateRates() {
                 //add lodging to total
 
                 total += lodgingRate;
-                //
-                //
                 var totalRate = lodgingRate + mieRate
                 perDiemSearch.results.breakdown.push({
-                        date: 'First Day',
-                        fullDate: date.format('MM/DD/YY'),
-                        lodging: formatCurrency(lodgingRate),
-                        mie: formatCurrency(mieRate),
-                        isFirstLast: true,
-                        total: formatCurrency(totalRate)
-                    })
-                    //
+                    date: 'First Day',
+                    fullDate: date.format('MM/DD/YY'),
+                    lodging: formatCurrency(lodgingRate),
+                    mie: formatCurrency(mieRate),
+                    isFirstLast: true,
+                    total: formatCurrency(totalRate)
+                })
             }
             //last day (and only day if a same-day trip)
             else if (date.format('MM-DD-YYYY') === pded) {
@@ -699,17 +684,14 @@ function calculateRates() {
                 //add mie to total
                 total += mieRate;
                 //NO LODGING
-                //
-                //
                 perDiemSearch.results.breakdown.push({
-                        date: dateText,
-                        fullDate: date.format('MM/DD/YY'),
-                        mie: formatCurrency(mieRate),
-                        lodging: 0,
-                        isFirstLast: true,
-                        total: formatCurrency(mieRate)
-                    })
-                    //
+                    date: dateText,
+                    fullDate: date.format('MM/DD/YY'),
+                    mie: formatCurrency(mieRate),
+                    lodging: 0,
+                    isFirstLast: true,
+                    total: formatCurrency(mieRate)
+                })
             }
             //all other days
             else {
@@ -724,30 +706,22 @@ function calculateRates() {
                 var breakdown = perDiemSearch.results.breakdown;
                 //loop through
                 for (i in breakdown) {
-                    //
                     //determine if month has already been pushed
-                    //
                     if (breakdown[i].date === month) {
-                        //
                         var monthAlreadyExists = true;
                     } else {
                         var monthAlreadyExists = false;
-                        //
                     }
                 }
-                //
                 if (!monthAlreadyExists) {
-                    //
-                    //
                     var totalRate = lodgingRate + mieRate
                     perDiemSearch.results.breakdown.push({
-                            isRate: true,
-                            date: month,
-                            lodging: formatCurrency(lodgingRate),
-                            mie: formatCurrency(mieRate),
-                            total: formatCurrency(totalRate)
-                        })
-                        //
+                        isRate: true,
+                        date: month,
+                        lodging: formatCurrency(lodgingRate),
+                        mie: formatCurrency(mieRate),
+                        total: formatCurrency(totalRate)
+                    })
                 }
             }
         }
@@ -770,7 +744,10 @@ function calculateRates() {
     });
     $('#perdiem-results').html(rendered);
     perDiemSwiper.slideTo(5)
-        //ga('send', 'event', [eventCategory], [eventAction], [eventLabel], [eventValue], [fieldsObject]);
+
+    if (typeof(ga) != "undefined") {
+        ga('send', 'event', 'Per Diem Tool Success', perDiemSearch.searchType);
+    }
     console.log('%cGA SEND EVENT: CATEGORY: Per Diem Tool Success, ACTION: ' + perDiemSearch.searchType + ' LABEL:', gaConsoleCSS)
 };
 
@@ -788,20 +765,14 @@ function ratesSelected() {
         var m = $('#perdiem-fiscal-year-1 option:selected').index() - 1;
         perDiemSearch.rates.fy1.rate = perDiemSearch.rates.fy1.rates[m]
 
-    } else {
-        //
-    }
+    } else {}
     if (perDiemSearch.rates.fy2) {
-        //
         if (perDiemSearch.rates.fy2.multiple) {
-            //
             var n = $('#perdiem-fiscal-year-2 option:selected').index() - 1;
             perDiemSearch.rates.fy2.rate = perDiemSearch.rates.fy2.rates[n]
 
         }
-    } else {
-        //
-    }
+    } else {}
 
     calculateRates()
 }
@@ -814,7 +785,9 @@ function lookUpRatesSubmit() {
     var fullState = USStates[$('#perdiem-state').val().toLowerCase()];
     var lookUpYear = $('#perdiem-rate-lookup-fiscal-year').val()
     var url = "http://www.gsa.gov/portal/category/100120?perdiemSearchVO.year=" + lookUpYear + "&perdiemSearchVO.city=" + $('#perdiem-city').val() + "&perdiemSearchVO.state=" + fullState + "&perdiemSearchVO.zip=" + $('#perdiem-zip').val() + "&resultName=getPerdiemRatesBySearchVO&currentCategory.categoryId=100120&x=44&y=13";
-    //ga('send', 'event', [eventCategory], [eventAction], [eventLabel], [eventValue], [fieldsObject]);
+    if (typeof(ga) != "undefined") {
+        ga('send', 'event', 'Per Diem Tool Success', 'Look Up');
+    }
     console.log('%cGA SEND EVENT: CATEGORY: Per Diem Tool Success ACTION: Look Up LABEL: ' + lookUpYear, gaConsoleCSS)
     window.open(url)
 }
