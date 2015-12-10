@@ -746,9 +746,9 @@ function calculateRates() {
     perDiemSwiper.slideTo(5)
 
     if (typeof(ga) != "undefined") {
-        ga('send', 'event', 'Per Diem Tool Success', perDiemSearch.searchType);
+        ga('send', 'event', 'Per Diem Tool Success', perDiemSearch.searchType, perDiemSearch.endFY);
     }
-    console.log('%cGA SEND EVENT: CATEGORY: Per Diem Tool Success, ACTION: ' + perDiemSearch.searchType + ' LABEL:', gaConsoleCSS)
+    console.log('%cGA SEND EVENT: CATEGORY: Per Diem Tool Success, ACTION: ' + perDiemSearch.searchType + ' LABEL:' + perDiemSearch.endFY, gaConsoleCSS)
 };
 
 function formatCurrency(n) {
