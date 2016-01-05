@@ -557,9 +557,9 @@ function useMyCurrentLocation() {
             validateLocationParams();
             perDiemSearch.locationType = 'Geolocation'
         }, 250)
-        $('#perdiem-zip,#perdiem-city,#perdiem-state').addClass('animated flash');
+        $('#perdiem-zip,#perdiem-city,#perdiem-state').addClass('animated pulse');
         setTimeout(function() {
-            $('#perdiem-zip,#perdiem-city,#perdiem-state').removeClass('animated flash');
+            $('#perdiem-zip,#perdiem-city,#perdiem-state').removeClass('animated pulse');
         }, 2000)
     }
 
