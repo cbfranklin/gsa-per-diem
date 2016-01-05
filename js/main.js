@@ -24,31 +24,17 @@ $(function() {
         $('#perdiem-current-location').hide();
     }
 
-    //test for IE8 and earlier
-    var ieVersion = (function() {
-
-        var undef,
-            v = 3,
-            div = document.createElement('div'),
-            all = div.getElementsByTagName('i');
-
-        while (
-            div.innerHTML = '<!--[if gt IE ' + (++v) + ']><i></i><![endif]-->',
-            all[0]
-        );
-
-        return v > 4 ? v : undef;
-
-    }());
-
-    if (ieVersion < 9) {
-        $('.perdiem-mobile-content,#perdiem-swiper').hide();
-        $('.perdiem-legacy-ie-content').show();
+    //test for IE < 9, and older non-HTML5 browsers in general
+    if (document.addEventListener) {
+        var legacyBrowser = false;
+    } else {
+        var legacyBrowser = true;
     }
 
-
-
-    if (ieVersion >= 9) {
+    if (legacyBrowser) {
+        $('.perdiem-mobile-content,#perdiem-swiper').hide();
+        $('.perdiem-legacy-ie-content').show();
+    } else {
         //set valid search dates to moment objs
         validDatesBegin = moment(validDatesBegin, 'MM/DD/YYYY');
         validDatesEnd = moment(validDatesEnd, 'MM/DD/YYYY')
