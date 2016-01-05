@@ -3,7 +3,7 @@ var perDiemSwiper,
         rates: {},
         query: {},
     },
-    
+
     gaConsoleCSS = 'background: green; color: white',
     //apiRoot = window.location.protocol + '//' + window.location.host,
     apiRoot = 'http://dev.oagov.com:3334/proxy',
@@ -39,12 +39,37 @@ $(function() {
     $.ajaxSetup({
         timeout: 10000
     });
-    //test for IE11, print userAgent
+
+    //test for IE11
     var isIE11 = !!navigator.userAgent.match(/Trident\/7.0;(.*)rv(:*)11/);
 
     if (!navigator.geolocation) {
         $('#perdiem-current-location').hide();
     }
+
+    //test for IE8 and earlier
+    var ieVersion = (function() {
+
+        var undef,
+            v = 3,
+            div = document.createElement('div'),
+            all = div.getElementsByTagName('i');
+
+        while (
+            div.innerHTML = '<!--[if gt IE ' + (++v) + ']><i></i><![endif]-->',
+            all[0]
+        );
+
+        return v > 4 ? v : undef;
+
+    }());
+
+    if(ieVersion < 9){
+        $('.perdiem-mobile-content,#perdiem-swiper').hide();
+        $('.perdiem-legacy-ie-content').show();
+    }
+
+
 
 
 
