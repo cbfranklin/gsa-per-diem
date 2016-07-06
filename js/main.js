@@ -9,7 +9,7 @@ var perDiemSwiper,
     //apiRoot = 'http://dev.oagov.com:3334/proxy',
     validDatesBegin = '10/1/2012',
     //must be updated when API is updated
-    validDatesEnd = '09/30/2017';
+    validDatesEnd = '09/30/2016';
 
 
 //doc ready
@@ -229,8 +229,6 @@ function validateDates() {
     var endDateVal = $('#perdiem-end-date').val();
     var startDate = moment(startDateVal, 'MM/DD/YYYY');
     var endDate = moment(endDateVal, 'MM/DD/YYYY');
-
-    console.log(startDate.format(),endDate.format())
 
 
     //text is valid and dates are valid
