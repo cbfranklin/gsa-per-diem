@@ -39,11 +39,13 @@ $(function() {
     var isIE11 = !!navigator.userAgent.match(/Trident\/7.0;(.*)rv(:*)11/);
 
     if (!navigator.geolocation) {
-        $('#perdiem-current-location, div.hr:first').hide();
+        $('#perdiem-current-location').hide();
+        $('div.hr:first span').hide();
     }
     //chrome does not permit HTML5 geolocation over HTTP, but navigator.geolocation === true
     if(navigator.userAgent.indexOf('Chrome') > -1 && window.location.protocol === 'http:'){
-        $('#perdiem-current-location, div.hr:first').hide();
+        $('#perdiem-current-location').hide();
+        $('div.hr:first span').hide();
     }
 
     //test for IE < 9, and older non-HTML5 browsers in general
