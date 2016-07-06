@@ -72,7 +72,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label for="perdiem-state">State</label>
-                                        <select class="form-control swiper-no-swiping" id="perdiem-state">
+                                        <select class="form-control swiper-no-swiping" id="perdiem-state" name="perdiem-state">
                                             <option value="">Select a State</option>
                                             <option value="AL">Alabama</option>
                                             <option value="AZ">Arizona</option>
@@ -127,14 +127,14 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="perdiem-city">City (Optional)</label>
-                                        <input id="perdiem-city" type="text" class="form-control">
+                                        <input id="perdiem-city" name="perdiem-city" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="hr"><span>or</span></div>
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <label for="perdiem-zip">ZIP</label>
-                                        <input id="perdiem-zip" type="text" class="form-control" maxlength="5">
+                                        <input id="perdiem-zip" name="perdiem-zip" type="text" class="form-control" maxlength="5">
                                     </div>
                                 </div>
                                 <br>
@@ -186,7 +186,7 @@
                                     <div class="col-sm-6">
                                         <div class="input-group date" id="perdiem-start-date-group">
                                             <span class="input-group-addon" id="start-date">Start Date</span>
-                                            <input id="perdiem-start-date" type="text" class="form-control" placeholder="mm/dd/yyyy" aria-describedby="start-date">
+                                            <input id="perdiem-start-date" name="perdiem-start-date" type="text" class="form-control" placeholder="mm/dd/yyyy" aria-describedby="start-date">
                                             <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -195,7 +195,7 @@
                                     <div class="col-sm-6">
                                         <div class="input-group date" id="perdiem-end-date-group">
                                             <span class="input-group-addon" id="end-date">End Date</span>
-                                            <input id="perdiem-end-date" type="text" class="form-control" placeholder="mm/dd/yyyy" aria-describedby="end-date">
+                                            <input id="perdiem-end-date" name="perdiem-end-date" type="text" class="form-control" placeholder="mm/dd/yyyy" aria-describedby="end-date">
                                             <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -226,7 +226,7 @@
                             <div class="swiper-slide">
                                 <h4 class="perdiem-step"><span class="perdiem-step-number">3</span>Select Fiscal Year</h4>
                                 <br>
-                                <select id="perdiem-rate-lookup-fiscal-year" class="form-control swiper-no-swiping">
+                                <select id="perdiem-rate-lookup-fiscal-year" name="perdiem-rate-lookup-fiscal-year" class="form-control swiper-no-swiping">
                                     <option>2016</option>
                                     <option>2015</option>
                                     <option>2014</option>
