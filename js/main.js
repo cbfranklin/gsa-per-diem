@@ -4,7 +4,7 @@ var perDiemSwiper,
         query: {},
     },
 
-    gaConsoleCSS = 'background: green; color: white',
+    //gaconsoleCSS = 'background: green; color: white',
     apiRoot = window.location.protocol + '//' + window.location.host,
     //apiRoot = 'http://dev.oagov.com:3334/proxy',
     validDatesBegin = '10/1/2012',
@@ -172,7 +172,7 @@ $(function() {
                 dataLayer.push(virtualEvent)
 
             }
-            console.log('%cGA SEND EVENT: CATEGORY: Per Diem Tool Intent ACTION: ' + perDiemSearch.locationType, gaConsoleCSS)
+            //console.log('%cGA SEND EVENT: CATEGORY: Per Diem Tool Intent ACTION: ' + perDiemSearch.locationType, ga//consoleCSS)
         })
 
         //on to date select
@@ -784,7 +784,7 @@ function calculateRates() {
     }
     perDiemSearch.results.total = total;;
 
-    console.table(perDiemSearch.results.breakdown)
+    //console.table(perDiemSearch.results.breakdown)
         //if more than one FY, are FYs using same rate?
     if (perDiemSearch.rates.fy2) {
         if (perDiemSearch.rates.fy1.rate.county === perDiemSearch.rates.fy2.rate.county) {
@@ -818,7 +818,7 @@ function calculateRates() {
         //Push to GTM dataLayer
         dataLayer.push(virtualEvent)
     }
-    console.log('%cGA SEND EVENT: CATEGORY: Per Diem Tool Success, ACTION: ' + perDiemSearch.searchType + ' LABEL:' + perDiemSearch.endFY, gaConsoleCSS)
+    //console.log('%cGA SEND EVENT: CATEGORY: Per Diem Tool Success, ACTION: ' + perDiemSearch.searchType + ' LABEL:' + perDiemSearch.endFY, ga//consoleCSS)
 };
 
 function formatCurrency(n) {
@@ -872,7 +872,7 @@ function lookUpRatesSubmit() {
 
 
     }
-    console.log('%cGA SEND EVENT: CATEGORY: Per Diem Tool Success ACTION: Look Up LABEL: ' + lookUpYear, gaConsoleCSS)
+    //console.log('%cGA SEND EVENT: CATEGORY: Per Diem Tool Success ACTION: Look Up LABEL: ' + lookUpYear, ga//consoleCSS)
     window.open(url)
 }
 
