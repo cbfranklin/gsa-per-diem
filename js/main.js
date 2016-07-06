@@ -41,6 +41,10 @@ $(function() {
     if (!navigator.geolocation) {
         $('#perdiem-current-location').hide();
     }
+    //chrome does not permit HTML5 geolocation over HTTP, but navigator.geolocation === true
+    if(navigator.userAgent.indexOf('Chrome') > -1 && window.location.protocol === 'http:'){
+        $('#perdiem-current-location').hide();
+    }
 
     //test for IE < 9, and older non-HTML5 browsers in general
     if (document.addEventListener) {
