@@ -5,17 +5,35 @@ var perDiemSwiper,
     },
 
     gaConsoleCSS = 'background: green; color: white',
-    //apiRoot = window.location.protocol + '//' + window.location.host,
-    apiRoot = 'http://dev.oagov.com:3334/proxy',
+    apiRoot = window.location.protocol + '//' + window.location.host,
+    //apiRoot = 'http://dev.oagov.com:3334/proxy',
     validDatesBegin = '10/1/2012',
     //must be updated when API is updated
-    validDatesEnd = '09/30/2016';
+    validDatesEnd = '09/30/2017';
 
 
 //doc ready
 $(function() {
     //homepage travel tabs collapse in mobile
     $('#homepage-travel-tabs').tabCollapse();
+
+    $('#homepage-travel-tabs > ul a').on('click', function() {
+        var tabName = $(this).text();
+        if (typeof(dataLayer) != "undefined") {
+            //Define event 'virtualEvent'
+            var virtualEvent = {
+                'event': 'virtualEvent'
+            }
+
+            //Apply event params (remove lines that do not apply)
+            virtualEvent.eventCategory = 'Travel Tabs Widget';
+            virtualEvent.eventAction = tabName;
+
+            //Push to GTM dataLayer
+            dataLayer.push(virtualEvent)
+
+        }
+    })
 
     //test for IE11
     var isIE11 = !!navigator.userAgent.match(/Trident\/7.0;(.*)rv(:*)11/);
@@ -37,7 +55,7 @@ $(function() {
     } else {
         //set valid search dates to moment objs
         validDatesBegin = moment(validDatesBegin, 'MM/DD/YYYY');
-        validDatesEnd = moment(validDatesEnd, 'MM/DD/YYYY')
+        validDatesEnd = moment(validDatesEnd, 'MM/DD/YYYY');
             //init swiper
         perDiemSwiper = new Swiper('#perdiem-swiper', {
             onlyExternal: true,
@@ -130,8 +148,20 @@ $(function() {
         })
         $('#perdiem-tool-intent').on('click', function() {
             perDiemSwiper.slideTo(1)
-            if (typeof(ga) != "undefined") {
-                ga('send', 'event', 'Per Diem Tool Intent', perDiemSearch.locationType);
+            if (typeof(dataLayer) != "undefined") {
+                //ga('send', 'event', 'Per Diem Tool Intent', perDiemSearch.locationType);
+                //Define event 'virtualEvent'
+                var virtualEvent = {
+                    'event': 'virtualEvent'
+                }
+
+                //Apply event params (remove lines that do not apply)
+                virtualEvent.eventCategory = 'Per Diem Tool Intent';
+                virtualEvent.eventAction = perDiemSearch.locationType;
+
+                //Push to GTM dataLayer
+                dataLayer.push(virtualEvent)
+
             }
             console.log('%cGA SEND EVENT: CATEGORY: Per Diem Tool Intent ACTION: ' + perDiemSearch.locationType, gaConsoleCSS)
         })
@@ -145,6 +175,8 @@ $(function() {
 
         //launch gsa.gov rate lookup
         $('#perdiem-look-up-rates-submit').on('click', lookUpRatesSubmit);
+
+
 
         //overflow fix
         setTimeout(function() {
@@ -198,21 +230,25 @@ function validateDates() {
     var startDate = moment(startDateVal, 'MM/DD/YYYY');
     var endDate = moment(endDateVal, 'MM/DD/YYYY');
 
+    console.log(startDate.format(),endDate.format())
+
 
     //text is valid and dates are valid
     if (startDateVal.match(valid) && endDateVal.match(valid) && startDate.isValid() && endDate.isValid()) {
         //dates are in acceptable range (THIS IS NOT INCLUSIVE)
-        if (startDate.isBetween(validDatesBegin, validDatesEnd) && endDate.isBetween(validDatesBegin, validDatesEnd)) {
+        if (startDate.isBetween(validDatesBegin, validDatesEnd, null, '[]') && endDate.isBetween(validDatesBegin, validDatesEnd, null, '[]')) {
             //start is before or equal to end
             if (startDate.isBefore(endDate) || startDate.isSame(endDate)) {
                 enableNext()
                 $('#perdiem-start-date').removeClass('perdiem-invalid')
                 $('#perdiem-end-date').removeClass('perdiem-invalid')
             } else {
-                $('#perdiem-end-before-start').show();
+                
                 disableNext()
+                $('#perdiem-end-before-start').show();
             }
         } else {
+            
             disableNext()
         }
     } else {
@@ -758,8 +794,22 @@ function calculateRates() {
     $('#perdiem-results').html(rendered);
     perDiemSwiper.slideTo(5)
 
-    if (typeof(ga) != "undefined") {
-        ga('send', 'event', 'Per Diem Tool Success', perDiemSearch.searchType, perDiemSearch.endFY);
+    if (typeof(dataLayer) != "undefined") {
+        //ga('send', 'event', 'Per Diem Tool Success', perDiemSearch.searchType, perDiemSearch.endFY);
+        //Define event 'virtualEvent'
+        var virtualEvent = {
+            'event': 'virtualEvent'
+        }
+
+        //Apply event params (remove lines that do not apply)
+        virtualEvent.eventCategory = 'Per Diem Tool Success';
+        virtualEvent.eventAction = perDiemSearch.searchType;
+        if(perDiemSearch.searchType === 'Look Up'){
+            virtualEvent.eventLabel = perDiemSearch.endFY;
+        }
+
+        //Push to GTM dataLayer
+        dataLayer.push(virtualEvent)
     }
     console.log('%cGA SEND EVENT: CATEGORY: Per Diem Tool Success, ACTION: ' + perDiemSearch.searchType + ' LABEL:' + perDiemSearch.endFY, gaConsoleCSS)
 };
@@ -798,8 +848,22 @@ function lookUpRatesSubmit() {
     var fullState = USStates[$('#perdiem-state').val().toLowerCase()];
     var lookUpYear = $('#perdiem-rate-lookup-fiscal-year').val()
     var url = "http://www.gsa.gov/portal/category/100120?perdiemSearchVO.year=" + lookUpYear + "&perdiemSearchVO.city=" + $('#perdiem-city').val() + "&perdiemSearchVO.state=" + fullState + "&perdiemSearchVO.zip=" + $('#perdiem-zip').val() + "&resultName=getPerdiemRatesBySearchVO&currentCategory.categoryId=100120&x=44&y=13";
-    if (typeof(ga) != "undefined") {
-        ga('send', 'event', 'Per Diem Tool Success', 'Look Up');
+    if (typeof(dataLayer) != "undefined") {
+        //ga('send', 'event', 'Per Diem Tool Success', 'Look Up');
+        //Define event 'virtualEvent'
+        var virtualEvent = {
+            'event': 'virtualEvent'
+        }
+
+        //Apply event params (remove lines that do not apply)
+        virtualEvent.eventCategory = 'Per Diem Tool Success';
+        virtualEvent.eventAction = 'Look Up';
+        virtualEvent.eventLabel = lookUpYear;
+
+        //Push to GTM dataLayer
+        dataLayer.push(virtualEvent)
+
+
     }
     console.log('%cGA SEND EVENT: CATEGORY: Per Diem Tool Success ACTION: Look Up LABEL: ' + lookUpYear, gaConsoleCSS)
     window.open(url)
@@ -845,7 +909,8 @@ var USStates = {
     "md": "Maryland",
     "ma": "Massachusetts",
     "mi": "Michigan",
-    "mn": "Montana",
+    "mn": "Minnesota",
+    "mt": "Montana",
     "ms": "Mississippi",
     "mo": "Missouri",
     "ne": "Nebraska",
