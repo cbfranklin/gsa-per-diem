@@ -56,7 +56,7 @@ $(function() {
         //set valid search dates to moment objs
         validDatesBegin = moment(validDatesBegin, 'MM/DD/YYYY');
         validDatesEnd = moment(validDatesEnd, 'MM/DD/YYYY');
-            //init swiper
+        //init swiper
         perDiemSwiper = new Swiper('#perdiem-swiper', {
             onlyExternal: true,
             a11y: true,
@@ -124,6 +124,11 @@ $(function() {
         $('#perdiem-city,#perdiem-zip').on('keyup', validateLocationParams)
         $('#perdiem-state').on('change', validateLocationParams)
         validateLocationParams();
+
+        $('#perdiem-city,#perdiem-zip').keypress(function(e) {
+            if (e.keyCode == 13)
+                $('#perdiem-tool-intent').click();
+        });
 
         //validate dates
         $('#perdiem-start-date,#perdiem-end-date').on('keyup', validateDates)
@@ -241,12 +246,12 @@ function validateDates() {
                 $('#perdiem-start-date').removeClass('perdiem-invalid')
                 $('#perdiem-end-date').removeClass('perdiem-invalid')
             } else {
-                
+
                 disableNext()
                 $('#perdiem-end-before-start').show();
             }
         } else {
-            
+
             disableNext()
         }
     } else {
@@ -802,7 +807,7 @@ function calculateRates() {
         //Apply event params (remove lines that do not apply)
         virtualEvent.eventCategory = 'Per Diem Tool Success';
         virtualEvent.eventAction = perDiemSearch.searchType;
-        if(perDiemSearch.searchType === 'Look Up'){
+        if (perDiemSearch.searchType === 'Look Up') {
             virtualEvent.eventLabel = perDiemSearch.endFY;
         }
 
